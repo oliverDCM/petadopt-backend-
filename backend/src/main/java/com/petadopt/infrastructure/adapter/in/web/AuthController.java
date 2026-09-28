@@ -1,7 +1,10 @@
 package com.petadopt.infrastructure.adapter.in.web;
 
+import com.petadopt.application.port.in.LoginUseCase;
 import com.petadopt.application.port.in.RegistrarUsuarioUseCase;
 import com.petadopt.domain.model.Usuario;
+import com.petadopt.infrastructure.adapter.in.web.dto.LoginRequest;
+import com.petadopt.infrastructure.adapter.in.web.dto.LoginResponse;
 import com.petadopt.infrastructure.adapter.in.web.dto.RegistroRequest;
 import com.petadopt.infrastructure.adapter.in.web.dto.UsuarioResponse;
 import jakarta.validation.Valid;
@@ -17,9 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final RegistrarUsuarioUseCase registrarUsuario;
+    private final LoginUseCase loginUseCase;
 
-    public AuthController(RegistrarUsuarioUseCase registrarUsuario) {
+    public AuthController(RegistrarUsuarioUseCase registrarUsuario, LoginUseCase loginUseCase) {
         this.registrarUsuario = registrarUsuario;
+        this.loginUseCase = loginUseCase;
     }
 
     @PostMapping("/register")
@@ -28,5 +33,11 @@ public class AuthController {
                 req.nombre(), req.email(), req.password(),
                 req.telefono(), req.ciudad(), req.rol()));
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioResponse.desde(usuario));
+    }
+
+    @PostMapping("/login")
+    public LoginResponse login(@Valid @RequestBody LoginRequest req) {
+        var resultado = loginUseCase.login(new LoginUseCase.Comando(req.email(), req.password()));
+        return LoginResponse.desde(resultado.token(), resultado.usuario());
     }
 }

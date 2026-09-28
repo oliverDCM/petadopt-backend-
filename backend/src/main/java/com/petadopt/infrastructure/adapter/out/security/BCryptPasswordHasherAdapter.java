@@ -17,4 +17,9 @@ public class BCryptPasswordHasherAdapter implements PasswordHasherPort {
     public String cifrar(String passwordPlano) {
         return passwordEncoder.encode(passwordPlano);
     }
+
+    @Override
+    public boolean coincide(String passwordPlano, String hash) {
+        return passwordEncoder.matches(passwordPlano, hash);
+    }
 }

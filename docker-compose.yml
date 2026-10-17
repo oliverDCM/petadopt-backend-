@@ -4,18 +4,49 @@ services:
     container_name: petadopt-db
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-petadopt}
+      POSTGRES_USER: ${POSTGRES_USER:-petadopt}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-123456}
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-petadopt} -d ${POSTGRES_DB:-petadopt}"]
       interval: 5s
       timeout: 5s
       retries: 10
+    networks:
+      - petadopt-net
+
+  backend:
+    build:
+      context: ./backend
+    container_name: petadopt-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-petadopt}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-petadopt}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-123456}
+      JWT_SECRET: ${JWT_SECRET:-cambia_este_secreto_largo_minimo_32_caracteres_aaaa}
+    ports:
+      - "8080:8080"
+    networks:
+      - petadopt-net
+
+  frontend:
+    build:
+      context: ./petadot-frontend-main
+    container_name: petadopt-frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "4200:8080"
     networks:
       - petadopt-net
 

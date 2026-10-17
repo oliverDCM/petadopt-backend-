@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(CredencialesInvalidasException.class)
-    public ResponseEntity<Map<String, String>> credenciales(CredencialesInvalidasException ex) {
+    public ResponseEntity<Map<String, String>> credencialesInvalidas(CredencialesInvalidasException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", ex.getMessage()));
     }
 

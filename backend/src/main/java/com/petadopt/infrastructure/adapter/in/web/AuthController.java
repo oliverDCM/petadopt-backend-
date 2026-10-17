@@ -1,6 +1,6 @@
 package com.petadopt.infrastructure.adapter.in.web;
 
-import com.petadopt.application.port.in.LoginUseCase;
+import com.petadopt.application.port.in.IniciarSesionUseCase;
 import com.petadopt.application.port.in.RegistrarUsuarioUseCase;
 import com.petadopt.domain.model.Usuario;
 import com.petadopt.infrastructure.adapter.in.web.dto.LoginRequest;
@@ -20,11 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final RegistrarUsuarioUseCase registrarUsuario;
-    private final LoginUseCase loginUseCase;
+    private final IniciarSesionUseCase iniciarSesion;
 
-    public AuthController(RegistrarUsuarioUseCase registrarUsuario, LoginUseCase loginUseCase) {
+    public AuthController(RegistrarUsuarioUseCase registrarUsuario,
+                          IniciarSesionUseCase iniciarSesion) {
         this.registrarUsuario = registrarUsuario;
-        this.loginUseCase = loginUseCase;
+        this.iniciarSesion = iniciarSesion;
     }
 
     @PostMapping("/register")
@@ -37,7 +38,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public LoginResponse login(@Valid @RequestBody LoginRequest req) {
-        var resultado = loginUseCase.login(new LoginUseCase.Comando(req.email(), req.password()));
-        return LoginResponse.desde(resultado.token(), resultado.usuario());
+        IniciarSesionUseCase.Resultado r = iniciarSesion.iniciarSesion(
+                new IniciarSesionUseCase.Comando(req.email(), req.password()));
+        return new LoginResponse(r.token(), r.rol(), r.nombre(), r.email());
     }
 }

@@ -14,11 +14,6 @@ public class IniciarSesionService implements IniciarSesionUseCase {
     private final UsuarioRepositoryPort usuarioRepository;
     private final PasswordHasherPort passwordHasher;
     private final TokenServicePort tokenService;
-
-    /**
-     * Hash de relleno: cuando el email no existe se compara igualmente contra este hash,
-     * para que la respuesta tarde lo mismo y no se pueda deducir qué emails están registrados.
-     */
     private final String hashDeRelleno;
 
     public IniciarSesionService(UsuarioRepositoryPort usuarioRepository,

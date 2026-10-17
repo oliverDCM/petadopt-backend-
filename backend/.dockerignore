@@ -1,0 +1,20 @@
+# Compilación y dependencias locales
+target/
+.mvn/wrapper/maven-wrapper.jar
+
+# Control de versiones e IDE
+.git
+.gitignore
+.gitattributes
+.idea/
+.vscode/
+*.iml
+
+# Secretos y archivos locales: nunca deben entrar a la imagen
+.env
+.env.*
+*.log
+
+# Documentación
+*.md
+HELP.md

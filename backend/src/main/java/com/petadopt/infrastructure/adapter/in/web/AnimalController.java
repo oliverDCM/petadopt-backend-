@@ -12,17 +12,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.petadopt.application.port.in.ListarAnimalesUseCase;
+import org.springframework.web.bind.annotation.GetMapping;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/animales")
 public class AnimalController {
 
     private final PublicarAnimalUseCase publicarAnimal;
+    private final ListarAnimalesUseCase listarAnimales;
 
-    public AnimalController(PublicarAnimalUseCase publicarAnimal) {
+    public AnimalController(PublicarAnimalUseCase publicarAnimal,
+                            ListarAnimalesUseCase listarAnimales) {
         this.publicarAnimal = publicarAnimal;
+        this.listarAnimales = listarAnimales;
     }
-
+    @GetMapping
+    public List<AnimalResponse> listar() {
+        return listarAnimales.listarDisponibles().stream()
+                .map(AnimalResponse::desde)
+                .toList();
+    }
     @PostMapping
     public ResponseEntity<AnimalResponse> publicar(@Valid @RequestBody AnimalRequest req,
                                                    Authentication authentication) {

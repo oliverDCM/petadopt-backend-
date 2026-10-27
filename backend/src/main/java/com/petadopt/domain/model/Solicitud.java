@@ -11,4 +11,7 @@ public record Solicitud(
         LocalDateTime fechaSolicitud,
         LocalDateTime fechaDecision
 ) {
+    public Solicitud conDecision(EstadoSolicitud nuevoEstado, LocalDateTime fecha) {
+    return new Solicitud(id, animalId, solicitanteId, mensaje, nuevoEstado, fechaSolicitud, fecha);
+}
 }

@@ -14,4 +14,6 @@ public interface SolicitudRepositoryPort {
     List<Solicitud> listarPorSolicitante(Long solicitanteId);
 
     List<Solicitud> listarPorVendedor(Long vendedorId);
+
+    List<Solicitud> listarPendientesPorAnimal(Long animalId);
 }

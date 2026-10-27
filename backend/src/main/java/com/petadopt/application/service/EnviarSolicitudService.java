@@ -1,0 +1,63 @@
+package com.petadopt.application.service;
+
+import com.petadopt.application.port.in.EnviarSolicitudUseCase;
+import com.petadopt.application.port.out.AnimalRepositoryPort;
+import com.petadopt.application.port.out.SolicitudRepositoryPort;
+import com.petadopt.application.port.out.UsuarioRepositoryPort;
+import com.petadopt.domain.exception.AnimalNoDisponibleException;
+import com.petadopt.domain.exception.AnimalNoEncontradoException;
+import com.petadopt.domain.exception.SoloAdoptantePuedeSolicitarException;
+import com.petadopt.domain.exception.SolicitudPropioAnimalException;
+import com.petadopt.domain.model.Animal;
+import com.petadopt.domain.model.EstadoAnimal;
+import com.petadopt.domain.model.EstadoSolicitud;
+import com.petadopt.domain.model.Rol;
+import com.petadopt.domain.model.Solicitud;
+import com.petadopt.domain.model.Usuario;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+
+@Service
+public class EnviarSolicitudService implements EnviarSolicitudUseCase {
+
+    private final SolicitudRepositoryPort solicitudRepository;
+    private final AnimalRepositoryPort animalRepository;
+    private final UsuarioRepositoryPort usuarioRepository;
+
+    public EnviarSolicitudService(SolicitudRepositoryPort solicitudRepository,
+                                  AnimalRepositoryPort animalRepository,
+                                  UsuarioRepositoryPort usuarioRepository) {
+        this.solicitudRepository = solicitudRepository;
+        this.animalRepository = animalRepository;
+        this.usuarioRepository = usuarioRepository;
+    }
+
+    @Override
+    public Solicitud enviar(Comando comando) {
+        Usuario solicitante = usuarioRepository.buscarPorEmail(comando.solicitanteEmail())
+                .filter(u -> u.rol() == Rol.ADOPTANTE)
+                .orElseThrow(SoloAdoptantePuedeSolicitarException::new);
+
+        Animal animal = animalRepository.buscarPorId(comando.animalId())
+                .orElseThrow(() -> new AnimalNoEncontradoException(comando.animalId()));
+
+        if (animal.vendedorId().equals(solicitante.id())) {
+            throw new SolicitudPropioAnimalException();
+        }
+        if (animal.estado() != EstadoAnimal.DISPONIBLE) {
+            throw new AnimalNoDisponibleException();
+        }
+
+        Solicitud nueva = new Solicitud(
+                null,
+                animal.id(),
+                solicitante.id(),
+                comando.mensaje().trim(),
+                EstadoSolicitud.PENDIENTE,
+                LocalDateTime.now(),
+                null
+        );
+        return solicitudRepository.guardar(nueva);
+    }
+}

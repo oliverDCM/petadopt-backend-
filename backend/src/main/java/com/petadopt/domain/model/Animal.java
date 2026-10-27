@@ -16,4 +16,8 @@ public record Animal(
         Long vendedorId,
         LocalDateTime fechaPublicacion
 ) {
+    public Animal conEstado(EstadoAnimal nuevoEstado) {
+        return new Animal(id, nombre, especie, raza, edadMeses, sexo, descripcion,
+                fotoUrl, nuevoEstado, ciudad, vendedorId, fechaPublicacion);
+    }
 }

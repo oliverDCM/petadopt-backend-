@@ -44,6 +44,12 @@ public class SolicitudPersistenceAdapter implements SolicitudRepositoryPort {
         return jpaRepository.findByAnimalVendedorId(vendedorId).stream().map(this::toDomain).toList();
     }
 
+    @Override
+    public List<Solicitud> listarPendientesPorAnimal(Long animalId) {
+        return jpaRepository.findByAnimalIdAndEstado(animalId, EstadoSolicitud.PENDIENTE)
+                .stream().map(this::toDomain).toList();
+    }
+
     private SolicitudEntity toEntity(Solicitud s) {
         AnimalEntity animal = animalJpaRepository.getReferenceById(s.animalId());
         UsuarioEntity solicitante = usuarioJpaRepository.getReferenceById(s.solicitanteId());

@@ -20,6 +20,10 @@ import com.petadopt.domain.exception.RolNoPermitidoException;
 import com.petadopt.domain.exception.AlmacenamientoImagenException;
 import com.petadopt.domain.exception.ImagenInvalidaException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import com.petadopt.domain.exception.PerfilNoAccesibleException;
+import com.petadopt.domain.exception.UsuarioNoEncontradoException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import java.util.LinkedHashMap;
@@ -27,6 +31,7 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(EmailYaRegistradoException.class)
     public ResponseEntity<Map<String, String>> emailDuplicado(EmailYaRegistradoException ex) {
@@ -106,6 +111,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AlmacenamientoImagenException.class)
     public ResponseEntity<Map<String, String>> fallaAlmacenamiento(AlmacenamientoImagenException ex) {
+        log.error("Fallo al subir la imagen a Cloudinary", ex);
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(UsuarioNoEncontradoException.class)
+    public ResponseEntity<Map<String, String>> usuarioNoEncontrado(UsuarioNoEncontradoException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(PerfilNoAccesibleException.class)
+    public ResponseEntity<Map<String, String>> perfilNoAccesible(PerfilNoAccesibleException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", ex.getMessage()));
     }
 }

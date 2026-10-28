@@ -11,4 +11,6 @@ public interface UsuarioRepositoryPort {
     Optional<Usuario> buscarPorEmail(String email);
 
     boolean existePorEmail(String email);
+
+    Optional<Usuario> buscarPorId(Long id);
 }

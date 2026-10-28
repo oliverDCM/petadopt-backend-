@@ -21,6 +21,12 @@ jwt:
   secret: ${JWT_SECRET:cambia_este_secreto_largo_minimo_32_caracteres_aaaa}
   expiration-ms: 86400000
 
+cloudinary:
+  cloud-name: ${CLOUDINARY_CLOUD_NAME:}
+  api-key: ${CLOUDINARY_API_KEY:}
+  api-secret: ${CLOUDINARY_API_SECRET:}
+  folder: petadopt/animales
+
 app:
   cors:
     allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:4200}

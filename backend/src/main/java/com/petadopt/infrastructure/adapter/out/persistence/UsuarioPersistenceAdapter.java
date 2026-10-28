@@ -40,4 +40,9 @@ public class UsuarioPersistenceAdapter implements UsuarioRepositoryPort {
         return new Usuario(e.getId(), e.getNombre(), e.getEmail(), e.getPassword(),
                 e.getTelefono(), e.getCiudad(), e.getRol());
     }
+
+    @Override
+    public Optional<Usuario> buscarPorId(Long id) {
+        return jpaRepository.findById(id).map(this::toDomain);
+    }
 }

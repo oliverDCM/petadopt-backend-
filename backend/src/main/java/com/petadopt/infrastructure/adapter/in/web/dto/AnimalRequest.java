@@ -2,6 +2,7 @@ package com.petadopt.infrastructure.adapter.in.web.dto;
 
 import com.petadopt.domain.model.EspecieAnimal;
 import com.petadopt.domain.model.SexoAnimal;
+import com.petadopt.domain.model.TipoPublicacion;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -15,6 +16,9 @@ public record AnimalRequest(
         @NotNull SexoAnimal sexo,
         @Size(max = 1000) String descripcion,
         @Size(max = 500) String fotoUrl,
-        @Size(max = 80) String ciudad
+        @Size(max = 80) String ciudad,
+        boolean vacunado,
+        boolean esterilizado,
+        @NotNull TipoPublicacion tipo
 ) {
 }

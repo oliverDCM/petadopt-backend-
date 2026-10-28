@@ -3,6 +3,7 @@ package com.petadopt.infrastructure.adapter.out.persistence;
 import com.petadopt.domain.model.EspecieAnimal;
 import com.petadopt.domain.model.EstadoAnimal;
 import com.petadopt.domain.model.SexoAnimal;
+import com.petadopt.domain.model.TipoPublicacion;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -52,13 +53,24 @@ public class AnimalEntity {
     @Column(name = "fecha_publicacion", nullable = false)
     private LocalDateTime fechaPublicacion;
 
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean vacunado;
+
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean esterilizado;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10, columnDefinition = "varchar(10) default 'ADOPCION'")
+    private TipoPublicacion tipo;
+
     protected AnimalEntity() {
     }
 
     public AnimalEntity(Long id, String nombre, EspecieAnimal especie, String raza,
                         Integer edadMeses, SexoAnimal sexo, String descripcion,
                         String fotoUrl, EstadoAnimal estado, String ciudad,
-                        UsuarioEntity vendedor, LocalDateTime fechaPublicacion) {
+                        UsuarioEntity vendedor, LocalDateTime fechaPublicacion,
+                        boolean vacunado, boolean esterilizado, TipoPublicacion tipo) {
         this.id = id;
         this.nombre = nombre;
         this.especie = especie;
@@ -71,6 +83,9 @@ public class AnimalEntity {
         this.ciudad = ciudad;
         this.vendedor = vendedor;
         this.fechaPublicacion = fechaPublicacion;
+        this.vacunado = vacunado;
+        this.esterilizado = esterilizado;
+        this.tipo = tipo;
     }
 
     public Long getId() { return id; }
@@ -85,4 +100,7 @@ public class AnimalEntity {
     public String getCiudad() { return ciudad; }
     public UsuarioEntity getVendedor() { return vendedor; }
     public LocalDateTime getFechaPublicacion() { return fechaPublicacion; }
+    public boolean isVacunado() { return vacunado; }
+    public boolean isEsterilizado() { return esterilizado; }
+    public TipoPublicacion getTipo() { return tipo; }
 }

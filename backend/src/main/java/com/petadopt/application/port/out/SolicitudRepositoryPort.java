@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SolicitudRepositoryPort {
+    boolean existeActivaPorAnimalYSolicitante(Long animalId, Long solicitanteId);
 
     Solicitud guardar(Solicitud solicitud);
 
@@ -16,4 +17,5 @@ public interface SolicitudRepositoryPort {
     List<Solicitud> listarPorVendedor(Long vendedorId);
 
     List<Solicitud> listarPendientesPorAnimal(Long animalId);
+
 }

@@ -15,6 +15,7 @@ import com.petadopt.domain.model.Rol;
 import com.petadopt.domain.model.Solicitud;
 import com.petadopt.domain.model.Usuario;
 import org.springframework.stereotype.Service;
+import com.petadopt.domain.exception.SolicitudDuplicadaException;
 
 import java.time.LocalDateTime;
 
@@ -48,6 +49,9 @@ public class EnviarSolicitudService implements EnviarSolicitudUseCase {
         if (animal.estado() != EstadoAnimal.DISPONIBLE) {
             throw new AnimalNoDisponibleException();
         }
+        if (solicitudRepository.existeActivaPorAnimalYSolicitante(animal.id(), solicitante.id())) {
+            throw new SolicitudDuplicadaException();
+        }
 
         Solicitud nueva = new Solicitud(
                 null,
@@ -60,4 +64,5 @@ public class EnviarSolicitudService implements EnviarSolicitudUseCase {
         );
         return solicitudRepository.guardar(nueva);
     }
+
 }

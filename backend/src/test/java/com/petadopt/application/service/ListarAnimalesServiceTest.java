@@ -5,6 +5,7 @@ import com.petadopt.domain.model.Animal;
 import com.petadopt.domain.model.EspecieAnimal;
 import com.petadopt.domain.model.EstadoAnimal;
 import com.petadopt.domain.model.SexoAnimal;
+import com.petadopt.domain.model.TipoPublicacion;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,7 +30,7 @@ class ListarAnimalesServiceTest {
     void devuelve_solo_los_animales_disponibles() {
         Animal disponible = new Animal(1L, "Firulais", EspecieAnimal.PERRO, "Criollo", 12,
                 SexoAnimal.MACHO, "Cariñoso", null, EstadoAnimal.DISPONIBLE, "Bogotá", 1L,
-                LocalDateTime.now());
+                LocalDateTime.now(), true, true, TipoPublicacion.VENTA);
         when(animalRepository.listarPorEstado(EstadoAnimal.DISPONIBLE)).thenReturn(List.of(disponible));
 
         assertThat(service.listarDisponibles()).containsExactly(disponible);

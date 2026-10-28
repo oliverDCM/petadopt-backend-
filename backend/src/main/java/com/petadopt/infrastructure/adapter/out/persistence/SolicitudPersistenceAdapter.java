@@ -62,4 +62,10 @@ public class SolicitudPersistenceAdapter implements SolicitudRepositoryPort {
         return new Solicitud(e.getId(), e.getAnimal().getId(), e.getSolicitante().getId(),
                 e.getMensaje(), e.getEstado(), e.getFechaSolicitud(), e.getFechaDecision());
     }
+
+    @Override
+    public boolean existeActivaPorAnimalYSolicitante(Long animalId, Long solicitanteId) {
+        return jpaRepository.existsByAnimalIdAndSolicitanteIdAndEstadoIn(
+                animalId, solicitanteId, List.of(EstadoSolicitud.PENDIENTE, EstadoSolicitud.APROBADA));
+    }
 }

@@ -4,6 +4,7 @@ import com.petadopt.domain.model.Animal;
 import com.petadopt.domain.model.EspecieAnimal;
 import com.petadopt.domain.model.EstadoAnimal;
 import com.petadopt.domain.model.SexoAnimal;
+import com.petadopt.domain.model.TipoPublicacion;
 
 import java.time.LocalDateTime;
 
@@ -19,11 +20,15 @@ public record AnimalResponse(
         EstadoAnimal estado,
         String ciudad,
         Long vendedorId,
-        LocalDateTime fechaPublicacion
+        LocalDateTime fechaPublicacion,
+        boolean vacunado,
+        boolean esterilizado,
+        TipoPublicacion tipo
 ) {
     public static AnimalResponse desde(Animal a) {
         return new AnimalResponse(a.id(), a.nombre(), a.especie(), a.raza(), a.edadMeses(),
                 a.sexo(), a.descripcion(), a.fotoUrl(), a.estado(), a.ciudad(),
-                a.vendedorId(), a.fechaPublicacion());
+                a.vendedorId(), a.fechaPublicacion(),
+                a.vacunado(), a.esterilizado(), a.tipo());
     }
 }

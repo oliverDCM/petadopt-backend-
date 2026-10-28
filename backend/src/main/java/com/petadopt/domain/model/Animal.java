@@ -14,10 +14,14 @@ public record Animal(
         EstadoAnimal estado,
         String ciudad,
         Long vendedorId,
-        LocalDateTime fechaPublicacion
+        LocalDateTime fechaPublicacion,
+        boolean vacunado,
+        boolean esterilizado,
+        TipoPublicacion tipo
 ) {
     public Animal conEstado(EstadoAnimal nuevoEstado) {
         return new Animal(id, nombre, especie, raza, edadMeses, sexo, descripcion,
-                fotoUrl, nuevoEstado, ciudad, vendedorId, fechaPublicacion);
+                fotoUrl, nuevoEstado, ciudad, vendedorId, fechaPublicacion,
+                vacunado, esterilizado, tipo);
     }
 }

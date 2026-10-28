@@ -7,6 +7,7 @@ import com.petadopt.application.port.out.UsuarioRepositoryPort;
 import com.petadopt.domain.exception.AnimalNoDisponibleException;
 import com.petadopt.domain.exception.AnimalNoEncontradoException;
 import com.petadopt.domain.exception.SoloAdoptantePuedeSolicitarException;
+import com.petadopt.domain.exception.SolicitudDuplicadaException;
 import com.petadopt.domain.exception.SolicitudPropioAnimalException;
 import com.petadopt.domain.model.Animal;
 import com.petadopt.domain.model.EspecieAnimal;
@@ -15,6 +16,7 @@ import com.petadopt.domain.model.EstadoSolicitud;
 import com.petadopt.domain.model.Rol;
 import com.petadopt.domain.model.SexoAnimal;
 import com.petadopt.domain.model.Solicitud;
+import com.petadopt.domain.model.TipoPublicacion;
 import com.petadopt.domain.model.Usuario;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,7 +52,8 @@ class EnviarSolicitudServiceTest {
 
     private Animal animal(long id, long vendedorId, EstadoAnimal estado) {
         return new Animal(id, "Firulais", EspecieAnimal.PERRO, "Criollo", 12, SexoAnimal.MACHO,
-                "Cariñoso", null, estado, "Bogotá", vendedorId, LocalDateTime.now());
+                "Cariñoso", null, estado, "Bogotá", vendedorId, LocalDateTime.now(),
+                false, false, TipoPublicacion.ADOPCION);
     }
 
     private EnviarSolicitudUseCase.Comando comando(long animalId) {
@@ -103,6 +106,16 @@ class EnviarSolicitudServiceTest {
         when(animalRepository.buscarPorId(10L)).thenReturn(Optional.of(animal(10L, 1L, EstadoAnimal.RESERVADO)));
 
         assertThrows(AnimalNoDisponibleException.class, () -> service.enviar(comando(10L)));
+        verify(solicitudRepository, never()).guardar(any());
+    }
+
+    @Test
+    void rechaza_solicitud_duplicada_activa_sobre_el_mismo_animal() {
+        when(usuarioRepository.buscarPorEmail("a@test.com")).thenReturn(Optional.of(adoptante(2L)));
+        when(animalRepository.buscarPorId(10L)).thenReturn(Optional.of(animal(10L, 1L, EstadoAnimal.DISPONIBLE)));
+        when(solicitudRepository.existeActivaPorAnimalYSolicitante(10L, 2L)).thenReturn(true);
+
+        assertThrows(SolicitudDuplicadaException.class, () -> service.enviar(comando(10L)));
         verify(solicitudRepository, never()).guardar(any());
     }
 }

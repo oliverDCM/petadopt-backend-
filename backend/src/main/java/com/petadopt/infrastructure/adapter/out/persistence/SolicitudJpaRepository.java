@@ -2,6 +2,7 @@ package com.petadopt.infrastructure.adapter.out.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.petadopt.domain.model.EstadoSolicitud;
+import java.util.Collection;
 
 import java.util.List;
 
@@ -12,4 +13,7 @@ public interface SolicitudJpaRepository extends JpaRepository<SolicitudEntity, L
     List<SolicitudEntity> findByAnimalVendedorId(Long vendedorId);
 
     List<SolicitudEntity> findByAnimalIdAndEstado(Long animalId, EstadoSolicitud estado);
+
+    boolean existsByAnimalIdAndSolicitanteIdAndEstadoIn(Long animalId, Long solicitanteId,
+                                                        Collection<EstadoSolicitud> estados);
 }

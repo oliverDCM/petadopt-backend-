@@ -4,6 +4,7 @@ import com.petadopt.application.port.out.AnimalRepositoryPort;
 import com.petadopt.domain.model.Animal;
 import com.petadopt.domain.model.EstadoAnimal;
 import org.springframework.stereotype.Component;
+import com.petadopt.domain.model.TipoPublicacion;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -46,13 +47,16 @@ public class AnimalPersistenceAdapter implements AnimalRepositoryPort {
         UsuarioEntity vendedor = usuarioJpaRepository.getReferenceById(a.vendedorId());
         LocalDateTime fecha = a.fechaPublicacion() != null ? a.fechaPublicacion() : LocalDateTime.now();
         EstadoAnimal estado = a.estado() != null ? a.estado() : EstadoAnimal.DISPONIBLE;
+        TipoPublicacion tipo = a.tipo() != null ? a.tipo() : TipoPublicacion.ADOPCION;
         return new AnimalEntity(a.id(), a.nombre(), a.especie(), a.raza(), a.edadMeses(),
-                a.sexo(), a.descripcion(), a.fotoUrl(), estado, a.ciudad(), vendedor, fecha);
+                a.sexo(), a.descripcion(), a.fotoUrl(), estado, a.ciudad(), vendedor, fecha,
+                a.vacunado(), a.esterilizado(), tipo);
     }
 
     private Animal toDomain(AnimalEntity e) {
         return new Animal(e.getId(), e.getNombre(), e.getEspecie(), e.getRaza(), e.getEdadMeses(),
                 e.getSexo(), e.getDescripcion(), e.getFotoUrl(), e.getEstado(), e.getCiudad(),
-                e.getVendedor().getId(), e.getFechaPublicacion());
+                e.getVendedor().getId(), e.getFechaPublicacion(),
+                e.isVacunado(), e.isEsterilizado(), e.getTipo());
     }
 }

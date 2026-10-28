@@ -15,6 +15,7 @@ import com.petadopt.domain.model.EstadoSolicitud;
 import com.petadopt.domain.model.Rol;
 import com.petadopt.domain.model.SexoAnimal;
 import com.petadopt.domain.model.Solicitud;
+import com.petadopt.domain.model.TipoPublicacion;
 import com.petadopt.domain.model.Usuario;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -52,7 +53,8 @@ class DecidirSolicitudServiceTest {
 
     private Animal animal(long vendedorId) {
         return new Animal(10L, "Firulais", EspecieAnimal.PERRO, "Criollo", 12, SexoAnimal.MACHO,
-                "Cariñoso", null, EstadoAnimal.DISPONIBLE, "Bogotá", vendedorId, LocalDateTime.now());
+                "Cariñoso", null, EstadoAnimal.DISPONIBLE, "Bogotá", vendedorId, LocalDateTime.now(),
+                false, false, TipoPublicacion.ADOPCION);
     }
 
     private Solicitud solicitud(long id, EstadoSolicitud estado) {

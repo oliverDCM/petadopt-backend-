@@ -15,6 +15,12 @@ import com.petadopt.domain.exception.SolicitudPropioAnimalException;
 import com.petadopt.domain.exception.NoEsDuenoDelAnimalException;
 import com.petadopt.domain.exception.SolicitudNoEncontradaException;
 import com.petadopt.domain.exception.SolicitudYaDecididaException;
+import com.petadopt.domain.exception.SolicitudDuplicadaException;
+import com.petadopt.domain.exception.RolNoPermitidoException;
+import com.petadopt.domain.exception.AlmacenamientoImagenException;
+import com.petadopt.domain.exception.ImagenInvalidaException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -76,5 +82,30 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoEsDuenoDelAnimalException.class)
     public ResponseEntity<Map<String, String>> noEsDueno(NoEsDuenoDelAnimalException ex) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(SolicitudDuplicadaException.class)
+    public ResponseEntity<Map<String, String>> solicitudDuplicada(SolicitudDuplicadaException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(RolNoPermitidoException.class)
+    public ResponseEntity<Map<String, String>> rolNoPermitido(RolNoPermitidoException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", ex.getMessage()));
+    }
+    @ExceptionHandler(ImagenInvalidaException.class)
+    public ResponseEntity<Map<String, String>> imagenInvalida(ImagenInvalidaException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<Map<String, String>> imagenMuyGrande(MaxUploadSizeExceededException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("error", "La imagen supera el tamaño máximo de 5 MB"));
+    }
+
+    @ExceptionHandler(AlmacenamientoImagenException.class)
+    public ResponseEntity<Map<String, String>> fallaAlmacenamiento(AlmacenamientoImagenException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(Map.of("error", ex.getMessage()));
     }
 }

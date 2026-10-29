@@ -1,20 +1,10 @@
+# Despliegue completo con un solo comando (desde la carpeta petadopt):  docker compose up --build -d
+#   App:       http://localhost:4200
+#   pgAdmin:   http://localhost:5050
+#   SonarQube: http://localhost:9000
+#   Mailpit:   http://localhost:8025   (bandeja donde llegan los correos de desarrollo)
+# Los secretos (Cloudinary, JWT, SMTP real) van en un archivo .env junto a este compose, nunca en el código.
 services:
- 
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: petadopt-pgadmin
-    restart: unless-stopped
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@petadopt.com
-      PGADMIN_DEFAULT_PASSWORD: admin123
-    ports:
-      - "5050:80"
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    depends_on:
-      - db
-    networks:
-      - petadopt-net
   db:
     image: postgres:15
     container_name: petadopt-db
@@ -34,20 +24,18 @@ services:
       retries: 10
     networks:
       - petadopt-net
-  sonarqube:
-    image: sonarqube:community
-    container_name: petadopt-sonarqube
+
+  # HU-BE-22: servidor SMTP de pruebas. No envía nada a internet: guarda los correos y los muestra en la web.
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: petadopt-mailpit
     restart: unless-stopped
-    environment:
-      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
     ports:
-      - "9000:9000"
-    volumes:
-      - sonarqube-data:/opt/sonarqube/data
-      - sonarqube-extensions:/opt/sonarqube/extensions
-      - sonarqube-logs:/opt/sonarqube/logs
+      - "1025:1025"
+      - "8025:8025"
     networks:
       - petadopt-net
+
   backend:
     build:
       context: ./backend
@@ -56,13 +44,28 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      mailpit:
+        condition: service_started
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-petadopt}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-petadopt}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-123456}
       JWT_SECRET: ${JWT_SECRET:-cambia_este_secreto_largo_minimo_32_caracteres_aaaa}
-    ports:
-      - "8080:8080"
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME:-}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY:-}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET:-}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:4200}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:4200}
+      MAIL_HOST: ${MAIL_HOST:-mailpit}
+      MAIL_PORT: ${MAIL_PORT:-1025}
+      MAIL_USERNAME: ${MAIL_USERNAME:-}
+      MAIL_PASSWORD: ${MAIL_PASSWORD:-}
+      MAIL_SMTP_AUTH: ${MAIL_SMTP_AUTH:-false}
+      MAIL_STARTTLS: ${MAIL_STARTTLS:-false}
+      MAIL_FROM: ${MAIL_FROM:-PetAdopt <no-reply@petadopt.local>}
+    # Solo accesible desde la red interna; el frontend (nginx) le reenvía /api
+    expose:
+      - "8080"
     networks:
       - petadopt-net
 
@@ -79,9 +82,40 @@ services:
     networks:
       - petadopt-net
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: petadopt-pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@petadopt.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - db
+    networks:
+      - petadopt-net
+
+  sonarqube:
+    image: sonarqube:community
+    container_name: petadopt-sonarqube
+    restart: unless-stopped
+    environment:
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+    ports:
+      - "9000:9000"
+    volumes:
+      - sonarqube-data:/opt/sonarqube/data
+      - sonarqube-extensions:/opt/sonarqube/extensions
+      - sonarqube-logs:/opt/sonarqube/logs
+    networks:
+      - petadopt-net
+
 volumes:
-  pgadmin-data:
   pgdata:
+  pgadmin-data:
   sonarqube-data:
   sonarqube-extensions:
   sonarqube-logs:

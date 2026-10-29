@@ -1,4 +1,20 @@
 services:
+ 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: petadopt-pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@petadopt.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - db
+    networks:
+      - petadopt-net
   db:
     image: postgres:15
     container_name: petadopt-db
@@ -18,7 +34,20 @@ services:
       retries: 10
     networks:
       - petadopt-net
-
+  sonarqube:
+    image: sonarqube:community
+    container_name: petadopt-sonarqube
+    restart: unless-stopped
+    environment:
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+    ports:
+      - "9000:9000"
+    volumes:
+      - sonarqube-data:/opt/sonarqube/data
+      - sonarqube-extensions:/opt/sonarqube/extensions
+      - sonarqube-logs:/opt/sonarqube/logs
+    networks:
+      - petadopt-net
   backend:
     build:
       context: ./backend
@@ -51,7 +80,11 @@ services:
       - petadopt-net
 
 volumes:
+  pgadmin-data:
   pgdata:
+  sonarqube-data:
+  sonarqube-extensions:
+  sonarqube-logs:
 
 networks:
   petadopt-net:

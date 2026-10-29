@@ -32,8 +32,8 @@ public class ConsultarPerfilPublicoService implements ConsultarPerfilPublicoUseC
         Usuario solicitante = usuarioRepository.buscarPorId(usuarioId)
                 .orElseThrow(() -> new UsuarioNoEncontradoException(usuarioId));
 
-        boolean envioSolicitud = solicitudRepository.listarPorVendedor(vendedor.id()).stream()
-                .anyMatch(s -> s.solicitanteId().equals(solicitante.id()));
+        boolean envioSolicitud = solicitudRepository
+                .existeSolicitudDeSolicitanteAVendedor(solicitante.id(), vendedor.id());
         if (!envioSolicitud) {
             throw new PerfilNoAccesibleException();
         }

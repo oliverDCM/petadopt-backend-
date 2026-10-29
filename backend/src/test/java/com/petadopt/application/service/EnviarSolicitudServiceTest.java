@@ -63,7 +63,7 @@ class EnviarSolicitudServiceTest {
     @Test
     void envia_solicitud_pendiente() {
         when(usuarioRepository.buscarPorEmail("a@test.com")).thenReturn(Optional.of(adoptante(2L)));
-        when(animalRepository.buscarPorId(10L)).thenReturn(Optional.of(animal(10L, 1L, EstadoAnimal.DISPONIBLE)));
+        when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(animal(10L, 1L, EstadoAnimal.DISPONIBLE)));
         when(solicitudRepository.guardar(any(Solicitud.class))).thenAnswer(inv -> inv.getArgument(0));
 
         Solicitud resultado = service.enviar(comando(10L));
@@ -86,7 +86,7 @@ class EnviarSolicitudServiceTest {
     @Test
     void rechaza_animal_inexistente() {
         when(usuarioRepository.buscarPorEmail("a@test.com")).thenReturn(Optional.of(adoptante(2L)));
-        when(animalRepository.buscarPorId(99L)).thenReturn(Optional.empty());
+        when(animalRepository.buscarPorIdParaActualizar(99L)).thenReturn(Optional.empty());
 
         assertThrows(AnimalNoEncontradoException.class, () -> service.enviar(comando(99L)));
     }
@@ -94,7 +94,7 @@ class EnviarSolicitudServiceTest {
     @Test
     void rechaza_solicitud_sobre_animal_propio() {
         when(usuarioRepository.buscarPorEmail("a@test.com")).thenReturn(Optional.of(adoptante(1L)));
-        when(animalRepository.buscarPorId(10L)).thenReturn(Optional.of(animal(10L, 1L, EstadoAnimal.DISPONIBLE)));
+        when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(animal(10L, 1L, EstadoAnimal.DISPONIBLE)));
 
         assertThrows(SolicitudPropioAnimalException.class, () -> service.enviar(comando(10L)));
         verify(solicitudRepository, never()).guardar(any());
@@ -103,7 +103,7 @@ class EnviarSolicitudServiceTest {
     @Test
     void rechaza_animal_no_disponible() {
         when(usuarioRepository.buscarPorEmail("a@test.com")).thenReturn(Optional.of(adoptante(2L)));
-        when(animalRepository.buscarPorId(10L)).thenReturn(Optional.of(animal(10L, 1L, EstadoAnimal.RESERVADO)));
+        when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(animal(10L, 1L, EstadoAnimal.RESERVADO)));
 
         assertThrows(AnimalNoDisponibleException.class, () -> service.enviar(comando(10L)));
         verify(solicitudRepository, never()).guardar(any());
@@ -112,7 +112,7 @@ class EnviarSolicitudServiceTest {
     @Test
     void rechaza_solicitud_duplicada_activa_sobre_el_mismo_animal() {
         when(usuarioRepository.buscarPorEmail("a@test.com")).thenReturn(Optional.of(adoptante(2L)));
-        when(animalRepository.buscarPorId(10L)).thenReturn(Optional.of(animal(10L, 1L, EstadoAnimal.DISPONIBLE)));
+        when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(animal(10L, 1L, EstadoAnimal.DISPONIBLE)));
         when(solicitudRepository.existeActivaPorAnimalYSolicitante(10L, 2L)).thenReturn(true);
 
         assertThrows(SolicitudDuplicadaException.class, () -> service.enviar(comando(10L)));

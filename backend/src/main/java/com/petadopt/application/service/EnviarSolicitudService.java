@@ -15,6 +15,7 @@ import com.petadopt.domain.model.Rol;
 import com.petadopt.domain.model.Solicitud;
 import com.petadopt.domain.model.Usuario;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.petadopt.domain.exception.SolicitudDuplicadaException;
 
 import java.time.LocalDateTime;
@@ -35,12 +36,13 @@ public class EnviarSolicitudService implements EnviarSolicitudUseCase {
     }
 
     @Override
+    @Transactional
     public Solicitud enviar(Comando comando) {
         Usuario solicitante = usuarioRepository.buscarPorEmail(comando.solicitanteEmail())
                 .filter(u -> u.rol() == Rol.ADOPTANTE)
                 .orElseThrow(SoloAdoptantePuedeSolicitarException::new);
 
-        Animal animal = animalRepository.buscarPorId(comando.animalId())
+        Animal animal = animalRepository.buscarPorIdParaActualizar(comando.animalId())
                 .orElseThrow(() -> new AnimalNoEncontradoException(comando.animalId()));
 
         if (animal.vendedorId().equals(solicitante.id())) {

@@ -10,6 +10,8 @@ public interface SolicitudJpaRepository extends JpaRepository<SolicitudEntity, L
 
     List<SolicitudEntity> findBySolicitanteId(Long solicitanteId);
 
+    boolean existsBySolicitanteIdAndAnimalVendedorId(Long solicitanteId, Long vendedorId);
+
     List<SolicitudEntity> findByAnimalVendedorId(Long vendedorId);
 
     List<SolicitudEntity> findByAnimalIdAndEstado(Long animalId, EstadoSolicitud estado);

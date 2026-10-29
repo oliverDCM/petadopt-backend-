@@ -64,6 +64,11 @@ public class SolicitudPersistenceAdapter implements SolicitudRepositoryPort {
     }
 
     @Override
+    public boolean existeSolicitudDeSolicitanteAVendedor(Long solicitanteId, Long vendedorId) {
+        return jpaRepository.existsBySolicitanteIdAndAnimalVendedorId(solicitanteId, vendedorId);
+    }
+
+    @Override
     public boolean existeActivaPorAnimalYSolicitante(Long animalId, Long solicitanteId) {
         return jpaRepository.existsByAnimalIdAndSolicitanteIdAndEstadoIn(
                 animalId, solicitanteId, List.of(EstadoSolicitud.PENDIENTE, EstadoSolicitud.APROBADA));

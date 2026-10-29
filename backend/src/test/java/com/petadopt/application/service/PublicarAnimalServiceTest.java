@@ -36,6 +36,9 @@ class PublicarAnimalServiceTest {
 
     private static final String URL_FOTO = "https://res.cloudinary.com/demo/image/upload/petadopt/firulais.jpg";
 
+    private static final byte[] JPEG = {(byte) 0xFF, (byte) 0xD8, (byte) 0xFF, 0x00};
+    private static final byte[] PNG = {(byte) 0x89, 'P', 'N', 'G', 0x0D, 0x0A, 0x1A, 0x0A, 0x00};
+
     @Mock
     private AnimalRepositoryPort animalRepository;
     @Mock
@@ -95,7 +98,7 @@ class PublicarAnimalServiceTest {
 
     @Test
     void sube_la_imagen_y_guarda_la_url_devuelta() {
-        ImagenArchivo foto = new ImagenArchivo("firulais.jpg", "image/jpeg", new byte[]{1, 2, 3});
+        ImagenArchivo foto = new ImagenArchivo("firulais.jpg", "image/jpeg", JPEG);
         when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor()));
         when(imagenStorage.subirImagen(foto)).thenReturn(URL_FOTO);
         when(animalRepository.guardar(any(Animal.class))).thenAnswer(inv -> inv.getArgument(0));
@@ -127,11 +130,21 @@ class PublicarAnimalServiceTest {
 
     @Test
     void no_publica_el_animal_si_el_servicio_externo_falla() {
-        ImagenArchivo foto = new ImagenArchivo("firulais.png", "image/png", new byte[]{1, 2, 3});
+        ImagenArchivo foto = new ImagenArchivo("firulais.png", "image/png", PNG);
         when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor()));
         when(imagenStorage.subirImagen(foto)).thenThrow(new AlmacenamientoImagenException(new RuntimeException("sin red")));
 
         assertThrows(AlmacenamientoImagenException.class, () -> service.publicar(comando("v@test.com", foto)));
+        verify(animalRepository, never()).guardar(any());
+    }
+
+    @Test
+    void rechaza_un_archivo_cuya_firma_no_corresponde_al_tipo_declarado() {
+        ImagenArchivo falsa = new ImagenArchivo("virus.jpg", "image/jpeg", new byte[]{1, 2, 3, 4});
+        when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor()));
+
+        assertThrows(ImagenInvalidaException.class, () -> service.publicar(comando("v@test.com", falsa)));
+        verifyNoInteractions(imagenStorage);
         verify(animalRepository, never()).guardar(any());
     }
 }

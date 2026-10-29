@@ -34,6 +34,11 @@ public class AnimalPersistenceAdapter implements AnimalRepositoryPort {
     }
 
     @Override
+    public Optional<Animal> buscarPorIdParaActualizar(Long id) {
+        return jpaRepository.buscarBloqueadoPorId(id).map(this::toDomain);
+    }
+
+    @Override
     public List<Animal> listarPorEstado(EstadoAnimal estado) {
         return jpaRepository.findByEstado(estado).stream().map(this::toDomain).toList();
     }

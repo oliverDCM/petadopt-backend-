@@ -7,10 +7,10 @@ spring:
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/petadopt}
     username: ${SPRING_DATASOURCE_USERNAME:petadopt}
-    password: ${SPRING_DATASOURCE_PASSWORD:petadopt123}
+    password: ${SPRING_DATASOURCE_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: ${JPA_DDL_AUTO:update}
     open-in-view: false
   servlet:
     multipart:
@@ -18,7 +18,7 @@ spring:
       max-request-size: 6MB
 
 jwt:
-  secret: ${JWT_SECRET:cambia_este_secreto_largo_minimo_32_caracteres_aaaa}
+  secret: ${JWT_SECRET}
   expiration-ms: 86400000
 
 cloudinary:
@@ -30,3 +30,9 @@ cloudinary:
 app:
   cors:
     allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:4200}
+
+springdoc:
+  api-docs:
+    enabled: ${SWAGGER_ENABLED:true}
+  swagger-ui:
+    enabled: ${SWAGGER_ENABLED:true}

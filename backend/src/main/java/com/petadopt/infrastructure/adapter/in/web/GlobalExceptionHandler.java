@@ -23,6 +23,10 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import com.petadopt.domain.exception.PerfilNoAccesibleException;
 import com.petadopt.domain.exception.UsuarioNoEncontradoException;
 import org.slf4j.Logger;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.ErrorResponse;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.slf4j.LoggerFactory;
 
 
@@ -123,5 +127,37 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(PerfilNoAccesibleException.class)
     public ResponseEntity<Map<String, String>> perfilNoAccesible(PerfilNoAccesibleException ex) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Map<String, String>> cuerpoIlegible(HttpMessageNotReadableException ex) {
+        return ResponseEntity.badRequest()
+                .body(Map.of("error", "El cuerpo de la petición es inválido o está mal formado"));
+    }
+
+    @ExceptionHandler(MissingServletRequestPartException.class)
+    public ResponseEntity<Map<String, String>> parteFaltante(MissingServletRequestPartException ex) {
+        return ResponseEntity.badRequest()
+                .body(Map.of("error", "Falta la parte obligatoria: " + ex.getRequestPartName()));
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Map<String, String>> integridadDatos(DataIntegrityViolationException ex) {
+        log.warn("Violación de integridad de datos", ex);
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Map.of("error", "La operación entra en conflicto con datos existentes"));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, String>> inesperado(Exception ex) {
+        if (ex instanceof ErrorResponse respuesta) {
+            // errores propios de Spring (404, 405, 415...) conservan su código
+            return ResponseEntity.status(respuesta.getStatusCode())
+                    .body(Map.of("error", respuesta.getBody().getDetail() != null
+                            ? respuesta.getBody().getDetail() : "Petición no válida"));
+        }
+        log.error("Error no controlado", ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("error", "Error interno del servidor"));
     }
 }

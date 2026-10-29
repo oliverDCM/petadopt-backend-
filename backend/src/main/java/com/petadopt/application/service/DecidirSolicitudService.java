@@ -4,6 +4,7 @@ import com.petadopt.application.port.in.DecidirSolicitudUseCase;
 import com.petadopt.application.port.out.AnimalRepositoryPort;
 import com.petadopt.application.port.out.SolicitudRepositoryPort;
 import com.petadopt.application.port.out.UsuarioRepositoryPort;
+import com.petadopt.domain.exception.AnimalNoDisponibleException;
 import com.petadopt.domain.exception.AnimalNoEncontradoException;
 import com.petadopt.domain.exception.NoEsDuenoDelAnimalException;
 import com.petadopt.domain.exception.SolicitudNoEncontradaException;
@@ -42,7 +43,7 @@ public class DecidirSolicitudService implements DecidirSolicitudUseCase {
         Solicitud solicitud = solicitudRepository.buscarPorId(comando.solicitudId())
                 .orElseThrow(() -> new SolicitudNoEncontradaException(comando.solicitudId()));
 
-        Animal animal = animalRepository.buscarPorId(solicitud.animalId())
+        Animal animal = animalRepository.buscarPorIdParaActualizar(solicitud.animalId())
                 .orElseThrow(() -> new AnimalNoEncontradoException(solicitud.animalId()));
 
         if (!animal.vendedorId().equals(vendedor.id())) {
@@ -56,6 +57,10 @@ public class DecidirSolicitudService implements DecidirSolicitudUseCase {
 
         if (comando.decision() == Decision.RECHAZAR) {
             return solicitudRepository.guardar(solicitud.conDecision(EstadoSolicitud.RECHAZADA, ahora));
+        }
+        // La fila del animal está bloqueada: si otra aprobación ya lo reservó, aquí se ve RESERVADO.
+        if (animal.estado() != EstadoAnimal.DISPONIBLE) {
+            throw new AnimalNoDisponibleException();
         }
 
         Solicitud aprobada = solicitudRepository.guardar(

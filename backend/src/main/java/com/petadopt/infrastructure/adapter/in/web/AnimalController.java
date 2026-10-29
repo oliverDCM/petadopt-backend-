@@ -93,7 +93,7 @@ public class AnimalController {
                     content = @Content(mediaType = "application/json",
                             examples = @ExampleObject(value = ApiEjemplos.ERROR_ALMACENAMIENTO)))
     })
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(path = "/con-foto", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AnimalResponse> publicarConFoto(
             @Valid @RequestPart("datos") AnimalRequest req,
             @RequestPart(value = "foto", required = false) MultipartFile foto,

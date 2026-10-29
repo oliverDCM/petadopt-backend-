@@ -52,7 +52,7 @@ class ConsultarPerfilPublicoServiceTest {
     void devuelve_solo_nombre_ciudad_y_rol_del_solicitante() {
         when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor));
         when(usuarioRepository.buscarPorId(2L)).thenReturn(Optional.of(adoptante));
-        when(solicitudRepository.listarPorVendedor(1L)).thenReturn(List.of(solicitudDe(2L)));
+        when(solicitudRepository.existeSolicitudDeSolicitanteAVendedor(2L, 1L)).thenReturn(true);
 
         PerfilPublico perfil = service.consultar("v@test.com", 2L);
 
@@ -63,7 +63,7 @@ class ConsultarPerfilPublicoServiceTest {
     void rechaza_si_el_usuario_no_envio_solicitud_sobre_animales_del_vendedor() {
         when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor));
         when(usuarioRepository.buscarPorId(2L)).thenReturn(Optional.of(adoptante));
-        when(solicitudRepository.listarPorVendedor(1L)).thenReturn(List.of(solicitudDe(3L)));
+        when(solicitudRepository.existeSolicitudDeSolicitanteAVendedor(2L, 1L)).thenReturn(false);
 
         assertThrows(PerfilNoAccesibleException.class, () -> service.consultar("v@test.com", 2L));
     }

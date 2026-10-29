@@ -5,6 +5,7 @@ import com.petadopt.application.port.in.DecidirSolicitudUseCase.Decision;
 import com.petadopt.application.port.out.AnimalRepositoryPort;
 import com.petadopt.application.port.out.SolicitudRepositoryPort;
 import com.petadopt.application.port.out.UsuarioRepositoryPort;
+import com.petadopt.domain.exception.AnimalNoDisponibleException;
 import com.petadopt.domain.exception.NoEsDuenoDelAnimalException;
 import com.petadopt.domain.exception.SolicitudNoEncontradaException;
 import com.petadopt.domain.exception.SolicitudYaDecididaException;
@@ -71,7 +72,7 @@ class DecidirSolicitudServiceTest {
         Solicitud otra = solicitud(6L, EstadoSolicitud.PENDIENTE);
         when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor));
         when(solicitudRepository.buscarPorId(5L)).thenReturn(Optional.of(principal));
-        when(animalRepository.buscarPorId(10L)).thenReturn(Optional.of(animal(1L)));
+        when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(animal(1L)));
         when(solicitudRepository.guardar(any(Solicitud.class))).thenAnswer(inv -> inv.getArgument(0));
         when(solicitudRepository.listarPendientesPorAnimal(10L)).thenReturn(List.of(principal, otra));
 
@@ -95,7 +96,7 @@ class DecidirSolicitudServiceTest {
     void rechazar_no_cambia_el_estado_del_animal() {
         when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor));
         when(solicitudRepository.buscarPorId(5L)).thenReturn(Optional.of(solicitud(5L, EstadoSolicitud.PENDIENTE)));
-        when(animalRepository.buscarPorId(10L)).thenReturn(Optional.of(animal(1L)));
+        when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(animal(1L)));
         when(solicitudRepository.guardar(any(Solicitud.class))).thenAnswer(inv -> inv.getArgument(0));
 
         Solicitud resultado = service.decidir(comando(5L, Decision.RECHAZAR));
@@ -108,7 +109,7 @@ class DecidirSolicitudServiceTest {
     void rechaza_decision_de_quien_no_es_dueno_del_animal() {
         when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor));
         when(solicitudRepository.buscarPorId(5L)).thenReturn(Optional.of(solicitud(5L, EstadoSolicitud.PENDIENTE)));
-        when(animalRepository.buscarPorId(10L)).thenReturn(Optional.of(animal(99L)));
+        when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(animal(99L)));
 
         assertThrows(NoEsDuenoDelAnimalException.class, () -> service.decidir(comando(5L, Decision.APROBAR)));
         verify(solicitudRepository, never()).guardar(any());
@@ -118,7 +119,7 @@ class DecidirSolicitudServiceTest {
     void rechaza_solicitud_ya_decidida() {
         when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor));
         when(solicitudRepository.buscarPorId(5L)).thenReturn(Optional.of(solicitud(5L, EstadoSolicitud.APROBADA)));
-        when(animalRepository.buscarPorId(10L)).thenReturn(Optional.of(animal(1L)));
+        when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(animal(1L)));
 
         assertThrows(SolicitudYaDecididaException.class, () -> service.decidir(comando(5L, Decision.APROBAR)));
         verify(solicitudRepository, never()).guardar(any());
@@ -130,5 +131,17 @@ class DecidirSolicitudServiceTest {
         when(solicitudRepository.buscarPorId(77L)).thenReturn(Optional.empty());
 
         assertThrows(SolicitudNoEncontradaException.class, () -> service.decidir(comando(77L, Decision.APROBAR)));
+    }
+
+    @Test
+    void no_aprueba_si_el_animal_ya_no_esta_disponible() {
+        Animal reservado = animal(1L).conEstado(EstadoAnimal.RESERVADO);
+        when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor));
+        when(solicitudRepository.buscarPorId(5L)).thenReturn(Optional.of(solicitud(5L, EstadoSolicitud.PENDIENTE)));
+        when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(reservado));
+
+        assertThrows(AnimalNoDisponibleException.class, () -> service.decidir(comando(5L, Decision.APROBAR)));
+        verify(solicitudRepository, never()).guardar(any());
+        verify(animalRepository, never()).guardar(any());
     }
 }

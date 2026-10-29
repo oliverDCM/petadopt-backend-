@@ -5,6 +5,7 @@ import com.petadopt.domain.model.SexoAnimal;
 import com.petadopt.domain.model.TipoPublicacion;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
@@ -15,7 +16,7 @@ public record AnimalRequest(
         @PositiveOrZero Integer edadMeses,
         @NotNull SexoAnimal sexo,
         @Size(max = 1000) String descripcion,
-        @Size(max = 500) String fotoUrl,
+        @Size(max = 500) @Pattern(regexp = "^(https://\\S+)?$", message = "debe ser una URL https") String fotoUrl,
         @Size(max = 80) String ciudad,
         boolean vacunado,
         boolean esterilizado,

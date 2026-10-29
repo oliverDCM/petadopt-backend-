@@ -18,4 +18,6 @@ public interface SolicitudRepositoryPort {
 
     List<Solicitud> listarPendientesPorAnimal(Long animalId);
 
+    boolean existeSolicitudDeSolicitanteAVendedor(Long solicitanteId, Long vendedorId);
+
 }

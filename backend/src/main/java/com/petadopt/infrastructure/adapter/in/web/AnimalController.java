@@ -1,19 +1,24 @@
 package com.petadopt.infrastructure.adapter.in.web;
 
 import com.petadopt.application.port.in.CambiarEstadoAnimalUseCase;
+import com.petadopt.application.port.in.ConsultarAnimalUseCase;
 import com.petadopt.application.port.in.EditarAnimalUseCase;
 import com.petadopt.application.port.in.ListarAnimalesUseCase;
 import com.petadopt.application.port.in.ListarMisAnimalesUseCase;
 import com.petadopt.application.port.in.PublicarAnimalUseCase;
 import com.petadopt.domain.exception.ImagenInvalidaException;
 import com.petadopt.domain.model.Animal;
+import com.petadopt.domain.model.EspecieAnimal;
 import com.petadopt.domain.model.ImagenArchivo;
+import com.petadopt.domain.model.TipoPublicacion;
 import com.petadopt.infrastructure.adapter.in.web.docs.ApiEjemplos;
+import com.petadopt.infrastructure.adapter.in.web.dto.AnimalDetalleResponse;
 import com.petadopt.infrastructure.adapter.in.web.dto.AnimalRequest;
 import com.petadopt.infrastructure.adapter.in.web.dto.AnimalResponse;
 import com.petadopt.infrastructure.adapter.in.web.dto.EstadoRequest;
 import com.petadopt.infrastructure.config.OpenApiConfig;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -33,6 +38,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,17 +56,20 @@ public class AnimalController {
     private final ListarMisAnimalesUseCase listarMisAnimales;
     private final EditarAnimalUseCase editarAnimal;
     private final CambiarEstadoAnimalUseCase cambiarEstadoAnimal;
+    private final ConsultarAnimalUseCase consultarAnimal;
 
     public AnimalController(PublicarAnimalUseCase publicarAnimal,
                             ListarAnimalesUseCase listarAnimales,
                             ListarMisAnimalesUseCase listarMisAnimales,
                             EditarAnimalUseCase editarAnimal,
-                            CambiarEstadoAnimalUseCase cambiarEstadoAnimal) {
+                            CambiarEstadoAnimalUseCase cambiarEstadoAnimal,
+                            ConsultarAnimalUseCase consultarAnimal) {
         this.publicarAnimal = publicarAnimal;
         this.listarAnimales = listarAnimales;
         this.listarMisAnimales = listarMisAnimales;
         this.editarAnimal = editarAnimal;
         this.cambiarEstadoAnimal = cambiarEstadoAnimal;
+        this.consultarAnimal = consultarAnimal;
     }
 
     @Operation(summary = "Publicar un animal (sin foto)",
@@ -113,16 +122,35 @@ public class AnimalController {
     }
 
     @Operation(summary = "Consultar el catálogo",
-            description = "Público: lista los animales con estado DISPONIBLE, sin necesidad de iniciar sesión.")
+            description = "Público: lista los animales con estado DISPONIBLE, del más reciente al más antiguo. "
+                    + "Filtros opcionales: especie, tipo y ciudad (no distingue mayúsculas ni tildes).")
     @ApiResponse(responseCode = "200", description = "Animales disponibles",
             content = @Content(mediaType = "application/json",
                     array = @ArraySchema(schema = @Schema(implementation = AnimalResponse.class)),
                     examples = @ExampleObject(value = "[" + ApiEjemplos.ANIMAL_RESPONSE + "]")))
     @GetMapping
-    public List<AnimalResponse> listar() {
-        return listarAnimales.listarDisponibles().stream()
+    public List<AnimalResponse> listar(
+            @Parameter(description = "PERRO, GATO u OTRO") @RequestParam(required = false) EspecieAnimal especie,
+            @Parameter(description = "ADOPCION o VENTA") @RequestParam(required = false) TipoPublicacion tipo,
+            @Parameter(description = "Parte del nombre de la ciudad") @RequestParam(required = false) String ciudad) {
+        return listarAnimales.listarDisponibles(new ListarAnimalesUseCase.Filtro(especie, tipo, ciudad)).stream()
                 .map(AnimalResponse::desde)
                 .toList();
+    }
+
+    @Operation(summary = "Detalle de un animal",
+            description = "Público. Incluye el nombre y la ciudad de quien lo publicó (nunca su email ni teléfono).")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Detalle del animal",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AnimalDetalleResponse.class))),
+            @ApiResponse(responseCode = "404", description = "El animal no existe",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = ApiEjemplos.ERROR_NO_ENCONTRADO)))
+    })
+    @GetMapping("/{id:\\d+}")
+    public AnimalDetalleResponse detalle(@PathVariable Long id) {
+        return AnimalDetalleResponse.desde(consultarAnimal.consultar(id));
     }
 
     @Operation(summary = "Mis publicaciones",

@@ -24,7 +24,7 @@
         <sonar.host.url>http://localhost:9000</sonar.host.url>
         <sonar.projectKey>PetAdopt-Backend</sonar.projectKey>
         <sonar.projectName>PetAdopt Backend</sonar.projectName>
-        <sonar.coverage.exclusions>**/dto/**,**/*Entity.java,**/PetadoptBackendApplication.java</sonar.coverage.exclusions>
+        <sonar.coverage.exclusions>**/dto/**,**/*Entity.java,**/PetadoptBackendApplication.java,**/infrastructure/config/**,**/web/docs/**</sonar.coverage.exclusions>
     </properties>
 
     <dependencies>

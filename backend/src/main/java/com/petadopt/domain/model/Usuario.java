@@ -9,4 +9,7 @@ public record Usuario(
         String ciudad,
         Rol rol
 ) {
+    public Usuario conPassword(String nuevoHash) {
+        return new Usuario(id, nombre, email, nuevoHash, telefono, ciudad, rol);
+    }
 }

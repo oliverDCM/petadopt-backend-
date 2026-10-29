@@ -1,5 +1,7 @@
 server:
   port: 8080
+  # Detrás de nginx: toma la IP real del cliente de X-Forwarded-For (solo de proxies internos)
+  forward-headers-strategy: native
 
 spring:
   application:
@@ -16,6 +18,21 @@ spring:
     multipart:
       max-file-size: 5MB
       max-request-size: 6MB
+  # HU-BE-22: en desarrollo apunta a Mailpit (SMTP 1025, bandeja web en http://localhost:8025)
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:1025}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: ${MAIL_SMTP_AUTH:false}
+          starttls:
+            enable: ${MAIL_STARTTLS:false}
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
 
 jwt:
   secret: ${JWT_SECRET}
@@ -30,9 +47,58 @@ cloudinary:
 app:
   cors:
     allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:4200}
+  # Base de los enlaces que van en los correos (pantalla de restablecer contraseña del frontend)
+  frontend-url: ${FRONTEND_URL:http://localhost:4200}
+  mail:
+    remitente: ${MAIL_FROM:PetAdopt <no-reply@petadopt.local>}
+  recuperacion:
+    max-intentos: ${RECUPERACION_MAX_INTENTOS:3}
+    ventana-minutos: 60
 
 springdoc:
   api-docs:
     enabled: ${SWAGGER_ENABLED:true}
   swagger-ui:
     enabled: ${SWAGGER_ENABLED:true}
+
+# HU-BE-19: monitoreo. Solo se exponen health e info; health no muestra detalles internos.
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+      probes:
+        enabled: true
+  health:
+    # Si el SMTP no responde, la app sigue sirviendo: no debe marcarse como caída
+    mail:
+      enabled: false
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    nombre: PetAdopt Backend
+    descripcion: API REST de adopción y venta de mascotas
+
+# HU-BE-19: estrategia de logs. Cada línea lleva el requestId de la petición (cabecera X-Request-Id).
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [%X{requestId:--------}] %-40.40logger{39} : %m%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [%X{requestId:--------}] %-40.40logger{39} : %m%n"
+  level:
+    root: INFO
+    com.petadopt: ${LOG_LEVEL_APP:INFO}
+    org.hibernate.SQL: WARN
+    org.springframework.security: WARN
+  # Opcional: LOG_FILE=logs/petadopt.log guarda además en archivo, con rotación diaria de 7 días
+  file:
+    name: ${LOG_FILE:}
+  logback:
+    rollingpolicy:
+      max-history: 7
+      max-file-size: 10MB

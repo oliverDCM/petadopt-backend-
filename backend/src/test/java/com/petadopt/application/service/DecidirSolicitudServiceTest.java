@@ -3,6 +3,8 @@ package com.petadopt.application.service;
 import com.petadopt.application.port.in.DecidirSolicitudUseCase;
 import com.petadopt.application.port.in.DecidirSolicitudUseCase.Decision;
 import com.petadopt.application.port.out.AnimalRepositoryPort;
+import com.petadopt.application.port.out.EmailSenderPort;
+import com.petadopt.application.port.out.HistorialSolicitudRepositoryPort;
 import com.petadopt.application.port.out.SolicitudRepositoryPort;
 import com.petadopt.application.port.out.UsuarioRepositoryPort;
 import com.petadopt.domain.exception.AnimalNoDisponibleException;
@@ -13,6 +15,7 @@ import com.petadopt.domain.model.Animal;
 import com.petadopt.domain.model.EspecieAnimal;
 import com.petadopt.domain.model.EstadoAnimal;
 import com.petadopt.domain.model.EstadoSolicitud;
+import com.petadopt.domain.model.HistorialSolicitud;
 import com.petadopt.domain.model.Rol;
 import com.petadopt.domain.model.SexoAnimal;
 import com.petadopt.domain.model.Solicitud;
@@ -32,6 +35,10 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.contains;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -46,11 +53,17 @@ class DecidirSolicitudServiceTest {
     private AnimalRepositoryPort animalRepository;
     @Mock
     private UsuarioRepositoryPort usuarioRepository;
+    @Mock
+    private HistorialSolicitudRepositoryPort historialRepository;
+    @Mock
+    private EmailSenderPort emailSender;
     @InjectMocks
     private DecidirSolicitudService service;
 
     private final Usuario vendedor =
             new Usuario(1L, "Vendedor", "v@test.com", "hash", "300", "Bogotá", Rol.VENDEDOR);
+    private final Usuario adoptante =
+            new Usuario(2L, "Adoptante", "a@test.com", "hash", "311", "Fusagasugá", Rol.ADOPTANTE);
 
     private Animal animal(long vendedorId) {
         return new Animal(10L, "Firulais", EspecieAnimal.PERRO, "Criollo", 12, SexoAnimal.MACHO,
@@ -143,5 +156,69 @@ class DecidirSolicitudServiceTest {
         assertThrows(AnimalNoDisponibleException.class, () -> service.decidir(comando(5L, Decision.APROBAR)));
         verify(solicitudRepository, never()).guardar(any());
         verify(animalRepository, never()).guardar(any());
+    }
+
+    private void prepararAprobacion(Solicitud principal, List<Solicitud> pendientes) {
+        when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor));
+        when(solicitudRepository.buscarPorId(principal.id())).thenReturn(Optional.of(principal));
+        when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(animal(1L)));
+        when(solicitudRepository.guardar(any(Solicitud.class))).thenAnswer(inv -> inv.getArgument(0));
+        when(solicitudRepository.listarPendientesPorAnimal(10L)).thenReturn(pendientes);
+    }
+
+    @Test
+    void aprobar_registra_cada_cambio_en_el_historial() {
+        Solicitud principal = solicitud(5L, EstadoSolicitud.PENDIENTE);
+        Solicitud otra = solicitud(6L, EstadoSolicitud.PENDIENTE);
+        prepararAprobacion(principal, List.of(principal, otra));
+
+        service.decidir(comando(5L, Decision.APROBAR));
+
+        ArgumentCaptor<HistorialSolicitud> captor = ArgumentCaptor.forClass(HistorialSolicitud.class);
+        verify(historialRepository, times(2)).registrar(captor.capture());
+        HistorialSolicitud aprobada = captor.getAllValues().get(0);
+        assertThat(aprobada.solicitudId()).isEqualTo(5L);
+        assertThat(aprobada.estadoAnterior()).isEqualTo(EstadoSolicitud.PENDIENTE);
+        assertThat(aprobada.estadoNuevo()).isEqualTo(EstadoSolicitud.APROBADA);
+        assertThat(aprobada.usuarioId()).isEqualTo(1L);
+        HistorialSolicitud rechazoAutomatico = captor.getAllValues().get(1);
+        assertThat(rechazoAutomatico.solicitudId()).isEqualTo(6L);
+        assertThat(rechazoAutomatico.estadoNuevo()).isEqualTo(EstadoSolicitud.RECHAZADA);
+    }
+
+    @Test
+    void aprobar_envia_un_correo_a_cada_parte_con_el_contacto_de_la_otra() {
+        prepararAprobacion(solicitud(5L, EstadoSolicitud.PENDIENTE), List.of());
+        when(usuarioRepository.buscarPorId(2L)).thenReturn(Optional.of(adoptante));
+
+        service.decidir(comando(5L, Decision.APROBAR));
+
+        verify(emailSender).enviar(eq("a@test.com"), anyString(), contains("v@test.com"));
+        verify(emailSender).enviar(eq("v@test.com"), anyString(), contains("a@test.com"));
+    }
+
+    @Test
+    void si_el_correo_falla_la_aprobacion_no_se_revierte() {
+        prepararAprobacion(solicitud(5L, EstadoSolicitud.PENDIENTE), List.of());
+        when(usuarioRepository.buscarPorId(2L)).thenReturn(Optional.of(adoptante));
+        doThrow(new IllegalStateException("SMTP caído")).when(emailSender).enviar(anyString(), anyString(), anyString());
+
+        Solicitud resultado = service.decidir(comando(5L, Decision.APROBAR));
+
+        assertThat(resultado.estado()).isEqualTo(EstadoSolicitud.APROBADA);
+        verify(animalRepository).guardar(any(Animal.class));
+    }
+
+    @Test
+    void rechazar_registra_historial_y_no_envia_correos() {
+        when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor));
+        when(solicitudRepository.buscarPorId(5L)).thenReturn(Optional.of(solicitud(5L, EstadoSolicitud.PENDIENTE)));
+        when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(animal(1L)));
+        when(solicitudRepository.guardar(any(Solicitud.class))).thenAnswer(inv -> inv.getArgument(0));
+
+        service.decidir(comando(5L, Decision.RECHAZAR));
+
+        verify(historialRepository).registrar(any(HistorialSolicitud.class));
+        verify(emailSender, never()).enviar(anyString(), anyString(), anyString());
     }
 }

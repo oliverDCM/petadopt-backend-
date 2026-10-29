@@ -1,5 +1,7 @@
 package com.petadopt.infrastructure.adapter.in.web;
 
+import com.petadopt.application.port.in.CambiarEstadoAnimalUseCase;
+import com.petadopt.application.port.in.EditarAnimalUseCase;
 import com.petadopt.application.port.in.ListarAnimalesUseCase;
 import com.petadopt.application.port.in.ListarMisAnimalesUseCase;
 import com.petadopt.application.port.in.PublicarAnimalUseCase;
@@ -9,6 +11,7 @@ import com.petadopt.domain.model.ImagenArchivo;
 import com.petadopt.infrastructure.adapter.in.web.docs.ApiEjemplos;
 import com.petadopt.infrastructure.adapter.in.web.dto.AnimalRequest;
 import com.petadopt.infrastructure.adapter.in.web.dto.AnimalResponse;
+import com.petadopt.infrastructure.adapter.in.web.dto.EstadoRequest;
 import com.petadopt.infrastructure.config.OpenApiConfig;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -25,7 +28,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -43,13 +48,19 @@ public class AnimalController {
     private final PublicarAnimalUseCase publicarAnimal;
     private final ListarAnimalesUseCase listarAnimales;
     private final ListarMisAnimalesUseCase listarMisAnimales;
+    private final EditarAnimalUseCase editarAnimal;
+    private final CambiarEstadoAnimalUseCase cambiarEstadoAnimal;
 
     public AnimalController(PublicarAnimalUseCase publicarAnimal,
                             ListarAnimalesUseCase listarAnimales,
-                            ListarMisAnimalesUseCase listarMisAnimales) {
+                            ListarMisAnimalesUseCase listarMisAnimales,
+                            EditarAnimalUseCase editarAnimal,
+                            CambiarEstadoAnimalUseCase cambiarEstadoAnimal) {
         this.publicarAnimal = publicarAnimal;
         this.listarAnimales = listarAnimales;
         this.listarMisAnimales = listarMisAnimales;
+        this.editarAnimal = editarAnimal;
+        this.cambiarEstadoAnimal = cambiarEstadoAnimal;
     }
 
     @Operation(summary = "Publicar un animal (sin foto)",
@@ -132,6 +143,102 @@ public class AnimalController {
         return listarMisAnimales.listar(authentication.getName()).stream()
                 .map(AnimalResponse::desde)
                 .toList();
+    }
+
+    @Operation(summary = "Editar un animal (sin foto nueva)",
+            description = "Solo el vendedor dueño y solo mientras el animal esté DISPONIBLE. "
+                    + "Reemplaza todos los datos; si no se envía fotoUrl se conserva la foto actual.",
+            security = @SecurityRequirement(name = OpenApiConfig.ESQUEMA_JWT))
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(
+            mediaType = "application/json",
+            examples = @ExampleObject(value = ApiEjemplos.ANIMAL_REQUEST)))
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Animal actualizado",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AnimalResponse.class),
+                            examples = @ExampleObject(value = ApiEjemplos.ANIMAL_RESPONSE))),
+            @ApiResponse(responseCode = "400", description = "Datos inválidos",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = ApiEjemplos.ERROR_VALIDACION))),
+            @ApiResponse(responseCode = "401", description = "Falta el token"),
+            @ApiResponse(responseCode = "403", description = "No eres el dueño del animal"),
+            @ApiResponse(responseCode = "404", description = "El animal no existe",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = ApiEjemplos.ERROR_NO_ENCONTRADO))),
+            @ApiResponse(responseCode = "409", description = "El animal ya no está DISPONIBLE",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = ApiEjemplos.ERROR_CONFLICTO)))
+    })
+    @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public AnimalResponse editar(@PathVariable Long id,
+                                 @Valid @RequestBody AnimalRequest req,
+                                 Authentication authentication) {
+        return editarConImagen(id, req, null, authentication);
+    }
+
+    @Operation(summary = "Editar un animal con foto nueva",
+            description = "Multipart: la parte 'datos' lleva el JSON y la parte 'foto' la imagen nueva "
+                    + "(JPG, PNG o WEBP, máximo 5 MB). Reemplaza la foto anterior.",
+            security = @SecurityRequirement(name = OpenApiConfig.ESQUEMA_JWT))
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Animal actualizado",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AnimalResponse.class),
+                            examples = @ExampleObject(value = ApiEjemplos.ANIMAL_RESPONSE))),
+            @ApiResponse(responseCode = "400", description = "Datos o imagen inválidos",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = ApiEjemplos.ERROR_IMAGEN))),
+            @ApiResponse(responseCode = "401", description = "Falta el token"),
+            @ApiResponse(responseCode = "403", description = "No eres el dueño del animal"),
+            @ApiResponse(responseCode = "404", description = "El animal no existe"),
+            @ApiResponse(responseCode = "409", description = "El animal ya no está DISPONIBLE"),
+            @ApiResponse(responseCode = "502", description = "Cloudinary no respondió; no se modificó nada",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = ApiEjemplos.ERROR_ALMACENAMIENTO)))
+    })
+    @PutMapping(path = "/{id}/con-foto", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public AnimalResponse editarConFoto(@PathVariable Long id,
+                                        @Valid @RequestPart("datos") AnimalRequest req,
+                                        @RequestPart(value = "foto", required = false) MultipartFile foto,
+                                        Authentication authentication) {
+        return editarConImagen(id, req, aImagen(foto), authentication);
+    }
+
+    @Operation(summary = "Cambiar el estado de un animal",
+            description = "Solo el vendedor dueño. Transiciones permitidas: DISPONIBLE→RETIRADO; "
+                    + "RESERVADO→ADOPTADO, DISPONIBLE o RETIRADO. ADOPTADO y RETIRADO son estados finales.",
+            security = @SecurityRequirement(name = OpenApiConfig.ESQUEMA_JWT))
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(
+            mediaType = "application/json",
+            examples = @ExampleObject(value = ApiEjemplos.ESTADO_REQUEST)))
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Estado actualizado",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AnimalResponse.class),
+                            examples = @ExampleObject(value = ApiEjemplos.ANIMAL_RESPONSE))),
+            @ApiResponse(responseCode = "400", description = "Estado ausente o inválido"),
+            @ApiResponse(responseCode = "401", description = "Falta el token"),
+            @ApiResponse(responseCode = "403", description = "No eres el dueño del animal"),
+            @ApiResponse(responseCode = "404", description = "El animal no existe"),
+            @ApiResponse(responseCode = "409", description = "Transición de estado no permitida",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = ApiEjemplos.ERROR_TRANSICION)))
+    })
+    @PutMapping("/{id}/estado")
+    public AnimalResponse cambiarEstado(@PathVariable Long id,
+                                        @Valid @RequestBody EstadoRequest req,
+                                        Authentication authentication) {
+        return AnimalResponse.desde(cambiarEstadoAnimal.cambiar(
+                new CambiarEstadoAnimalUseCase.Comando(authentication.getName(), id, req.estado())));
+    }
+
+    private AnimalResponse editarConImagen(Long id, AnimalRequest req, ImagenArchivo foto,
+                                           Authentication authentication) {
+        return AnimalResponse.desde(editarAnimal.editar(new EditarAnimalUseCase.Comando(
+                authentication.getName(), id,
+                req.nombre(), req.especie(), req.raza(), req.edadMeses(),
+                req.sexo(), req.descripcion(), req.fotoUrl(), req.ciudad(),
+                req.vacunado(), req.esterilizado(), req.tipo(), foto)));
     }
 
     private ResponseEntity<AnimalResponse> publicarConImagen(AnimalRequest req, ImagenArchivo foto,

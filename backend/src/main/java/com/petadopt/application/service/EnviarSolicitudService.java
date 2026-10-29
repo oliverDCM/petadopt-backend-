@@ -2,6 +2,7 @@ package com.petadopt.application.service;
 
 import com.petadopt.application.port.in.EnviarSolicitudUseCase;
 import com.petadopt.application.port.out.AnimalRepositoryPort;
+import com.petadopt.application.port.out.HistorialSolicitudRepositoryPort;
 import com.petadopt.application.port.out.SolicitudRepositoryPort;
 import com.petadopt.application.port.out.UsuarioRepositoryPort;
 import com.petadopt.domain.exception.AnimalNoDisponibleException;
@@ -11,6 +12,7 @@ import com.petadopt.domain.exception.SolicitudPropioAnimalException;
 import com.petadopt.domain.model.Animal;
 import com.petadopt.domain.model.EstadoAnimal;
 import com.petadopt.domain.model.EstadoSolicitud;
+import com.petadopt.domain.model.HistorialSolicitud;
 import com.petadopt.domain.model.Rol;
 import com.petadopt.domain.model.Solicitud;
 import com.petadopt.domain.model.Usuario;
@@ -26,13 +28,16 @@ public class EnviarSolicitudService implements EnviarSolicitudUseCase {
     private final SolicitudRepositoryPort solicitudRepository;
     private final AnimalRepositoryPort animalRepository;
     private final UsuarioRepositoryPort usuarioRepository;
+    private final HistorialSolicitudRepositoryPort historialRepository;
 
     public EnviarSolicitudService(SolicitudRepositoryPort solicitudRepository,
                                   AnimalRepositoryPort animalRepository,
-                                  UsuarioRepositoryPort usuarioRepository) {
+                                  UsuarioRepositoryPort usuarioRepository,
+                                  HistorialSolicitudRepositoryPort historialRepository) {
         this.solicitudRepository = solicitudRepository;
         this.animalRepository = animalRepository;
         this.usuarioRepository = usuarioRepository;
+        this.historialRepository = historialRepository;
     }
 
     @Override
@@ -64,7 +69,10 @@ public class EnviarSolicitudService implements EnviarSolicitudUseCase {
                 LocalDateTime.now(),
                 null
         );
-        return solicitudRepository.guardar(nueva);
+        Solicitud guardada = solicitudRepository.guardar(nueva);
+        historialRepository.registrar(HistorialSolicitud.de(guardada.id(), null, EstadoSolicitud.PENDIENTE,
+                solicitante.id(), guardada.fechaSolicitud()));
+        return guardada;
     }
 
 }

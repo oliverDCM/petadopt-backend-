@@ -24,4 +24,11 @@ public record Animal(
                 fotoUrl, nuevoEstado, ciudad, vendedorId, fechaPublicacion,
                 vacunado, esterilizado, tipo);
     }
+
+    public Animal conDatos(String nombre, EspecieAnimal especie, String raza, Integer edadMeses,
+                           SexoAnimal sexo, String descripcion, String fotoUrl, String ciudad,
+                           boolean vacunado, boolean esterilizado, TipoPublicacion tipo) {
+        return new Animal(id, nombre, especie, raza, edadMeses, sexo, descripcion, fotoUrl,
+                estado, ciudad, vendedorId, fechaPublicacion, vacunado, esterilizado, tipo);
+    }
 }

@@ -2,6 +2,7 @@ package com.petadopt.application.service;
 
 import com.petadopt.application.port.in.EnviarSolicitudUseCase;
 import com.petadopt.application.port.out.AnimalRepositoryPort;
+import com.petadopt.application.port.out.HistorialSolicitudRepositoryPort;
 import com.petadopt.application.port.out.SolicitudRepositoryPort;
 import com.petadopt.application.port.out.UsuarioRepositoryPort;
 import com.petadopt.domain.exception.AnimalNoDisponibleException;
@@ -13,6 +14,7 @@ import com.petadopt.domain.model.Animal;
 import com.petadopt.domain.model.EspecieAnimal;
 import com.petadopt.domain.model.EstadoAnimal;
 import com.petadopt.domain.model.EstadoSolicitud;
+import com.petadopt.domain.model.HistorialSolicitud;
 import com.petadopt.domain.model.Rol;
 import com.petadopt.domain.model.SexoAnimal;
 import com.petadopt.domain.model.Solicitud;
@@ -20,6 +22,7 @@ import com.petadopt.domain.model.TipoPublicacion;
 import com.petadopt.domain.model.Usuario;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -43,6 +46,8 @@ class EnviarSolicitudServiceTest {
     private AnimalRepositoryPort animalRepository;
     @Mock
     private UsuarioRepositoryPort usuarioRepository;
+    @Mock
+    private HistorialSolicitudRepositoryPort historialRepository;
     @InjectMocks
     private EnviarSolicitudService service;
 
@@ -72,6 +77,12 @@ class EnviarSolicitudServiceTest {
         assertThat(resultado.animalId()).isEqualTo(10L);
         assertThat(resultado.solicitanteId()).isEqualTo(2L);
         assertThat(resultado.mensaje()).isEqualTo("Quiero adoptarlo");
+
+        ArgumentCaptor<HistorialSolicitud> historial = ArgumentCaptor.forClass(HistorialSolicitud.class);
+        verify(historialRepository).registrar(historial.capture());
+        assertThat(historial.getValue().estadoAnterior()).isNull();
+        assertThat(historial.getValue().estadoNuevo()).isEqualTo(EstadoSolicitud.PENDIENTE);
+        assertThat(historial.getValue().usuarioId()).isEqualTo(2L);
     }
 
     @Test
@@ -117,5 +128,6 @@ class EnviarSolicitudServiceTest {
 
         assertThrows(SolicitudDuplicadaException.class, () -> service.enviar(comando(10L)));
         verify(solicitudRepository, never()).guardar(any());
+        verify(historialRepository, never()).registrar(any());
     }
 }

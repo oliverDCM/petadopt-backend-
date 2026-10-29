@@ -1,11 +1,13 @@
 package com.petadopt.infrastructure.adapter.in.web;
 
+import com.petadopt.application.port.in.ConsultarContactoUseCase;
 import com.petadopt.application.port.in.DecidirSolicitudUseCase;
 import com.petadopt.application.port.in.EnviarSolicitudUseCase;
 import com.petadopt.application.port.in.ListarMisSolicitudesUseCase;
 import com.petadopt.application.port.in.ListarSolicitudesRecibidasUseCase;
 import com.petadopt.domain.model.Solicitud;
 import com.petadopt.infrastructure.adapter.in.web.docs.ApiEjemplos;
+import com.petadopt.infrastructure.adapter.in.web.dto.ContactoResponse;
 import com.petadopt.infrastructure.adapter.in.web.dto.DecisionRequest;
 import com.petadopt.infrastructure.adapter.in.web.dto.SolicitudRequest;
 import com.petadopt.infrastructure.adapter.in.web.dto.SolicitudResponse;
@@ -42,15 +44,18 @@ public class SolicitudController {
     private final DecidirSolicitudUseCase decidirSolicitud;
     private final ListarSolicitudesRecibidasUseCase listarRecibidas;
     private final ListarMisSolicitudesUseCase listarMias;
+    private final ConsultarContactoUseCase consultarContacto;
 
     public SolicitudController(EnviarSolicitudUseCase enviarSolicitud,
                                DecidirSolicitudUseCase decidirSolicitud,
                                ListarSolicitudesRecibidasUseCase listarRecibidas,
-                               ListarMisSolicitudesUseCase listarMias) {
+                               ListarMisSolicitudesUseCase listarMias,
+                               ConsultarContactoUseCase consultarContacto) {
         this.enviarSolicitud = enviarSolicitud;
         this.decidirSolicitud = decidirSolicitud;
         this.listarRecibidas = listarRecibidas;
         this.listarMias = listarMias;
+        this.consultarContacto = consultarContacto;
     }
 
     @Operation(summary = "Enviar una solicitud",
@@ -86,8 +91,9 @@ public class SolicitudController {
     }
 
     @Operation(summary = "Aprobar o rechazar una solicitud",
-            description = "Solo el vendedor dueño del animal. Al aprobar, el animal pasa a RESERVADO y las demás "
-                    + "solicitudes pendientes sobre él quedan RECHAZADAS.",
+            description = "Solo el vendedor dueño del animal. Al aprobar, el animal pasa a RESERVADO, las demás "
+                    + "solicitudes pendientes sobre él quedan RECHAZADAS y se envía un correo a ambas partes "
+                    + "con los datos de contacto de la otra. Cada cambio queda en el historial.",
             security = @SecurityRequirement(name = OpenApiConfig.ESQUEMA_JWT))
     @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(
             mediaType = "application/json",
@@ -147,5 +153,25 @@ public class SolicitudController {
         return listarMias.listar(authentication.getName()).stream()
                 .map(SolicitudResponse::desde)
                 .toList();
+    }
+
+    @Operation(summary = "Datos de contacto de una solicitud aprobada",
+            description = "Solo para las dos partes de una solicitud APROBADA: el adoptante recibe los datos del "
+                    + "vendedor y el vendedor los del adoptante.",
+            security = @SecurityRequirement(name = OpenApiConfig.ESQUEMA_JWT))
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Contacto de la otra parte",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ContactoResponse.class),
+                            examples = @ExampleObject(value = ApiEjemplos.CONTACTO_RESPONSE))),
+            @ApiResponse(responseCode = "401", description = "Falta el token"),
+            @ApiResponse(responseCode = "403", description = "La solicitud no está aprobada o no eres parte de ella",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = ApiEjemplos.ERROR_CONTACTO))),
+            @ApiResponse(responseCode = "404", description = "La solicitud no existe")
+    })
+    @GetMapping("/{id}/contacto")
+    public ContactoResponse contacto(@PathVariable Long id, Authentication authentication) {
+        return ContactoResponse.desde(consultarContacto.consultar(authentication.getName(), id));
     }
 }

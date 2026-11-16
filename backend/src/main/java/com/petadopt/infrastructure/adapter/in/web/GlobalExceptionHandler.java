@@ -134,7 +134,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AlmacenamientoImagenException.class)
     public ResponseEntity<ErrorResponse> fallaAlmacenamiento(AlmacenamientoImagenException ex, HttpServletRequest req) {
-        log.error("Fallo al subir la imagen a Cloudinary", ex);
+        log.error("Fallo al subir la imagen a Amazon S3", ex);
         return responder(HttpStatus.BAD_GATEWAY, ex.getMessage(), req);
     }
 

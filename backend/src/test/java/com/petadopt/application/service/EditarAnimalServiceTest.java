@@ -36,7 +36,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class EditarAnimalServiceTest {
 
-    private static final String FOTO_ACTUAL = "https://res.cloudinary.com/demo/actual.jpg";
+    private static final String FOTO_ACTUAL = "https://petadopt-fotos.s3.us-east-1.amazonaws.com/petadopt/animales/actual.jpg";
     private static final byte[] PNG = {(byte) 0x89, 'P', 'N', 'G', 0x0D, 0x0A, 0x1A, 0x0A, 0, 0};
 
     @Mock
@@ -92,12 +92,12 @@ class EditarAnimalServiceTest {
     void con_foto_nueva_la_sube_y_reemplaza_la_anterior() {
         prepararDueno(EstadoAnimal.DISPONIBLE);
         ImagenArchivo foto = new ImagenArchivo("rocky.png", "image/png", PNG);
-        when(imagenStorage.subirImagen(foto)).thenReturn("https://res.cloudinary.com/demo/nueva.png");
+        when(imagenStorage.subirImagen(foto)).thenReturn("https://petadopt-fotos.s3.us-east-1.amazonaws.com/petadopt/animales/nueva.png");
         when(animalRepository.guardar(any(Animal.class))).thenAnswer(inv -> inv.getArgument(0));
 
         Animal resultado = service.editar(comando(null, foto));
 
-        assertThat(resultado.fotoUrl()).isEqualTo("https://res.cloudinary.com/demo/nueva.png");
+        assertThat(resultado.fotoUrl()).isEqualTo("https://petadopt-fotos.s3.us-east-1.amazonaws.com/petadopt/animales/nueva.png");
     }
 
     @Test

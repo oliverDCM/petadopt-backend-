@@ -39,3 +39,8 @@ build/
 
 ### Datos de prueba locales ###
 datos.json
+
+### Logs (se guardan fuera del proyecto, pero por si acaso nunca se suben) ###
+logs/
+*.log
+*.log.*.gz

@@ -3,7 +3,8 @@
 #   pgAdmin:   http://localhost:5050
 #   SonarQube: http://localhost:9000
 #   Mailpit:   http://localhost:8025   (bandeja donde llegan los correos de desarrollo)
-# Los secretos (Cloudinary, JWT, SMTP real) van en un archivo .env junto a este compose, nunca en el código.
+#   Logs:      carpeta petadopt/logs/backend
+# Los secretos (AWS S3, JWT, SMTP real) van en un archivo .env junto a este compose, nunca en el código.
 services:
   db:
     image: postgres:15
@@ -51,11 +52,16 @@ services:
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-petadopt}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-123456}
       JWT_SECRET: ${JWT_SECRET:-cambia_este_secreto_largo_minimo_32_caracteres_aaaa}
-      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME:-}
-      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY:-}
-      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET:-}
+      S3_REGION: ${S3_REGION:-us-east-1}
+      S3_BUCKET: ${S3_BUCKET:-}
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY:-}
+      S3_SECRET_KEY: ${S3_SECRET_KEY:-}
+      S3_ENDPOINT: ${S3_ENDPOINT:-}
+      S3_PUBLIC_URL: ${S3_PUBLIC_URL:-}
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:4200}
       FRONTEND_URL: ${FRONTEND_URL:-http://localhost:4200}
+      # Pedidos de recuperación de contraseña por hora (por email y por IP). Para correr las E2E seguido: 100
+      RECUPERACION_MAX_INTENTOS: ${RECUPERACION_MAX_INTENTOS:-3}
       MAIL_HOST: ${MAIL_HOST:-mailpit}
       MAIL_PORT: ${MAIL_PORT:-1025}
       MAIL_USERNAME: ${MAIL_USERNAME:-}
@@ -63,6 +69,11 @@ services:
       MAIL_SMTP_AUTH: ${MAIL_SMTP_AUTH:-false}
       MAIL_STARTTLS: ${MAIL_STARTTLS:-false}
       MAIL_FROM: ${MAIL_FROM:-PetAdopt <no-reply@petadopt.local>}
+      LOG_LEVEL_APP: ${LOG_LEVEL_APP:-INFO}
+      LOG_FILE: /app/logs/petadopt.log
+    # Los logs quedan en tu equipo, en petadopt/logs/backend (fuera del proyecto y del contenedor)
+    volumes:
+      - ./logs/backend:/app/logs
     # Solo accesible desde la red interna; el frontend (nginx) le reenvía /api
     expose:
       - "8080"

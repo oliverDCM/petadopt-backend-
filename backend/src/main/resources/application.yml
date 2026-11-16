@@ -38,10 +38,16 @@ jwt:
   secret: ${JWT_SECRET}
   expiration-ms: 86400000
 
-cloudinary:
-  cloud-name: ${CLOUDINARY_CLOUD_NAME:}
-  api-key: ${CLOUDINARY_API_KEY:}
-  api-secret: ${CLOUDINARY_API_SECRET:}
+# Fotos de los animales en Amazon S3 (o cualquier servicio compatible: Cloudflare R2, MinIO)
+s3:
+  region: ${S3_REGION:us-east-1}
+  bucket: ${S3_BUCKET:}
+  access-key: ${S3_ACCESS_KEY:}
+  secret-key: ${S3_SECRET_KEY:}
+  # Vacío = AWS (https://s3.<region>.amazonaws.com). Para R2: https://<account-id>.r2.cloudflarestorage.com
+  endpoint: ${S3_ENDPOINT:}
+  # Vacío = https://<bucket>.s3.<region>.amazonaws.com. Para R2: la URL pública r2.dev o tu dominio
+  public-url: ${S3_PUBLIC_URL:}
   folder: petadopt/animales
 
 app:
@@ -95,10 +101,14 @@ logging:
     com.petadopt: ${LOG_LEVEL_APP:INFO}
     org.hibernate.SQL: WARN
     org.springframework.security: WARN
-  # Opcional: LOG_FILE=logs/petadopt.log guarda además en archivo, con rotación diaria de 7 días
+  # Los logs salen por consola (12 factores) y además se guardan en un archivo FUERA del proyecto backend:
+  #   - Desde IntelliJ / mvnw (carpeta de trabajo = backend): petadopt/logs/backend/petadopt.log
+  #   - En Docker: LOG_FILE=/app/logs/petadopt.log, montado en petadopt/logs/backend del equipo
+  # Rotación: un archivo por día (o cada 10 MB), se guardan 7 días y máximo 100 MB en total.
   file:
-    name: ${LOG_FILE:}
+    name: ${LOG_FILE:../logs/backend/petadopt.log}
   logback:
     rollingpolicy:
       max-history: 7
       max-file-size: 10MB
+      total-size-cap: 100MB

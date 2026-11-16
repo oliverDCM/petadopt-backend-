@@ -34,7 +34,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class PublicarAnimalServiceTest {
 
-    private static final String URL_FOTO = "https://res.cloudinary.com/demo/image/upload/petadopt/firulais.jpg";
+    private static final String URL_FOTO = "https://petadopt-fotos.s3.us-east-1.amazonaws.com/petadopt/animales/firulais.jpg";
 
     private static final byte[] JPEG = {(byte) 0xFF, (byte) 0xD8, (byte) 0xFF, 0x00};
     private static final byte[] PNG = {(byte) 0x89, 'P', 'N', 'G', 0x0D, 0x0A, 0x1A, 0x0A, 0x00};

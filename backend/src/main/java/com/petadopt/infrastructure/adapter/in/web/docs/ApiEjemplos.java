@@ -21,7 +21,7 @@ public final class ApiEjemplos {
             {"nombre": "Firulais", "especie": "PERRO", "raza": "Criollo", "edadMeses": 12, "sexo": "MACHO", "descripcion": "Muy cariñoso", "ciudad": "Fusagasugá", "vacunado": true, "esterilizado": false, "tipo": "ADOPCION"}""";
 
     public static final String ANIMAL_RESPONSE = """
-            {"id": 10, "nombre": "Firulais", "especie": "PERRO", "raza": "Criollo", "edadMeses": 12, "sexo": "MACHO", "descripcion": "Muy cariñoso", "fotoUrl": "https://res.cloudinary.com/demo/image/upload/v1/petadopt/animales/firulais.jpg", "estado": "DISPONIBLE", "ciudad": "Fusagasugá", "vendedorId": 2, "fechaPublicacion": "2026-10-28T14:30:00", "vacunado": true, "esterilizado": false, "tipo": "ADOPCION"}""";
+            {"id": 10, "nombre": "Firulais", "especie": "PERRO", "raza": "Criollo", "edadMeses": 12, "sexo": "MACHO", "descripcion": "Muy cariñoso", "fotoUrl": "https://petadopt-fotos.s3.us-east-1.amazonaws.com/petadopt/animales/3f2a9c1e-firulais.jpg", "estado": "DISPONIBLE", "ciudad": "Fusagasugá", "vendedorId": 2, "fechaPublicacion": "2026-10-28T14:30:00", "vacunado": true, "esterilizado": false, "tipo": "ADOPCION"}""";
 
     public static final String SOLICITUD_REQUEST = """
             {"animalId": 10, "mensaje": "Me encantaría adoptarlo, tengo patio y experiencia con perros"}""";

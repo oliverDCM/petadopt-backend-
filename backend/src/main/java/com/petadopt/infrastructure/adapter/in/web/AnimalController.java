@@ -97,10 +97,10 @@ public class AnimalController {
 
     @Operation(summary = "Publicar un animal con foto",
             description = "Formulario multipart: la parte 'datos' lleva el JSON del animal y la parte 'foto' la imagen "
-                    + "(JPG, PNG o WEBP, máximo 5 MB). La imagen se sube a Cloudinary; si falla, el animal no se publica.",
+                    + "(JPG, PNG o WEBP, máximo 5 MB). La imagen se sube a Amazon S3; si falla, el animal no se publica.",
             security = @SecurityRequirement(name = OpenApiConfig.ESQUEMA_JWT))
     @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Animal publicado; fotoUrl apunta a Cloudinary",
+            @ApiResponse(responseCode = "201", description = "Animal publicado; fotoUrl apunta a Amazon S3",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = AnimalResponse.class),
                             examples = @ExampleObject(value = ApiEjemplos.ANIMAL_RESPONSE))),
@@ -109,7 +109,7 @@ public class AnimalController {
                             examples = @ExampleObject(value = ApiEjemplos.ERROR_IMAGEN))),
             @ApiResponse(responseCode = "401", description = "Falta el token"),
             @ApiResponse(responseCode = "403", description = "El usuario no tiene rol VENDEDOR"),
-            @ApiResponse(responseCode = "502", description = "Cloudinary no respondió; el animal no se publicó",
+            @ApiResponse(responseCode = "502", description = "Amazon S3 no respondió; el animal no se publicó",
                     content = @Content(mediaType = "application/json",
                             examples = @ExampleObject(value = ApiEjemplos.ERROR_ALMACENAMIENTO)))
     })
@@ -220,7 +220,7 @@ public class AnimalController {
             @ApiResponse(responseCode = "403", description = "No eres el dueño del animal"),
             @ApiResponse(responseCode = "404", description = "El animal no existe"),
             @ApiResponse(responseCode = "409", description = "El animal ya no está DISPONIBLE"),
-            @ApiResponse(responseCode = "502", description = "Cloudinary no respondió; no se modificó nada",
+            @ApiResponse(responseCode = "502", description = "Amazon S3 no respondió; no se modificó nada",
                     content = @Content(mediaType = "application/json",
                             examples = @ExampleObject(value = ApiEjemplos.ERROR_ALMACENAMIENTO)))
     })

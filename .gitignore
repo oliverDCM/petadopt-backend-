@@ -5,3 +5,7 @@
 .vscode/
 
 petadot-frontend-main/
+
+logs/
+*.log
+.env

@@ -9,3 +9,7 @@ petadot-frontend-main/
 logs/
 *.log
 .env
+
+logs/
+*.log
+.env

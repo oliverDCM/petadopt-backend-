@@ -1,0 +1,201 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1794860697999,79,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,370,1,1,http://localhost:8080/api/auth/register,70,0,47
+1794860698080,7,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,714,367,1,1,http://localhost:8080/api/auth/register,6,0,0
+1794860698088,68,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,68,0,0
+1794860698209,61,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,693,1,1,http://localhost:8080/api/animales,60,0,0
+1794860698279,12,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,370,1,1,http://localhost:8080/api/auth/register,9,0,0
+1794860698293,10,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,714,367,1,1,http://localhost:8080/api/auth/register,9,0,0
+1794860698304,108,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,108,0,0
+1794860698418,19,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,799,693,1,1,http://localhost:8080/api/animales,19,0,0
+1794860698440,9,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,370,1,1,http://localhost:8080/api/auth/register,8,0,0
+1794860698450,8,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,714,367,1,1,http://localhost:8080/api/auth/register,7,0,0
+1794860698459,108,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,108,0,0
+1794860698569,20,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,693,1,1,http://localhost:8080/api/animales,18,0,0
+1794860698591,10,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,370,1,1,http://localhost:8080/api/auth/register,7,0,0
+1794860698602,15,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,714,367,1,1,http://localhost:8080/api/auth/register,11,0,0
+1794860698620,110,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,110,0,0
+1794860698732,26,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,693,1,1,http://localhost:8080/api/animales,26,0,0
+1794860698761,8,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,370,1,1,http://localhost:8080/api/auth/register,7,0,0
+1794860698770,10,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,714,367,1,1,http://localhost:8080/api/auth/register,8,0,0
+1794860698781,82,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,82,0,0
+1794860698865,12,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,693,1,1,http://localhost:8080/api/animales,11,0,0
+1794860698878,6,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,370,1,1,http://localhost:8080/api/auth/register,6,0,0
+1794860698885,6,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,714,367,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860698892,67,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,66,0,0
+1794860698960,12,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,799,693,1,1,http://localhost:8080/api/animales,12,0,0
+1794860698974,5,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,370,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860698980,6,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,714,367,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860698987,69,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,69,0,0
+1794860699057,12,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,693,1,1,http://localhost:8080/api/animales,11,0,0
+1794860699070,7,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,370,1,1,http://localhost:8080/api/auth/register,6,0,0
+1794860699078,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,714,367,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860699083,69,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,69,0,0
+1794860699153,12,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,693,1,1,http://localhost:8080/api/animales,11,0,0
+1794860699166,7,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,370,1,1,http://localhost:8080/api/auth/register,6,0,0
+1794860699174,6,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,713,367,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860699181,92,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,92,0,0
+1794860699274,15,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,693,1,1,http://localhost:8080/api/animales,15,0,0
+1794860699291,10,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,9,0,0
+1794860699303,14,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,8,0,0
+1794860699318,94,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,94,0,0
+1794860699413,14,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,13,0,0
+1794860699428,7,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,6,0,0
+1794860699436,8,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,7,0,0
+1794860699445,81,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,81,0,0
+1794860699527,11,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,11,0,0
+1794860699539,5,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860699545,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860699550,87,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,87,0,0
+1794860699639,12,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,799,694,1,1,http://localhost:8080/api/animales,11,0,0
+1794860699652,6,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860699659,7,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,6,0,0
+1794860699666,74,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,74,0,0
+1794860699740,12,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,11,0,0
+1794860699753,5,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860699758,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860699764,69,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,69,0,0
+1794860699834,12,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,12,0,0
+1794860699847,6,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860699854,6,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860699860,71,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,71,0,0
+1794860699932,12,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,11,0,0
+1794860699945,7,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,6,0,0
+1794860699953,6,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860699959,91,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,91,0,0
+1794860700058,11,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,11,0,0
+1794860700070,5,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860700076,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860700081,68,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,68,0,0
+1794860700150,13,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,12,0,0
+1794860700165,5,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,717,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860700171,6,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860700177,77,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,77,0,0
+1794860700255,14,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,13,0,0
+1794860700270,5,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860700276,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860700282,71,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,71,0,0
+1794860700353,12,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,12,0,0
+1794860700366,6,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,717,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860700373,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860700379,67,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,67,0,0
+1794860700447,10,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,9,0,0
+1794860700458,4,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860700463,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860700468,68,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,67,0,0
+1794860700536,12,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,11,0,0
+1794860700548,6,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860700554,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860700560,79,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,79,0,0
+1794860700640,10,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,10,0,0
+1794860700652,6,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860700659,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860700664,78,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,78,0,0
+1794860700743,15,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,799,694,1,1,http://localhost:8080/api/animales,14,0,0
+1794860700759,6,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,6,0,0
+1794860700766,6,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,6,0,0
+1794860700773,76,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,75,0,0
+1794860700849,12,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,799,694,1,1,http://localhost:8080/api/animales,11,0,0
+1794860700862,5,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860700868,6,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860700874,72,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,72,0,0
+1794860700947,13,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,771,694,1,1,http://localhost:8080/api/animales,11,0,0
+1794860700961,7,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,7,0,2
+1794860700969,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860700975,77,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,77,0,0
+1794860701053,12,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,11,0,0
+1794860701066,7,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,6,0,0
+1794860701074,6,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,715,369,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860701081,95,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,95,0,0
+1794860701177,12,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,11,0,0
+1794860701191,6,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860701197,6,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860701203,69,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,69,0,0
+1794860701273,11,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,10,0,0
+1794860701285,5,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860701291,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860701296,65,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,65,0,0
+1794860701362,65,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,65,0,0
+1794860701428,5,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860701433,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860701439,67,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,67,0,0
+1794860701507,11,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,11,0,0
+1794860701519,6,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,6,0,0
+1794860701526,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860701532,67,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,67,0,0
+1794860701599,11,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,11,0,0
+1794860701611,5,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860701617,4,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860701622,67,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,67,0,0
+1794860701690,11,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,11,0,0
+1794860701702,6,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860701708,6,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860701715,66,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,66,0,0
+1794860701782,10,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,10,0,0
+1794860701793,5,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860701798,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860701803,64,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,64,0,0
+1794860701868,10,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,9,0,0
+1794860701878,5,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860701884,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860701889,65,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,65,0,0
+1794860701955,11,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,10,0,0
+1794860701968,6,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,717,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860701975,4,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,715,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860701980,67,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,67,0,0
+1794860702048,10,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,10,0,0
+1794860702059,6,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860702065,6,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860702071,68,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,68,0,0
+1794860702140,10,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,10,0,0
+1794860702151,6,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860702157,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860702163,68,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,68,0,0
+1794860702232,10,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,10,0,0
+1794860702243,6,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,6,0,0
+1794860702250,7,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,6,0,0
+1794860702257,74,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,74,0,0
+1794860702331,12,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,694,1,1,http://localhost:8080/api/animales,11,0,0
+1794860702344,5,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860702350,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860702355,69,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,760,276,1,1,http://localhost:8080/api/auth/login,69,0,0
+1794860702424,10,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,800,696,1,1,http://localhost:8080/api/animales,9,0,0
+1794860702435,6,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860702442,4,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860702447,65,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,760,276,1,1,http://localhost:8080/api/auth/login,65,0,0
+1794860702513,11,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,801,696,1,1,http://localhost:8080/api/animales,11,0,0
+1794860702525,5,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860702531,4,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860702536,63,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,760,276,1,1,http://localhost:8080/api/auth/login,63,0,0
+1794860702600,11,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,801,696,1,1,http://localhost:8080/api/animales,10,0,0
+1794860702611,5,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860702616,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,715,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860702622,66,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,760,276,1,1,http://localhost:8080/api/auth/login,66,0,0
+1794860702689,10,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,801,696,1,1,http://localhost:8080/api/animales,10,0,0
+1794860702700,4,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860702705,4,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860702710,72,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,760,276,1,1,http://localhost:8080/api/auth/login,72,0,0
+1794860702783,14,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,801,696,1,1,http://localhost:8080/api/animales,13,0,0
+1794860702798,4,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860702803,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860702808,86,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,760,276,1,1,http://localhost:8080/api/auth/login,86,0,0
+1794860702895,9,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,801,696,1,1,http://localhost:8080/api/animales,9,0,0
+1794860702905,5,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860702910,9,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,8,0,0
+1794860702919,64,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,760,276,1,1,http://localhost:8080/api/auth/login,64,0,0
+1794860702985,10,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,801,696,1,1,http://localhost:8080/api/animales,10,0,0
+1794860702996,4,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860703001,4,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860703006,67,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,760,276,1,1,http://localhost:8080/api/auth/login,67,0,0
+1794860703074,10,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,801,696,1,1,http://localhost:8080/api/animales,9,0,0
+1794860703084,6,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,5,0,0
+1794860703090,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860703096,68,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,760,276,1,1,http://localhost:8080/api/auth/login,68,0,0
+1794860703165,11,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,801,696,1,1,http://localhost:8080/api/animales,11,0,0
+1794860703177,5,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860703182,5,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860703187,65,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,760,276,1,1,http://localhost:8080/api/auth/login,65,0,0
+1794860703252,11,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,801,696,1,1,http://localhost:8080/api/animales,11,0,0
+1794860703264,4,POST registrar adoptante i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,718,372,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860703269,4,POST registrar vendedor i,409,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,716,369,1,1,http://localhost:8080/api/auth/register,4,0,0
+1794860703274,66,POST login vendedor i,200,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,760,276,1,1,http://localhost:8080/api/auth/login,66,0,0
+1794860703340,11,POST publicar animal,201,,E0 - Preparar datos (cuentas y animales) 1-1,text,true,,771,696,1,1,http://localhost:8080/api/animales,10,0,0

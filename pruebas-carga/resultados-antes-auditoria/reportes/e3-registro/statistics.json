@@ -1,0 +1,50 @@
+{
+  "POST registro (email único)" : {
+    "transaction" : "POST registro (email único)",
+    "sampleCount" : 90,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 84.62222222222219,
+    "medianResTime" : 76.0,
+    "minResTime" : 69.0,
+    "maxResTime" : 226.0,
+    "pct1ResTime" : 114.80000000000001,
+    "pct2ResTime" : 140.9,
+    "pct3ResTime" : 226.0,
+    "throughput" : 9.28888430178553,
+    "receivedKBytesPerSec" : 5.63320034317267,
+    "sentKBytesPerSec" : 3.592185726081123
+  },
+  "Total" : {
+    "transaction" : "Total",
+    "sampleCount" : 180,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 45.400000000000034,
+    "medianResTime" : 40.5,
+    "minResTime" : 4.0,
+    "maxResTime" : 226.0,
+    "pct1ResTime" : 88.80000000000001,
+    "pct2ResTime" : 114.89999999999998,
+    "pct3ResTime" : 170.91999999999985,
+    "throughput" : 18.564356435643564,
+    "receivedKBytesPerSec" : 12.644550587871288,
+    "sentKBytesPerSec" : 7.179184715346535
+  },
+  "POST registro duplicado (debe dar 409)" : {
+    "transaction" : "POST registro duplicado (debe dar 409)",
+    "sampleCount" : 90,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 6.177777777777776,
+    "medianResTime" : 6.0,
+    "minResTime" : 4.0,
+    "maxResTime" : 12.0,
+    "pct1ResTime" : 9.900000000000006,
+    "pct2ResTime" : 10.0,
+    "pct3ResTime" : 12.0,
+    "throughput" : 9.572431397574984,
+    "receivedKBytesPerSec" : 7.234788808232292,
+    "sentKBytesPerSec" : 3.7018387045309513
+  }
+}

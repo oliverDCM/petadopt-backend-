@@ -1,0 +1,81 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1794860324164,76,GET catálogo,200,,E2 - Carga: consulta masiva 3-1,text,true,,60620,182,1,1,http://localhost:8080/api/animales,70,0,44
+1794860324286,10,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-1,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,9,0,0
+1794860324297,7,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-1,text,true,,824,186,1,1,http://localhost:8080/api/animales/111,7,0,0
+1794860324008,93,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-1,,true,,121338,564,1,1,null,86,203,44
+1794860324306,7,GET catálogo,200,,E2 - Carga: consulta masiva 3-1,text,true,,60620,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794860324319,10,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-1,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,8,0,0
+1794860324330,7,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-1,text,true,,826,186,1,1,http://localhost:8080/api/animales/178,7,0,0
+1794860324306,24,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-1,,true,,121340,564,1,1,null,21,8,0
+1794860324503,8,GET catálogo,200,,E2 - Carga: consulta masiva 3-2,text,true,,60620,182,1,1,http://localhost:8080/api/animales,7,0,1
+1794860324515,7,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-2,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,6,0,0
+1794860324523,6,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-2,text,true,,840,185,1,1,http://localhost:8080/api/animales/96,6,0,0
+1794860324502,21,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-2,,true,,121354,563,1,1,null,19,7,1
+1794860324530,7,GET catálogo,200,,E2 - Carga: consulta masiva 3-2,text,true,,60620,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794860324540,6,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-2,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,6,0,0
+1794860324547,5,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-2,text,true,,840,185,1,1,http://localhost:8080/api/animales/37,5,0,0
+1794860324530,18,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-2,,true,,121354,563,1,1,null,18,5,0
+1794860325005,9,GET catálogo,200,,E2 - Carga: consulta masiva 3-3,text,true,,60620,182,1,1,http://localhost:8080/api/animales,8,0,2
+1794860325017,7,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-3,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,6,0,0
+1794860325025,6,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-3,text,true,,823,186,1,1,http://localhost:8080/api/animales/134,6,0,0
+1794860325004,22,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-3,,true,,121337,564,1,1,null,20,5,2
+1794860325032,6,GET catálogo,200,,E2 - Carga: consulta masiva 3-3,text,true,,60620,182,1,1,http://localhost:8080/api/animales,5,0,0
+1794860325040,7,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-3,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,6,0,0
+1794860325048,6,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-3,text,true,,840,185,1,1,http://localhost:8080/api/animales/41,5,0,0
+1794860325031,19,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-3,,true,,121354,563,1,1,null,16,4,0
+1794860325499,12,GET catálogo,200,,E2 - Carga: consulta masiva 3-4,text,true,,60620,182,1,1,http://localhost:8080/api/animales,7,0,1
+1794860325514,7,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-4,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,6,0,0
+1794860325522,6,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-4,text,true,,824,186,1,1,http://localhost:8080/api/animales/131,6,0,0
+1794860325498,25,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-4,,true,,121338,564,1,1,null,19,5,1
+1794860325529,6,GET catálogo,200,,E2 - Carga: consulta masiva 3-4,text,true,,60620,182,1,1,http://localhost:8080/api/animales,5,0,0
+1794860325537,7,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-4,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,6,0,0
+1794860325545,5,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-4,text,true,,840,185,1,1,http://localhost:8080/api/animales/49,5,0,0
+1794860325528,18,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-4,,true,,121354,563,1,1,null,16,5,0
+1794860325999,8,GET catálogo,200,,E2 - Carga: consulta masiva 3-5,text,true,,60620,182,1,1,http://localhost:8080/api/animales,7,0,2
+1794860326009,6,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-5,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,5,0,0
+1794860326016,5,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-5,text,true,,842,186,1,1,http://localhost:8080/api/animales/102,5,0,0
+1794860325999,19,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-5,,true,,121356,564,1,1,null,17,3,2
+1794860326022,6,GET catálogo,200,,E2 - Carga: consulta masiva 3-5,text,true,,60620,182,1,1,http://localhost:8080/api/animales,5,0,0
+1794860326029,10,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-5,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,7,0,0
+1794860326040,5,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-5,text,true,,842,186,1,1,http://localhost:8080/api/animales/108,5,0,0
+1794860326021,21,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-5,,true,,121356,564,1,1,null,17,4,0
+1794860326498,8,GET catálogo,200,,E2 - Carga: consulta masiva 3-6,text,true,,60620,182,1,1,http://localhost:8080/api/animales,7,0,1
+1794860326507,6,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-6,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,6,0,0
+1794860326514,6,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-6,text,true,,840,185,1,1,http://localhost:8080/api/animales/76,5,0,0
+1794860326497,20,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-6,,true,,121354,563,1,1,null,18,3,1
+1794860326521,7,GET catálogo,200,,E2 - Carga: consulta masiva 3-6,text,true,,60620,182,1,1,http://localhost:8080/api/animales,5,0,0
+1794860326529,7,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-6,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,6,0,0
+1794860326537,5,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-6,text,true,,840,185,1,1,http://localhost:8080/api/animales/37,5,0,0
+1794860326520,19,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-6,,true,,121354,563,1,1,null,16,3,0
+1794860326997,9,GET catálogo,200,,E2 - Carga: consulta masiva 3-7,text,true,,60620,182,1,1,http://localhost:8080/api/animales,8,0,1
+1794860327007,6,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-7,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,5,0,0
+1794860327014,5,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-7,text,true,,839,185,1,1,http://localhost:8080/api/animales/48,5,0,0
+1794860326996,20,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-7,,true,,121353,563,1,1,null,18,3,1
+1794860327020,6,GET catálogo,200,,E2 - Carga: consulta masiva 3-7,text,true,,60620,182,1,1,http://localhost:8080/api/animales,5,0,0
+1794860327028,6,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-7,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,5,0,0
+1794860327035,5,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-7,text,true,,839,185,1,1,http://localhost:8080/api/animales/16,5,0,0
+1794860327019,17,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-7,,true,,121353,563,1,1,null,15,5,0
+1794860327497,10,GET catálogo,200,,E2 - Carga: consulta masiva 3-8,text,true,,60620,182,1,1,http://localhost:8080/api/animales,8,0,2
+1794860327509,7,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-8,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,5,0,0
+1794860327517,5,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-8,text,true,,841,185,1,1,http://localhost:8080/api/animales/53,5,0,0
+1794860327496,22,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-8,,true,,121355,563,1,1,null,18,4,2
+1794860327523,6,GET catálogo,200,,E2 - Carga: consulta masiva 3-8,text,true,,60620,182,1,1,http://localhost:8080/api/animales,5,0,0
+1794860327531,7,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-8,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,6,0,0
+1794860327538,6,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-8,text,true,,840,185,1,1,http://localhost:8080/api/animales/35,6,0,0
+1794860327522,19,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-8,,true,,121354,563,1,1,null,17,4,0
+1794860327997,10,GET catálogo,200,,E2 - Carga: consulta masiva 3-9,text,true,,60620,182,1,1,http://localhost:8080/api/animales,8,0,2
+1794860328010,8,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-9,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,7,0,0
+1794860328019,5,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-9,text,true,,839,185,1,1,http://localhost:8080/api/animales/12,5,0,0
+1794860327996,23,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-9,,true,,121353,563,1,1,null,20,5,2
+1794860328025,7,GET catálogo,200,,E2 - Carga: consulta masiva 3-9,text,true,,60620,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794860328034,7,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-9,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,5,0,0
+1794860328042,7,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-9,text,true,,824,186,1,1,http://localhost:8080/api/animales/126,6,0,0
+1794860328025,21,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-9,,true,,121338,564,1,1,null,17,3,0
+1794860328496,8,GET catálogo,200,,E2 - Carga: consulta masiva 3-10,text,true,,60620,182,1,1,http://localhost:8080/api/animales,8,0,1
+1794860328506,7,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-10,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,6,0,0
+1794860328513,6,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-10,text,true,,824,186,1,1,http://localhost:8080/api/animales/128,6,0,0
+1794860328495,21,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-10,,true,,121338,564,1,1,null,20,3,1
+1794860328519,7,GET catálogo,200,,E2 - Carga: consulta masiva 3-10,text,true,,60620,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794860328527,8,GET catálogo filtrado (perros),200,,E2 - Carga: consulta masiva 3-10,text,true,,59894,196,1,1,http://localhost:8080/api/animales?especie=PERRO,7,0,0
+1794860328536,7,GET detalle de animal,200,,E2 - Carga: consulta masiva 3-10,text,true,,824,186,1,1,http://localhost:8080/api/animales/138,7,0,0
+1794860328519,22,Consultar catálogo,200,"Number of samples in transaction : 3, number of failing samples : 0",E2 - Carga: consulta masiva 3-10,,true,,121338,564,1,1,null,20,2,0

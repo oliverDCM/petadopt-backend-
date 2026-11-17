@@ -1,0 +1,13 @@
+hora,contenedor,cpu,memoria
+15:02:19,petadopt-backend,0.22%,435.3MiB / 6.684GiB
+15:02:19,petadopt-frontend,0.00%,8.332MiB / 6.684GiB
+15:02:19,petadopt-db,0.03%,49.7MiB / 6.684GiB
+15:02:19,petadopt-mailpit,0.00%,15.86MiB / 6.684GiB
+15:02:26,petadopt-backend,746.02%,451.4MiB / 6.684GiB
+15:02:26,petadopt-frontend,0.00%,8.328MiB / 6.684GiB
+15:02:26,petadopt-db,16.42%,50.65MiB / 6.684GiB
+15:02:26,petadopt-mailpit,0.00%,15.86MiB / 6.684GiB
+15:02:33,petadopt-backend,743.31%,509.5MiB / 6.684GiB
+15:02:33,petadopt-frontend,0.00%,8.328MiB / 6.684GiB
+15:02:33,petadopt-db,1.93%,51.3MiB / 6.684GiB
+15:02:33,petadopt-mailpit,0.00%,15.86MiB / 6.684GiB

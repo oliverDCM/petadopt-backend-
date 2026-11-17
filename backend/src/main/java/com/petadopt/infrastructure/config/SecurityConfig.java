@@ -14,7 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -34,14 +34,12 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
     /**
-     * La autenticación es solo por JWT. Declarar este bean evita que Spring Boot cree el usuario
-     * por defecto "user" y escriba su contraseña generada en el log.
+     * La autenticación es solo por JWT. Declarar este bean (vacío, sin usuarios) evita que Spring Boot cree
+     * el usuario por defecto "user" y escriba su contraseña generada en el log.
      */
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> {
-            throw new UsernameNotFoundException("La autenticación es solo por token JWT");
-        };
+        return new InMemoryUserDetailsManager();
     }
 
     @Bean

@@ -1,0 +1,451 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1794859244315,129,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,125,0,44
+1794859244485,10,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,36275,182,1,1,http://localhost:8080/api/animales,9,0,0
+1794859244496,45,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-1,text,true,,797,691,1,1,http://localhost:8080/api/animales,44,0,0
+1794859244543,131,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,761,680,1,1,http://localhost:8080/api/animales/111,131,0,0
+1794859244675,12,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,824,186,1,1,http://localhost:8080/api/animales/111,12,0,0
+1794859244170,327,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-1,,true,,39412,2014,1,1,null,321,189,44
+1794859244690,88,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,88,0,0
+1794859244780,21,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,36599,182,1,1,http://localhost:8080/api/animales,21,0,0
+1794859244803,29,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-1,text,true,,797,691,2,2,http://localhost:8080/api/animales,26,0,0
+1794859244836,33,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,761,680,2,2,http://localhost:8080/api/animales/112,33,0,0
+1794859244870,9,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,824,186,2,2,http://localhost:8080/api/animales/112,8,0,0
+1794859244689,180,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-1,,true,,39736,2014,2,2,null,176,10,0
+1794859244832,91,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,755,275,2,2,http://localhost:8080/api/auth/login,91,0,3
+1794859244924,12,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,36923,182,2,2,http://localhost:8080/api/animales,8,0,0
+1794859244938,22,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-2,text,true,,797,691,2,2,http://localhost:8080/api/animales,21,0,0
+1794859244880,87,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,755,275,2,2,http://localhost:8080/api/auth/login,87,0,0
+1794859244968,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,37261,182,2,2,http://localhost:8080/api/animales,6,0,0
+1794859244961,19,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,761,680,2,2,http://localhost:8080/api/animales/113,19,0,0
+1794859244981,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,824,186,2,2,http://localhost:8080/api/animales/113,7,0,0
+1794859244830,151,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-2,,true,,40060,2014,2,2,null,146,7,3
+1794859244977,16,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-1,text,true,,797,691,2,2,http://localhost:8080/api/animales,14,0,0
+1794859244994,18,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,761,680,2,2,http://localhost:8080/api/animales/114,18,0,0
+1794859245012,8,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,824,186,2,2,http://localhost:8080/api/animales/114,8,0,0
+1794859244880,137,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-1,,true,,40398,2014,2,2,null,133,5,0
+1794859244989,72,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,755,275,2,2,http://localhost:8080/api/auth/login,72,0,0
+1794859245062,10,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,37572,182,2,2,http://localhost:8080/api/animales,7,0,0
+1794859245072,16,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-2,text,true,,797,691,2,2,http://localhost:8080/api/animales,15,0,0
+1794859245022,72,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,755,275,2,2,http://localhost:8080/api/auth/login,72,0,0
+1794859245095,10,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,37910,182,2,2,http://localhost:8080/api/animales,7,0,0
+1794859245089,23,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,761,680,2,2,http://localhost:8080/api/animales/115,23,0,0
+1794859245106,16,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-1,text,true,,797,691,2,2,http://localhost:8080/api/animales,15,0,0
+1794859245113,10,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,824,186,2,2,http://localhost:8080/api/animales/115,10,0,0
+1794859244989,131,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-2,,true,,40709,2014,2,2,null,127,3,0
+1794859245123,17,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,761,680,2,2,http://localhost:8080/api/animales/116,17,0,0
+1794859245141,8,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,824,186,2,2,http://localhost:8080/api/animales/116,8,0,0
+1794859245022,123,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-1,,true,,41047,2014,2,2,null,119,4,0
+1794859245124,77,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,755,275,2,2,http://localhost:8080/api/auth/login,76,0,0
+1794859245201,10,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,38220,182,2,2,http://localhost:8080/api/animales,9,0,0
+1794859245212,13,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-2,text,true,,796,691,2,2,http://localhost:8080/api/animales,13,0,0
+1794859245150,76,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,755,275,2,2,http://localhost:8080/api/auth/login,76,0,0
+1794859245226,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,38558,182,2,2,http://localhost:8080/api/animales,7,0,0
+1794859245226,19,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,761,680,2,2,http://localhost:8080/api/animales/117,19,0,0
+1794859245246,9,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,824,186,2,2,http://localhost:8080/api/animales/117,9,0,0
+1794859245123,128,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-2,,true,,41356,2014,2,2,null,126,5,0
+1794859245235,24,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-1,text,true,,797,691,2,2,http://localhost:8080/api/animales,23,0,0
+1794859245261,24,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,761,680,2,2,http://localhost:8080/api/animales/118,23,0,0
+1794859245286,8,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-1,text,true,,824,186,2,2,http://localhost:8080/api/animales/118,8,0,0
+1794859245150,140,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-1,,true,,41695,2014,2,2,null,137,5,0
+1794859245257,79,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,79,0,0
+1794859245337,10,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,38868,182,1,1,http://localhost:8080/api/animales,8,0,0
+1794859245348,18,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-2,text,true,,797,691,1,1,http://localhost:8080/api/animales,18,0,0
+1794859245368,18,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,761,680,1,1,http://localhost:8080/api/animales/119,18,0,0
+1794859245387,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,824,186,1,1,http://localhost:8080/api/animales/119,7,0,0
+1794859245256,132,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-2,,true,,42005,2014,1,1,null,130,7,0
+1794859245395,70,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,70,0,0
+1794859245466,13,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,39192,182,1,1,http://localhost:8080/api/animales,9,0,0
+1794859245480,16,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-2,text,true,,797,691,2,2,http://localhost:8080/api/animales,15,0,0
+1794859245497,21,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,760,680,2,2,http://localhost:8080/api/animales/120,21,0,0
+1794859245519,10,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-2,text,true,,823,186,2,2,http://localhost:8080/api/animales/120,10,0,0
+1794859245395,130,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-2,,true,,42327,2014,2,2,null,125,4,0
+1794859245496,83,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,83,0,3
+1794859245580,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,39515,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794859245588,21,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-3,text,true,,797,691,1,1,http://localhost:8080/api/animales,21,0,0
+1794859245610,15,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,761,680,1,1,http://localhost:8080/api/animales/121,15,0,0
+1794859245626,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,824,186,1,1,http://localhost:8080/api/animales/121,7,0,0
+1794859245495,134,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-3,,true,,42652,2014,1,1,null,133,5,3
+1794859245634,72,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,72,0,0
+1794859245707,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,39839,182,1,1,http://localhost:8080/api/animales,8,0,0
+1794859245716,17,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-3,text,true,,797,691,1,1,http://localhost:8080/api/animales,17,0,0
+1794859245734,17,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,761,680,1,1,http://localhost:8080/api/animales/122,17,0,0
+1794859245752,9,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,824,186,1,1,http://localhost:8080/api/animales/122,8,0,0
+1794859245634,123,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-3,,true,,42976,2014,1,1,null,122,4,0
+1794859245762,74,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,74,0,0
+1794859245837,9,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,40163,182,1,1,http://localhost:8080/api/animales,8,0,0
+1794859245847,26,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-3,text,true,,796,691,1,1,http://localhost:8080/api/animales,25,0,0
+1794859245874,20,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,761,680,1,1,http://localhost:8080/api/animales/123,20,0,0
+1794859245895,10,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,824,186,1,1,http://localhost:8080/api/animales/123,10,0,0
+1794859245761,139,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-3,,true,,43299,2014,1,1,null,137,5,0
+1794859245906,70,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,70,0,0
+1794859245977,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,40487,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859245986,23,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-3,text,true,,797,691,1,1,http://localhost:8080/api/animales,22,0,0
+1794859246010,19,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,761,680,1,1,http://localhost:8080/api/animales/124,19,0,0
+1794859246030,9,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,824,186,1,1,http://localhost:8080/api/animales/124,9,0,0
+1794859245905,129,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-3,,true,,43624,2014,1,1,null,126,5,0
+1794859246040,68,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,68,0,0
+1794859246109,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,40811,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859246117,17,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-3,text,true,,797,691,1,1,http://localhost:8080/api/animales,16,0,0
+1794859246135,15,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,761,680,1,1,http://localhost:8080/api/animales/125,15,0,0
+1794859246151,8,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-3,text,true,,824,186,1,1,http://localhost:8080/api/animales/125,8,0,0
+1794859246039,116,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-3,,true,,43948,2014,1,1,null,113,4,0
+1794859246161,72,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,72,0,3
+1794859246234,10,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,41135,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794859246245,24,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-4,text,true,,797,691,1,1,http://localhost:8080/api/animales,24,0,0
+1794859246270,21,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,761,680,1,1,http://localhost:8080/api/animales/126,21,0,0
+1794859246292,9,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,824,186,1,1,http://localhost:8080/api/animales/126,9,0,0
+1794859246160,136,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-4,,true,,44272,2014,1,1,null,133,6,3
+1794859246303,73,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,73,0,0
+1794859246377,9,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,41464,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859246387,20,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-4,text,true,,795,691,1,1,http://localhost:8080/api/animales,20,0,0
+1794859246408,16,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,761,680,1,1,http://localhost:8080/api/animales/127,16,0,0
+1794859246425,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,824,186,1,1,http://localhost:8080/api/animales/127,7,0,0
+1794859246302,125,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-4,,true,,44599,2014,1,1,null,122,5,0
+1794859246433,70,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,70,0,0
+1794859246504,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,41790,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859246512,25,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-4,text,true,,797,691,1,1,http://localhost:8080/api/animales,25,0,0
+1794859246538,16,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,761,680,1,1,http://localhost:8080/api/animales/128,16,0,0
+1794859246554,8,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,824,186,1,1,http://localhost:8080/api/animales/128,8,0,0
+1794859246433,127,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-4,,true,,44927,2014,1,1,null,125,2,0
+1794859246562,69,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,69,0,0
+1794859246632,10,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,42114,182,1,1,http://localhost:8080/api/animales,8,0,0
+1794859246643,21,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-4,text,true,,797,691,1,1,http://localhost:8080/api/animales,21,0,0
+1794859246665,18,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,761,680,1,1,http://localhost:8080/api/animales/129,18,0,0
+1794859246684,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,824,186,1,1,http://localhost:8080/api/animales/129,7,0,0
+1794859246562,125,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-4,,true,,45251,2014,1,1,null,123,5,0
+1794859246692,68,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,68,0,0
+1794859246761,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,42438,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794859246770,15,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-4,text,true,,797,691,1,1,http://localhost:8080/api/animales,14,0,0
+1794859246786,16,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,760,680,1,1,http://localhost:8080/api/animales/130,16,0,0
+1794859246802,9,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-4,text,true,,823,186,1,1,http://localhost:8080/api/animales/130,9,0,0
+1794859246692,116,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-4,,true,,45573,2014,1,1,null,114,3,0
+1794859246827,71,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,71,0,3
+1794859246900,9,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,42761,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859246909,22,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-5,text,true,,797,691,1,1,http://localhost:8080/api/animales,21,0,0
+1794859246933,17,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,761,680,1,1,http://localhost:8080/api/animales/131,17,0,0
+1794859246951,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,824,186,1,1,http://localhost:8080/api/animales/131,7,0,0
+1794859246826,126,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-5,,true,,45898,2014,1,1,null,122,7,3
+1794859246959,74,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,74,0,0
+1794859247034,9,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,43085,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794859247044,20,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-5,text,true,,797,691,1,1,http://localhost:8080/api/animales,20,0,0
+1794859247066,20,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,760,680,1,1,http://localhost:8080/api/animales/132,20,0,0
+1794859247087,9,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,823,186,1,1,http://localhost:8080/api/animales/132,9,0,0
+1794859246959,132,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-5,,true,,46220,2014,1,1,null,130,6,0
+1794859247097,101,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,101,0,0
+1794859247199,9,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,43408,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794859247209,27,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-5,text,true,,797,691,1,1,http://localhost:8080/api/animales,24,0,0
+1794859247238,19,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,761,680,1,1,http://localhost:8080/api/animales/133,19,0,0
+1794859247258,10,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,824,186,1,1,http://localhost:8080/api/animales/133,10,0,0
+1794859247097,166,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-5,,true,,46545,2014,1,1,null,161,5,0
+1794859247269,88,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,88,0,0
+1794859247358,10,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,43732,182,1,1,http://localhost:8080/api/animales,9,0,0
+1794859247369,20,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-5,text,true,,797,691,1,1,http://localhost:8080/api/animales,19,0,0
+1794859247391,21,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,760,680,1,1,http://localhost:8080/api/animales/134,21,0,0
+1794859247413,9,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,823,186,1,1,http://localhost:8080/api/animales/134,9,0,0
+1794859247269,148,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-5,,true,,46867,2014,1,1,null,146,5,0
+1794859247423,69,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,755,275,2,2,http://localhost:8080/api/auth/login,69,0,0
+1794859247493,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,44055,182,2,2,http://localhost:8080/api/animales,7,0,0
+1794859247502,13,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-5,text,true,,797,691,2,2,http://localhost:8080/api/animales,12,0,0
+1794859247516,14,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,761,680,2,2,http://localhost:8080/api/animales/135,13,0,0
+1794859247530,8,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-5,text,true,,824,186,2,2,http://localhost:8080/api/animales/135,8,0,0
+1794859247422,112,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-5,,true,,47192,2014,2,2,null,109,5,0
+1794859247492,72,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,72,0,2
+1794859247564,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,44379,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859247573,15,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-6,text,true,,797,691,1,1,http://localhost:8080/api/animales,14,0,0
+1794859247589,16,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,761,680,1,1,http://localhost:8080/api/animales/136,16,0,0
+1794859247606,9,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,824,186,1,1,http://localhost:8080/api/animales/136,9,0,0
+1794859247491,120,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-6,,true,,47516,2014,1,1,null,117,5,2
+1794859247616,70,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,70,0,0
+1794859247687,10,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,44703,182,1,1,http://localhost:8080/api/animales,8,0,0
+1794859247697,17,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-6,text,true,,797,691,1,1,http://localhost:8080/api/animales,16,0,0
+1794859247715,19,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,761,680,1,1,http://localhost:8080/api/animales/137,19,0,0
+1794859247735,8,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,824,186,1,1,http://localhost:8080/api/animales/137,8,0,0
+1794859247616,124,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-6,,true,,47840,2014,1,1,null,121,3,0
+1794859247744,71,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,71,0,0
+1794859247816,7,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,45027,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859247824,16,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-6,text,true,,797,691,1,1,http://localhost:8080/api/animales,15,0,0
+1794859247841,15,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,761,680,1,1,http://localhost:8080/api/animales/138,15,0,0
+1794859247856,10,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,824,186,1,1,http://localhost:8080/api/animales/138,10,0,0
+1794859247743,119,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-6,,true,,48164,2014,1,1,null,117,4,0
+1794859247867,67,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,67,0,0
+1794859247935,7,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,45351,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859247942,14,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-6,text,true,,797,691,1,1,http://localhost:8080/api/animales,14,0,0
+1794859247957,16,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,760,680,1,1,http://localhost:8080/api/animales/139,16,0,0
+1794859247974,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,823,186,1,1,http://localhost:8080/api/animales/139,7,0,0
+1794859247866,111,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-6,,true,,48486,2014,1,1,null,110,5,0
+1794859247982,70,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,69,0,0
+1794859248052,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,45675,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794859248061,26,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-6,text,true,,797,691,1,1,http://localhost:8080/api/animales,25,0,0
+1794859248088,22,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,761,680,1,1,http://localhost:8080/api/animales/140,22,0,0
+1794859248111,15,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-6,text,true,,824,186,1,1,http://localhost:8080/api/animales/140,14,0,0
+1794859247982,141,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-6,,true,,48812,2014,1,1,null,137,3,0
+1794859248159,95,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,95,0,3
+1794859248256,13,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,45999,182,1,1,http://localhost:8080/api/animales,9,0,0
+1794859248270,31,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-7,text,true,,797,691,1,1,http://localhost:8080/api/animales,31,0,0
+1794859248303,21,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,761,680,1,1,http://localhost:8080/api/animales/141,21,0,0
+1794859248325,12,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,824,186,1,1,http://localhost:8080/api/animales/141,12,0,0
+1794859248158,172,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-7,,true,,49136,2014,1,1,null,168,8,3
+1794859248338,105,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,105,0,0
+1794859248444,10,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,46323,182,1,1,http://localhost:8080/api/animales,8,0,0
+1794859248455,23,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-7,text,true,,796,691,1,1,http://localhost:8080/api/animales,22,0,0
+1794859248478,20,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,761,680,1,1,http://localhost:8080/api/animales/142,20,0,0
+1794859248498,8,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,824,186,1,1,http://localhost:8080/api/animales/142,8,0,0
+1794859248338,166,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-7,,true,,49459,2014,1,1,null,163,3,0
+1794859248507,72,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,72,0,0
+1794859248580,10,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,46647,182,1,1,http://localhost:8080/api/animales,9,0,0
+1794859248591,27,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-7,text,true,,797,691,1,1,http://localhost:8080/api/animales,26,0,0
+1794859248619,20,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,761,680,1,1,http://localhost:8080/api/animales/143,20,0,0
+1794859248640,10,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,824,186,1,1,http://localhost:8080/api/animales/143,10,0,0
+1794859248507,139,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-7,,true,,49784,2014,1,1,null,137,4,0
+1794859248651,85,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,85,0,0
+1794859248736,10,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,46971,182,1,1,http://localhost:8080/api/animales,8,0,0
+1794859248747,17,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-7,text,true,,797,691,1,1,http://localhost:8080/api/animales,16,0,0
+1794859248766,16,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,761,680,1,1,http://localhost:8080/api/animales/144,16,0,0
+1794859248783,9,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,824,186,1,1,http://localhost:8080/api/animales/144,9,0,0
+1794859248651,137,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-7,,true,,50108,2014,1,1,null,134,4,0
+1794859248793,73,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,755,275,2,2,http://localhost:8080/api/auth/login,73,0,0
+1794859248868,10,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,47295,182,2,2,http://localhost:8080/api/animales,8,0,0
+1794859248880,24,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-7,text,true,,797,691,2,2,http://localhost:8080/api/animales,23,0,0
+1794859248826,86,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,755,275,2,2,http://localhost:8080/api/auth/login,86,0,3
+1794859248905,19,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,761,680,2,2,http://localhost:8080/api/animales/145,19,0,0
+1794859248913,11,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,47633,182,2,2,http://localhost:8080/api/animales,8,0,0
+1794859248925,9,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-7,text,true,,824,186,2,2,http://localhost:8080/api/animales/145,9,0,0
+1794859248792,135,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-7,,true,,50432,2014,2,2,null,132,7,0
+1794859248925,17,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-8,text,true,,797,691,1,1,http://localhost:8080/api/animales,16,0,0
+1794859248944,16,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,761,680,1,1,http://localhost:8080/api/animales/146,16,0,0
+1794859248960,8,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,824,186,1,1,http://localhost:8080/api/animales/146,8,0,0
+1794859248825,138,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-8,,true,,50770,2014,1,1,null,134,5,3
+1794859248969,69,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,69,0,0
+1794859249039,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,47943,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794859249048,14,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-8,text,true,,797,691,1,1,http://localhost:8080/api/animales,13,0,0
+1794859249063,15,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,761,680,1,1,http://localhost:8080/api/animales/147,15,0,0
+1794859249079,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,824,186,1,1,http://localhost:8080/api/animales/147,7,0,0
+1794859248969,113,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-8,,true,,51080,2014,1,1,null,111,4,0
+1794859249087,68,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,68,0,0
+1794859249155,7,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,48267,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859249162,13,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-8,text,true,,797,691,1,1,http://localhost:8080/api/animales,12,0,0
+1794859249176,15,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,761,680,1,1,http://localhost:8080/api/animales/148,15,0,0
+1794859249192,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,824,186,1,1,http://localhost:8080/api/animales/148,7,0,0
+1794859249087,110,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-8,,true,,51404,2014,1,1,null,108,3,0
+1794859249200,67,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,67,0,0
+1794859249267,7,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,48591,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859249275,19,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-8,text,true,,797,691,1,1,http://localhost:8080/api/animales,18,0,0
+1794859249295,21,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,761,680,1,1,http://localhost:8080/api/animales/149,20,0,0
+1794859249316,8,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,824,186,1,1,http://localhost:8080/api/animales/149,8,0,0
+1794859249200,122,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-8,,true,,51728,2014,1,1,null,119,4,0
+1794859249325,70,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,70,0,0
+1794859249395,10,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,48915,182,1,1,http://localhost:8080/api/animales,8,0,0
+1794859249405,23,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-8,text,true,,797,691,1,1,http://localhost:8080/api/animales,22,0,0
+1794859249430,21,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,761,680,1,1,http://localhost:8080/api/animales/150,20,0,0
+1794859249451,10,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-8,text,true,,824,186,1,1,http://localhost:8080/api/animales/150,10,0,0
+1794859249325,134,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-8,,true,,52052,2014,1,1,null,130,3,0
+1794859249497,74,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,74,0,2
+1794859249572,7,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,49239,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859249580,14,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-9,text,true,,797,691,1,1,http://localhost:8080/api/animales,13,0,0
+1794859249595,16,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,761,680,1,1,http://localhost:8080/api/animales/151,16,0,0
+1794859249612,9,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,824,186,1,1,http://localhost:8080/api/animales/151,9,0,0
+1794859249496,120,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-9,,true,,52376,2014,1,1,null,118,5,2
+1794859249621,73,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,73,0,0
+1794859249695,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,49563,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859249703,19,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-9,text,true,,797,691,1,1,http://localhost:8080/api/animales,18,0,0
+1794859249723,21,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,761,680,1,1,http://localhost:8080/api/animales/152,21,0,0
+1794859249744,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,824,186,1,1,http://localhost:8080/api/animales/152,7,0,0
+1794859249621,128,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-9,,true,,52700,2014,1,1,null,125,2,0
+1794859249752,65,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,65,0,0
+1794859249818,7,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,49893,182,1,1,http://localhost:8080/api/animales,5,0,0
+1794859249825,20,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-9,text,true,,797,691,1,1,http://localhost:8080/api/animales,20,0,0
+1794859249846,15,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,761,680,1,1,http://localhost:8080/api/animales/153,15,0,0
+1794859249862,10,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,824,186,1,1,http://localhost:8080/api/animales/153,10,0,0
+1794859249751,117,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-9,,true,,53030,2014,1,1,null,115,4,0
+1794859249873,68,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,68,0,0
+1794859249942,7,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,50218,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794859249950,20,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-9,text,true,,797,691,1,1,http://localhost:8080/api/animales,20,0,0
+1794859249971,16,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,761,680,1,1,http://localhost:8080/api/animales/154,16,0,0
+1794859249987,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,824,186,1,1,http://localhost:8080/api/animales/154,7,0,0
+1794859249872,118,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-9,,true,,53355,2014,1,1,null,118,4,0
+1794859249994,75,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,755,275,1,1,http://localhost:8080/api/auth/login,75,0,0
+1794859250070,7,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,50542,182,1,1,http://localhost:8080/api/animales,5,0,0
+1794859250077,15,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-9,text,true,,797,691,1,1,http://localhost:8080/api/animales,14,0,0
+1794859250093,14,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,761,680,1,1,http://localhost:8080/api/animales/155,14,0,0
+1794859250107,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-9,text,true,,824,186,1,1,http://localhost:8080/api/animales/155,7,0,0
+1794859249994,118,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-9,,true,,53679,2014,1,1,null,115,2,0
+1794859250163,69,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,69,0,2
+1794859250232,10,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,50866,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794859250243,20,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-10,text,true,,797,692,1,1,http://localhost:8080/api/animales,20,0,0
+1794859250264,15,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,762,682,1,1,http://localhost:8080/api/animales/156,15,0,0
+1794859250280,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,826,186,1,1,http://localhost:8080/api/animales/156,7,0,0
+1794859250162,121,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-10,,true,,54009,2018,1,1,null,118,5,2
+1794859250288,68,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,68,0,0
+1794859250356,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,51191,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859250364,26,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-10,text,true,,797,692,1,1,http://localhost:8080/api/animales,25,0,0
+1794859250390,19,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,762,682,1,1,http://localhost:8080/api/animales/157,19,0,0
+1794859250410,9,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,826,186,1,1,http://localhost:8080/api/animales/157,9,0,0
+1794859250288,130,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-10,,true,,54334,2018,1,1,null,127,1,0
+1794859250419,89,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,89,0,0
+1794859250509,10,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,51516,182,1,1,http://localhost:8080/api/animales,8,0,0
+1794859250520,24,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-10,text,true,,797,692,1,1,http://localhost:8080/api/animales,24,0,0
+1794859250545,17,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,762,682,1,1,http://localhost:8080/api/animales/158,17,0,0
+1794859250562,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,826,186,1,1,http://localhost:8080/api/animales/158,7,0,0
+1794859250419,147,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-10,,true,,54659,2018,1,1,null,145,4,0
+1794859250570,68,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,68,0,0
+1794859250638,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,51841,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859250646,18,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-10,text,true,,797,692,1,1,http://localhost:8080/api/animales,17,0,0
+1794859250665,13,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,762,682,1,1,http://localhost:8080/api/animales/159,13,0,0
+1794859250678,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,826,186,1,1,http://localhost:8080/api/animales/159,7,0,0
+1794859250570,114,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-10,,true,,54984,2018,1,1,null,111,1,0
+1794859250685,70,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,70,0,0
+1794859250755,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,52166,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794859250764,18,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-10,text,true,,797,692,1,1,http://localhost:8080/api/animales,17,0,0
+1794859250783,16,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,762,682,1,1,http://localhost:8080/api/animales/160,16,0,0
+1794859250800,6,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-10,text,true,,826,186,1,1,http://localhost:8080/api/animales/160,6,0,0
+1794859250685,118,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-10,,true,,55309,2018,1,1,null,116,3,0
+1794859250829,69,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,69,0,2
+1794859250898,9,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,52491,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794859250907,44,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-11,text,true,,797,692,1,1,http://localhost:8080/api/animales,43,0,0
+1794859250951,16,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,762,682,1,1,http://localhost:8080/api/animales/161,16,0,0
+1794859250968,6,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,826,186,1,1,http://localhost:8080/api/animales/161,6,0,0
+1794859250828,144,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-11,,true,,55634,2018,1,1,null,141,3,2
+1794859250975,73,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,73,0,0
+1794859251050,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,52816,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859251060,17,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-11,text,true,,797,692,1,1,http://localhost:8080/api/animales,16,0,0
+1794859251078,26,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,762,682,1,1,http://localhost:8080/api/animales/162,26,0,0
+1794859251104,8,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,826,186,1,1,http://localhost:8080/api/animales/162,8,0,0
+1794859250975,132,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-11,,true,,55959,2018,1,1,null,129,5,0
+1794859251113,70,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,70,0,0
+1794859251184,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,53141,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859251192,23,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-11,text,true,,797,692,1,1,http://localhost:8080/api/animales,22,0,0
+1794859251216,32,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,762,682,1,1,http://localhost:8080/api/animales/163,32,0,0
+1794859251249,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,826,186,1,1,http://localhost:8080/api/animales/163,7,0,0
+1794859251113,140,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-11,,true,,56284,2018,1,1,null,137,3,0
+1794859251256,68,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,68,0,0
+1794859251325,9,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,53466,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794859251335,17,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-11,text,true,,796,692,1,1,http://localhost:8080/api/animales,16,0,0
+1794859251353,20,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,762,682,1,1,http://localhost:8080/api/animales/164,20,0,0
+1794859251374,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,826,186,1,1,http://localhost:8080/api/animales/164,7,0,0
+1794859251256,121,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-11,,true,,56608,2018,1,1,null,118,5,0
+1794859251382,68,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,68,0,0
+1794859251451,9,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,53792,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794859251460,14,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-11,text,true,,797,692,1,1,http://localhost:8080/api/animales,14,0,0
+1794859251475,13,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,762,682,1,1,http://localhost:8080/api/animales/165,13,0,0
+1794859251489,8,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-11,text,true,,826,186,2,2,http://localhost:8080/api/animales/165,8,0,0
+1794859251382,112,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-11,,true,,56935,2018,2,2,null,110,3,0
+1794859251492,79,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,79,0,3
+1794859251571,11,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,54117,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794859251582,21,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-12,text,true,,797,692,1,1,http://localhost:8080/api/animales,20,0,0
+1794859251604,19,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,762,682,1,1,http://localhost:8080/api/animales/166,19,0,0
+1794859251624,10,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,826,186,1,1,http://localhost:8080/api/animales/166,10,0,0
+1794859251492,140,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-12,,true,,57260,2018,1,1,null,135,2,3
+1794859251635,71,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,71,0,0
+1794859251708,11,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,54442,182,1,1,http://localhost:8080/api/animales,8,0,0
+1794859251720,24,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-12,text,true,,797,692,1,1,http://localhost:8080/api/animales,24,0,0
+1794859251746,17,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,762,682,1,1,http://localhost:8080/api/animales/167,17,0,0
+1794859251764,9,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,826,186,1,1,http://localhost:8080/api/animales/167,9,0,0
+1794859251635,132,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-12,,true,,57585,2018,1,1,null,129,6,0
+1794859251774,73,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,73,0,0
+1794859251848,7,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,54767,182,1,1,http://localhost:8080/api/animales,5,0,0
+1794859251855,23,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-12,text,true,,797,692,1,1,http://localhost:8080/api/animales,22,0,0
+1794859251879,15,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,762,682,1,1,http://localhost:8080/api/animales/168,14,0,0
+1794859251894,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,826,186,1,1,http://localhost:8080/api/animales/168,7,0,0
+1794859251773,125,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-12,,true,,57910,2018,1,1,null,121,4,0
+1794859251902,70,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,70,0,0
+1794859251972,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,55092,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794859251981,13,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-12,text,true,,797,692,1,1,http://localhost:8080/api/animales,13,0,0
+1794859251995,14,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,762,682,1,1,http://localhost:8080/api/animales/169,14,0,0
+1794859252010,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,826,186,1,1,http://localhost:8080/api/animales/169,7,0,0
+1794859251902,112,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-12,,true,,58235,2018,1,1,null,111,4,0
+1794859252018,68,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,68,0,0
+1794859252087,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,55417,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794859252095,21,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-12,text,true,,797,692,1,1,http://localhost:8080/api/animales,21,0,0
+1794859252117,13,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,762,682,1,1,http://localhost:8080/api/animales/170,13,0,0
+1794859252131,8,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-12,text,true,,826,186,1,1,http://localhost:8080/api/animales/170,8,0,0
+1794859252018,118,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-12,,true,,58560,2018,1,1,null,117,3,0
+1794859252159,73,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,73,0,2
+1794859252233,9,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,55742,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794859252242,20,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-13,text,true,,797,692,1,1,http://localhost:8080/api/animales,19,0,0
+1794859252263,14,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,760,682,1,1,http://localhost:8080/api/animales/171,14,0,0
+1794859252277,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,824,186,1,1,http://localhost:8080/api/animales/171,7,0,0
+1794859252159,123,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-13,,true,,58881,2018,1,1,null,120,2,2
+1794859252284,67,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,67,0,0
+1794859252352,7,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,56065,182,1,1,http://localhost:8080/api/animales,5,0,0
+1794859252359,13,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-13,text,true,,797,692,1,1,http://localhost:8080/api/animales,13,0,0
+1794859252373,15,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,762,682,1,1,http://localhost:8080/api/animales/172,15,0,0
+1794859252388,6,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,826,186,1,1,http://localhost:8080/api/animales/172,6,0,0
+1794859252284,108,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-13,,true,,59208,2018,1,1,null,106,3,0
+1794859252395,67,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,67,0,0
+1794859252463,7,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,56390,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859252471,22,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-13,text,true,,797,692,1,1,http://localhost:8080/api/animales,21,0,0
+1794859252494,14,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,762,682,1,1,http://localhost:8080/api/animales/173,14,0,0
+1794859252509,6,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,826,186,1,1,http://localhost:8080/api/animales/173,6,0,0
+1794859252395,116,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-13,,true,,59533,2018,1,1,null,114,5,0
+1794859252516,67,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,67,0,0
+1794859252584,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,56715,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859252592,15,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-13,text,true,,797,692,1,1,http://localhost:8080/api/animales,15,0,0
+1794859252608,16,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,762,682,1,1,http://localhost:8080/api/animales/174,15,0,0
+1794859252624,8,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,826,186,1,1,http://localhost:8080/api/animales/174,8,0,0
+1794859252516,114,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-13,,true,,59858,2018,1,1,null,111,2,0
+1794859252632,67,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,67,0,0
+1794859252699,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,57040,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859252708,19,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-13,text,true,,797,692,1,1,http://localhost:8080/api/animales,18,0,0
+1794859252728,16,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,762,682,1,1,http://localhost:8080/api/animales/175,16,0,0
+1794859252745,8,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-13,text,true,,826,186,1,1,http://localhost:8080/api/animales/175,8,0,0
+1794859252632,118,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-13,,true,,60183,2018,1,1,null,115,3,0
+1794859252829,70,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,70,0,1
+1794859252899,7,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,57365,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859252907,20,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-14,text,true,,797,692,1,1,http://localhost:8080/api/animales,19,0,0
+1794859252928,13,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,762,682,1,1,http://localhost:8080/api/animales/176,13,0,0
+1794859252942,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,826,186,1,1,http://localhost:8080/api/animales/176,7,0,0
+1794859252828,117,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-14,,true,,60508,2018,1,1,null,115,4,1
+1794859252950,69,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,69,0,0
+1794859253020,6,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,57690,182,1,1,http://localhost:8080/api/animales,5,0,0
+1794859253027,13,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-14,text,true,,797,692,1,1,http://localhost:8080/api/animales,12,0,0
+1794859253040,13,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,762,682,1,1,http://localhost:8080/api/animales/177,13,0,0
+1794859253054,6,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,826,186,1,1,http://localhost:8080/api/animales/177,6,0,0
+1794859252950,107,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-14,,true,,60833,2018,1,1,null,105,3,0
+1794859253061,65,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,65,0,0
+1794859253126,7,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,58021,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859253134,22,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-14,text,true,,797,692,1,1,http://localhost:8080/api/animales,21,0,0
+1794859253156,14,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,762,682,1,1,http://localhost:8080/api/animales/178,14,0,0
+1794859253170,9,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,826,186,1,1,http://localhost:8080/api/animales/178,9,0,0
+1794859253060,117,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-14,,true,,61164,2018,1,1,null,115,2,0
+1794859253180,67,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,67,0,0
+1794859253248,7,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,58347,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859253255,23,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-14,text,true,,797,692,1,1,http://localhost:8080/api/animales,22,0,0
+1794859253279,13,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,762,682,1,1,http://localhost:8080/api/animales/179,13,0,0
+1794859253292,6,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,826,186,1,1,http://localhost:8080/api/animales/179,6,0,0
+1794859253180,116,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-14,,true,,61490,2018,1,1,null,114,3,0
+1794859253299,68,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,68,0,0
+1794859253368,6,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,58672,182,1,1,http://localhost:8080/api/animales,5,0,0
+1794859253375,13,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-14,text,true,,797,692,1,1,http://localhost:8080/api/animales,12,0,0
+1794859253388,18,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,762,682,1,1,http://localhost:8080/api/animales/180,18,0,0
+1794859253406,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-14,text,true,,826,186,1,1,http://localhost:8080/api/animales/180,7,0,0
+1794859253299,112,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-14,,true,,61815,2018,1,1,null,110,2,0
+1794859253494,68,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,68,0,2
+1794859253563,7,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,58997,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859253571,21,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-15,text,true,,797,692,1,1,http://localhost:8080/api/animales,20,0,0
+1794859253593,14,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,761,682,1,1,http://localhost:8080/api/animales/181,14,0,0
+1794859253608,6,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,825,186,1,1,http://localhost:8080/api/animales/181,6,0,0
+1794859253493,116,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-15,,true,,62138,2018,1,1,null,114,6,2
+1794859253615,72,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,72,0,0
+1794859253688,14,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,59321,182,1,1,http://localhost:8080/api/animales,10,0,0
+1794859253703,24,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-15,text,true,,797,692,1,1,http://localhost:8080/api/animales,23,0,0
+1794859253728,15,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,762,682,1,1,http://localhost:8080/api/animales/182,15,0,0
+1794859253744,9,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,826,186,1,1,http://localhost:8080/api/animales/182,9,0,0
+1794859253615,134,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-15,,true,,62464,2018,1,1,null,129,5,0
+1794859253754,73,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,73,0,0
+1794859253828,9,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,59646,182,1,1,http://localhost:8080/api/animales,7,0,0
+1794859253837,25,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-15,text,true,,797,692,1,1,http://localhost:8080/api/animales,24,0,0
+1794859253863,16,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,762,682,1,1,http://localhost:8080/api/animales/183,16,0,0
+1794859253879,9,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,826,186,1,1,http://localhost:8080/api/animales/183,9,0,0
+1794859253754,132,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-15,,true,,62789,2018,1,1,null,129,2,0
+1794859253889,84,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,84,0,0
+1794859253974,8,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,59971,182,1,1,http://localhost:8080/api/animales,6,0,0
+1794859253983,21,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-15,text,true,,797,692,1,1,http://localhost:8080/api/animales,20,0,0
+1794859254005,16,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,762,682,1,1,http://localhost:8080/api/animales/184,16,0,0
+1794859254021,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,826,186,1,1,http://localhost:8080/api/animales/184,7,0,0
+1794859253888,136,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-15,,true,,63114,2018,1,1,null,133,4,0
+1794859254029,67,1. POST login vendedor,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,758,276,1,1,http://localhost:8080/api/auth/login,67,0,0
+1794859254097,6,2. GET catálogo,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,60296,182,1,1,http://localhost:8080/api/animales,5,0,0
+1794859254104,15,POST publicar animal,201,,E4 - Carga: flujo completo del negocio 5-15,text,true,,796,692,1,1,http://localhost:8080/api/animales,15,0,0
+1794859254120,14,PUT actualizar animal,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,761,682,1,1,http://localhost:8080/api/animales/185,14,0,0
+1794859254134,7,5. GET consulta final del animal,200,,E4 - Carga: flujo completo del negocio 5-15,text,true,,825,186,1,1,http://localhost:8080/api/animales/185,7,0,0
+1794859254028,109,Flujo completo: login → consulta → registro → actualización → consulta final,200,"Number of samples in transaction : 5, number of failing samples : 0",E4 - Carga: flujo completo del negocio 5-15,,true,,63436,2018,1,1,null,108,5,0

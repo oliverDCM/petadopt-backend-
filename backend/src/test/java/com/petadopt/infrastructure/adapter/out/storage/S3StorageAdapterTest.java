@@ -38,10 +38,10 @@ class S3StorageAdapterTest {
         servidor.createContext("/", intercambio -> {
             recibido.put("metodo", intercambio.getRequestMethod());
             recibido.put("ruta", intercambio.getRequestURI().getRawPath());
-            recibido.put("host", intercambio.getRequestHeaders().getFirst("Host"));
-            recibido.put("contentType", intercambio.getRequestHeaders().getFirst("Content-Type"));
-            recibido.put("authorization", intercambio.getRequestHeaders().getFirst("Authorization"));
-            recibido.put("amzDate", intercambio.getRequestHeaders().getFirst("x-amz-date"));
+            anotar("host", intercambio.getRequestHeaders().getFirst("Host"));
+            anotar("contentType", intercambio.getRequestHeaders().getFirst("Content-Type"));
+            anotar("authorization", intercambio.getRequestHeaders().getFirst("Authorization"));
+            anotar("amzDate", intercambio.getRequestHeaders().getFirst("x-amz-date"));
             recibido.put("cuerpo", new String(intercambio.getRequestBody().readAllBytes(), StandardCharsets.UTF_8));
             byte[] respuesta = codigoRespuesta.get() == 200
                     ? new byte[0]
@@ -59,6 +59,13 @@ class S3StorageAdapterTest {
     @AfterEach
     void apagar() {
         servidor.stop(0);
+    }
+
+    /** Una petición DELETE no trae Content-Type, y ConcurrentHashMap no admite valores nulos. */
+    private void anotar(String clave, String valor) {
+        if (valor != null) {
+            recibido.put(clave, valor);
+        }
     }
 
     private S3StorageAdapter adaptador(String endpoint, String urlPublica) {
@@ -138,5 +145,52 @@ class S3StorageAdapterTest {
         assertThat(S3StorageAdapter.extension("image/webp")).isEqualTo("webp");
         assertThat(S3StorageAdapter.extension("image/gif")).isEqualTo("img");
         assertThat(S3StorageAdapter.extension(null)).isEqualTo("img");
+    }
+
+    @Test
+    void reconoce_como_propias_solo_las_urls_de_su_carpeta_de_fotos() {
+        S3StorageAdapter s3 = adaptador(endpoint, "https://fotos.petadopt.dev");
+
+        assertThat(s3.esUrlPropia("https://fotos.petadopt.dev/petadopt/animales/abc.jpg")).isTrue();
+        assertThat(s3.esUrlPropia("https://fotos.petadopt.dev/otra-carpeta/abc.jpg")).isFalse();
+        assertThat(s3.esUrlPropia("https://fotos.petadopt.dev.atacante.com/petadopt/animales/abc.jpg")).isFalse();
+        assertThat(s3.esUrlPropia("https://rastreador.ejemplo.com/pixel.png")).isFalse();
+        assertThat(s3.esUrlPropia(null)).isFalse();
+    }
+
+    @Test
+    void elimina_una_foto_propia_con_un_delete_firmado() {
+        S3StorageAdapter s3 = adaptador(endpoint, "");
+
+        s3.eliminarImagen(endpoint + "/petadopt-fotos/petadopt/animales/vieja.jpg");
+
+        assertThat(recibido)
+                .containsEntry("metodo", "DELETE")
+                .containsEntry("ruta", "/petadopt-fotos/petadopt/animales/vieja.jpg");
+        assertThat(recibido.get("authorization"))
+                .startsWith("AWS4-HMAC-SHA256 Credential=AKIAEJEMPLO/20261103/us-east-1/s3/aws4_request");
+    }
+
+    @Test
+    void no_intenta_eliminar_urls_ajenas_ni_rutas_que_salgan_de_la_carpeta() {
+        S3StorageAdapter s3 = adaptador(endpoint, "");
+
+        s3.eliminarImagen("https://rastreador.ejemplo.com/pixel.png");
+        s3.eliminarImagen(endpoint + "/petadopt-fotos/petadopt/animales/../../otro-objeto");
+        s3.eliminarImagen(null);
+
+        assertThat(recibido).isEmpty();
+    }
+
+    @Test
+    void si_el_borrado_falla_no_lanza_excepcion() {
+        S3StorageAdapter s3 = adaptador(endpoint, "");
+        codigoRespuesta.set(403);
+        s3.eliminarImagen(endpoint + "/petadopt-fotos/petadopt/animales/vieja.jpg");
+
+        servidor.stop(0);
+        s3.eliminarImagen(endpoint + "/petadopt-fotos/petadopt/animales/vieja.jpg");
+
+        assertThat(recibido).containsEntry("metodo", "DELETE"); // el primer intento sí llegó; ninguno lanzó
     }
 }

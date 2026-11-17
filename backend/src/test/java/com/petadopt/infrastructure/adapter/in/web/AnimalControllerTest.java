@@ -10,6 +10,7 @@ import com.petadopt.domain.exception.ImagenInvalidaException;
 import com.petadopt.domain.model.Animal;
 import com.petadopt.domain.model.EspecieAnimal;
 import com.petadopt.domain.model.EstadoAnimal;
+import com.petadopt.domain.model.Pagina;
 import com.petadopt.domain.model.SexoAnimal;
 import com.petadopt.domain.model.TipoPublicacion;
 import com.petadopt.infrastructure.adapter.in.web.dto.AnimalDetalleResponse;
@@ -110,13 +111,18 @@ class AnimalControllerTest {
     }
 
     @Test
-    void listar_pasa_los_filtros_al_caso_de_uso() {
-        when(listar.listarDisponibles(any(ListarAnimalesUseCase.Filtro.class))).thenReturn(List.of(animal));
+    void listar_pasa_filtros_y_pagina_al_caso_de_uso_y_devuelve_el_total_en_la_cabecera() {
+        when(listar.listarDisponibles(any(ListarAnimalesUseCase.Filtro.class)))
+                .thenReturn(new Pagina<>(List.of(animal), 37L, 1, 12));
 
-        List<AnimalResponse> r = controller.listar(EspecieAnimal.PERRO, TipoPublicacion.ADOPCION, "fusa");
+        ResponseEntity<List<AnimalResponse>> r =
+                controller.listar(EspecieAnimal.PERRO, TipoPublicacion.ADOPCION, "fusa", 1, 12);
 
-        assertThat(r).extracting(AnimalResponse::id).containsExactly(10L);
-        verify(listar).listarDisponibles(new ListarAnimalesUseCase.Filtro(EspecieAnimal.PERRO, TipoPublicacion.ADOPCION, "fusa"));
+        assertThat(r.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(r.getBody()).extracting(AnimalResponse::id).containsExactly(10L);
+        assertThat(r.getHeaders().getFirst(AnimalController.CABECERA_TOTAL)).isEqualTo("37");
+        verify(listar).listarDisponibles(
+                new ListarAnimalesUseCase.Filtro(EspecieAnimal.PERRO, TipoPublicacion.ADOPCION, "fusa", 1, 12));
     }
 
     @Test

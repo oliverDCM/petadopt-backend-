@@ -17,6 +17,7 @@ import com.petadopt.domain.model.TipoPublicacion;
 import com.petadopt.domain.model.Usuario;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -36,8 +37,6 @@ class PublicarAnimalServiceTest {
 
     private static final String URL_FOTO = "https://petadopt-fotos.s3.us-east-1.amazonaws.com/petadopt/animales/firulais.jpg";
 
-    private static final byte[] JPEG = {(byte) 0xFF, (byte) 0xD8, (byte) 0xFF, 0x00};
-    private static final byte[] PNG = {(byte) 0x89, 'P', 'N', 'G', 0x0D, 0x0A, 0x1A, 0x0A, 0x00};
 
     @Mock
     private AnimalRepositoryPort animalRepository;
@@ -53,8 +52,12 @@ class PublicarAnimalServiceTest {
     }
 
     private PublicarAnimalUseCase.Comando comando(String email, ImagenArchivo foto) {
+        return comando(email, null, foto);
+    }
+
+    private PublicarAnimalUseCase.Comando comando(String email, String fotoUrl, ImagenArchivo foto) {
         return new PublicarAnimalUseCase.Comando(email, "  Firulais  ", EspecieAnimal.PERRO,
-                "Criollo", 12, SexoAnimal.MACHO, "Muy cariñoso", null, "Fusagasugá",
+                "Criollo", 12, SexoAnimal.MACHO, "Muy cariñoso", fotoUrl, "Fusagasugá",
                 true, false, TipoPublicacion.ADOPCION, foto);
     }
 
@@ -97,15 +100,55 @@ class PublicarAnimalServiceTest {
     }
 
     @Test
-    void sube_la_imagen_y_guarda_la_url_devuelta() {
-        ImagenArchivo foto = new ImagenArchivo("firulais.jpg", "image/jpeg", JPEG);
+    void sube_la_imagen_sin_metadatos_y_guarda_la_url_devuelta() {
+        ImagenArchivo foto = new ImagenArchivo("firulais.jpg", "image/jpeg", ImagenesDePrueba.jpegConMetadatos(6));
         when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor()));
-        when(imagenStorage.subirImagen(foto)).thenReturn(URL_FOTO);
+        when(imagenStorage.subirImagen(any(ImagenArchivo.class))).thenReturn(URL_FOTO);
         when(animalRepository.guardar(any(Animal.class))).thenAnswer(inv -> inv.getArgument(0));
 
         Animal resultado = service.publicar(comando("v@test.com", foto));
 
         assertThat(resultado.fotoUrl()).isEqualTo(URL_FOTO);
+        ArgumentCaptor<ImagenArchivo> subida = ArgumentCaptor.forClass(ImagenArchivo.class);
+        verify(imagenStorage).subirImagen(subida.capture());
+        byte[] contenido = subida.getValue().getContenido();
+        assertThat(ImagenesDePrueba.contiene(contenido, ImagenesDePrueba.MARCA_GPS)).isFalse();
+        assertThat(ImagenesDePrueba.contiene(contenido, ImagenesDePrueba.MARCA_TELEFONO)).isFalse();
+    }
+
+    @Test
+    void rechaza_un_enlace_a_una_foto_de_otro_servidor() {
+        when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor()));
+        when(imagenStorage.esUrlPropia("https://rastreador.ejemplo.com/pixel.png")).thenReturn(false);
+
+        assertThrows(ImagenInvalidaException.class,
+                () -> service.publicar(comando("v@test.com", "https://rastreador.ejemplo.com/pixel.png", null)));
+        verify(animalRepository, never()).guardar(any());
+    }
+
+    @Test
+    void acepta_un_enlace_a_una_foto_del_almacenamiento_propio() {
+        when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor()));
+        when(imagenStorage.esUrlPropia(URL_FOTO)).thenReturn(true);
+        when(animalRepository.guardar(any(Animal.class))).thenAnswer(inv -> inv.getArgument(0));
+
+        Animal resultado = service.publicar(comando("v@test.com", URL_FOTO, null));
+
+        assertThat(resultado.fotoUrl()).isEqualTo(URL_FOTO);
+        verify(imagenStorage, never()).subirImagen(any());
+    }
+
+    @Test
+    void si_no_se_puede_guardar_la_publicacion_borra_la_foto_que_ya_habia_subido() {
+        ImagenArchivo foto = new ImagenArchivo("firulais.png", "image/png", ImagenesDePrueba.png());
+        when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor()));
+        when(imagenStorage.subirImagen(any(ImagenArchivo.class))).thenReturn(URL_FOTO);
+        when(imagenStorage.esUrlPropia(URL_FOTO)).thenReturn(true);
+        when(animalRepository.guardar(any(Animal.class))).thenThrow(new IllegalStateException("base de datos caída"));
+
+        assertThrows(IllegalStateException.class, () -> service.publicar(comando("v@test.com", foto)));
+
+        verify(imagenStorage).eliminarImagen(URL_FOTO);
     }
 
     @Test
@@ -130,9 +173,10 @@ class PublicarAnimalServiceTest {
 
     @Test
     void no_publica_el_animal_si_el_servicio_externo_falla() {
-        ImagenArchivo foto = new ImagenArchivo("firulais.png", "image/png", PNG);
+        ImagenArchivo foto = new ImagenArchivo("firulais.png", "image/png", ImagenesDePrueba.png());
         when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor()));
-        when(imagenStorage.subirImagen(foto)).thenThrow(new AlmacenamientoImagenException(new RuntimeException("sin red")));
+        when(imagenStorage.subirImagen(any(ImagenArchivo.class)))
+                .thenThrow(new AlmacenamientoImagenException(new RuntimeException("sin red")));
 
         assertThrows(AlmacenamientoImagenException.class, () -> service.publicar(comando("v@test.com", foto)));
         verify(animalRepository, never()).guardar(any());

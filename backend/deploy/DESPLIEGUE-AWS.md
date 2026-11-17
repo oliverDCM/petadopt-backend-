@@ -2,8 +2,8 @@
 
 ```
                          ┌──────────── AWS (Ohio, us-east-2) ─────────────┐
- Navegador ──HTTP:80──►  │  EC2 (Docker)                                   │
-                         │   ├─ frontend (nginx) ──/api──► backend ────────┼──► RDS PostgreSQL (privada)
+ Navegador ─HTTPS:443─►  │  EC2 (Docker)                                   │
+                         │   Caddy ─► frontend (nginx) ─/api─► backend ────┼──► RDS PostgreSQL (privada)
                          │   └─ mailpit                       │            │
                          │                                    └────────────┼──► S3 (fotos)
                          └─────────────────────────────────────────────────┘
@@ -42,7 +42,7 @@ Todo en la región **Ohio (`us-east-2`)**, la misma del bucket. Revisa la regió
 | Imagen (AMI) | **Ubuntu Server 24.04 LTS** |
 | Tipo | **t3.small** (2 GB). Usa créditos del plan gratis; `t3.micro` también sirve, pero va justo de memoria |
 | Par de claves | **Crear nuevo par de claves** → `petadopt`, RSA, `.pem` → se descarga `petadopt.pem`. Guárdalo bien y **nunca** lo subas a GitHub |
-| Red | Marca **Permitir tráfico SSH desde: Cualquier lugar** y **Permitir tráfico HTTP desde Internet** |
+| Red | Marca **Permitir tráfico SSH desde: Cualquier lugar**, **Permitir tráfico HTTPS desde Internet** y **Permitir tráfico HTTP desde Internet** |
 | Almacenamiento | **20 GiB gp3** |
 
 Luego haz clic en **Lanzar instancia**.
@@ -108,6 +108,23 @@ mkdir -p ~/petadopt/logs/backend && nano ~/petadopt/.env
 ```
 
 En `nano`, pega `deploy/env.produccion.example` con tus valores: `DB_HOST`, `DB_PASSWORD`, `JWT_SECRET`, las `S3_*` y `PUBLIC_URL=http://<IP_ELASTICA>`. Guarda con Ctrl+O, Enter y Ctrl+X. Para generar el JWT usa `openssl rand -base64 48`.
+
+## 3.1 HTTPS (necesita un dominio)
+
+Sin HTTPS, las contraseñas y las sesiones viajan en texto plano: cualquiera en la misma red wifi puede leerlas. Para una demostración con la IP sirve HTTP, pero para dejar la app pública hace falta un dominio.
+
+1. Consigue un dominio o subdominio y crea un registro **A** que apunte a la IP elástica.
+2. En `~/petadopt/.env` del servidor pon:
+   ```
+   PUBLIC_URL=https://tudominio.com
+   SITIO=tudominio.com
+   ```
+3. En GitHub, en el repo del frontend, crea la variable `APP_URL` con `https://tudominio.com` (pestaña **Variables**).
+4. Aplica el cambio: `docker compose -f docker-compose.prod.yml up -d`.
+
+Caddy pide solo el certificado a Let's Encrypt, lo renueva y redirige HTTP a HTTPS. Los puertos 80 y 443 deben estar abiertos en el grupo de seguridad.
+
+Sin dominio, deja `SITIO=:80` y `PUBLIC_URL=http://<IP_ELASTICA>`.
 
 ## 4. SonarCloud
 

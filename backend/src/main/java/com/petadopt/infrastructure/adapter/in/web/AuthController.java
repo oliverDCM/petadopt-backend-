@@ -73,7 +73,8 @@ public class AuthController {
     }
 
     @Operation(summary = "Iniciar sesión",
-            description = "Devuelve un token JWT (válido 24 horas). Úsalo con el botón Authorize.")
+            description = "Devuelve un token JWT (válido 2 horas). Úsalo con el botón Authorize. "
+                    + "Tras 5 intentos fallidos sobre una cuenta desde la misma IP se bloquea 15 minutos.")
     @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(
             mediaType = "application/json",
             examples = @ExampleObject(value = ApiEjemplos.LOGIN_REQUEST)))
@@ -85,12 +86,13 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Datos inválidos",
                     content = @Content(mediaType = "application/json",
                             examples = @ExampleObject(value = ApiEjemplos.ERROR_VALIDACION))),
-            @ApiResponse(responseCode = "401", description = "Email o contraseña incorrectos")
+            @ApiResponse(responseCode = "401", description = "Email o contraseña incorrectos"),
+            @ApiResponse(responseCode = "429", description = "Demasiados intentos fallidos desde esta dirección")
     })
     @PostMapping("/login")
-    public LoginResponse login(@Valid @RequestBody LoginRequest req) {
+    public LoginResponse login(@Valid @RequestBody LoginRequest req, HttpServletRequest request) {
         IniciarSesionUseCase.Resultado r = iniciarSesion.iniciarSesion(
-                new IniciarSesionUseCase.Comando(req.email(), req.password()));
+                new IniciarSesionUseCase.Comando(req.email(), req.password(), request.getRemoteAddr()));
         return new LoginResponse(r.token(), r.rol(), r.nombre(), r.email());
     }
 

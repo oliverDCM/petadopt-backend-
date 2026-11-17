@@ -1,6 +1,7 @@
 package com.petadopt.infrastructure.config;
 
 import com.petadopt.application.port.out.TokenServicePort;
+import com.petadopt.application.port.out.UsuarioRepositoryPort;
 import com.petadopt.infrastructure.adapter.in.web.security.JwtAuthFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,6 +13,8 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -30,8 +33,20 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    /**
+     * La autenticación es solo por JWT. Declarar este bean evita que Spring Boot cree el usuario
+     * por defecto "user" y escriba su contraseña generada en el log.
+     */
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, TokenServicePort tokenService) throws Exception {
+    public UserDetailsService userDetailsService() {
+        return username -> {
+            throw new UsernameNotFoundException("La autenticación es solo por token JWT");
+        };
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http, TokenServicePort tokenService,
+                                           UsuarioRepositoryPort usuarioRepository) throws Exception {
         http
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
@@ -45,7 +60,6 @@ public class SecurityConfig {
                                         "No tienes permiso para realizar esta acción")))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/health").permitAll()
                         .requestMatchers(HttpMethod.GET, "/actuator/health", "/actuator/health/**", "/actuator/info")
                         .permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login",
@@ -55,7 +69,8 @@ public class SecurityConfig {
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(new JwtAuthFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthFilter(tokenService, usuarioRepository),
+                        UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
@@ -64,8 +79,10 @@ public class SecurityConfig {
             @Value("${app.cors.allowed-origins:http://localhost:4200}") List<String> origenesPermitidos) {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(origenesPermitidos);
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        // El catálogo paginado informa el total de resultados en esta cabecera
+        config.setExposedHeaders(List.of("X-Total-Count"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);

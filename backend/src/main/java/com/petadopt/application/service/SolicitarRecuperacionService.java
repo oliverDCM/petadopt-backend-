@@ -49,7 +49,8 @@ public class SolicitarRecuperacionService implements SolicitarRecuperacionUseCas
         String email = comando.email().trim().toLowerCase(Locale.ROOT);
 
         // El límite se aplica exista o no la cuenta, para no revelar qué emails están registrados.
-        if (!limitador.intentar("email:" + email) || !limitador.intentar("ip:" + comando.ip())) {
+        // Primero la IP: una IP ya bloqueada no puede gastar la cuota de otro email ni llenar la memoria de claves.
+        if (!limitador.intentar("ip:" + comando.ip()) || !limitador.intentar("email:" + email)) {
             throw new LimiteSolicitudesExcedidoException();
         }
 

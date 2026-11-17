@@ -12,6 +12,12 @@ public interface SolicitudRepositoryPort {
 
     Optional<Solicitud> buscarPorId(Long id);
 
+    /** Id del animal de una solicitud, sin cargar la solicitud (para bloquear primero el animal). */
+    Optional<Long> buscarAnimalId(Long solicitudId);
+
+    /** Solicitudes PENDIENTES o APROBADAS de un animal. */
+    List<Solicitud> listarActivasPorAnimal(Long animalId);
+
     List<Solicitud> listarPorSolicitante(Long solicitanteId);
 
     List<Solicitud> listarPorVendedor(Long vendedorId);

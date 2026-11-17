@@ -29,7 +29,7 @@ final class PlantillasCorreo {
                   Ciudad:   %s
                 """.formatted(nombreAdoptante, nombreAnimal, nombreVendedor, emailVendedor,
                 valor(telefonoVendedor), valor(ciudadVendedor));
-        return new Correo("Tu solicitud por " + nombreAnimal + " fue aprobada", cuerpo + FIRMA);
+        return new Correo("Tu solicitud por " + enUnaLinea(nombreAnimal) + " fue aprobada", cuerpo + FIRMA);
     }
 
     static Correo solicitudAprobadaParaVendedor(String nombreVendedor, String nombreAnimal,
@@ -50,7 +50,23 @@ final class PlantillasCorreo {
                 Cuando se complete la entrega, marca el animal como ADOPTADO en "Mis publicaciones".
                 """.formatted(nombreVendedor, nombreAnimal, nombreAdoptante, emailAdoptante,
                 valor(telefonoAdoptante), valor(ciudadAdoptante));
-        return new Correo("Aprobaste la solicitud por " + nombreAnimal, cuerpo + FIRMA);
+        return new Correo("Aprobaste la solicitud por " + enUnaLinea(nombreAnimal), cuerpo + FIRMA);
+    }
+
+    static Correo solicitudCerrada(String nombreAdoptante, String nombreAnimal, boolean estabaAprobada) {
+        String motivo = estabaAprobada
+                ? "Quien publicó a %s canceló la reserva que tenías aprobada.".formatted(nombreAnimal)
+                : "Quien publicó a %s retiró la publicación antes de responder tu solicitud.".formatted(nombreAnimal);
+        String cuerpo = """
+                Hola %s,
+
+                %s
+                Tu solicitud quedó cerrada y ya no se comparten datos de contacto.
+
+                En el catálogo de PetAdopt hay más animales esperando un hogar.
+
+                """.formatted(nombreAdoptante, motivo);
+        return new Correo("Tu solicitud por " + enUnaLinea(nombreAnimal) + " fue cerrada", cuerpo + FIRMA);
     }
 
     static Correo recuperacionContrasena(String nombre, String enlace, long minutosVigencia) {
@@ -76,6 +92,11 @@ final class PlantillasCorreo {
                 Si no fuiste tú, solicita de inmediato una nueva recuperación de contraseña.
                 """.formatted(nombre);
         return new Correo("Tu contraseña de PetAdopt fue cambiada", cuerpo + FIRMA);
+    }
+
+    /** Para el asunto: el texto que escribió un usuario no puede partir la cabecera ni la línea del log. */
+    static String enUnaLinea(String texto) {
+        return texto == null ? "" : texto.replaceAll("\\p{Cntrl}+", " ").trim();
     }
 
     private static String valor(String dato) {

@@ -6,6 +6,7 @@ import com.petadopt.domain.exception.AnimalNoEncontradoException;
 import com.petadopt.domain.exception.ContactoNoDisponibleException;
 import com.petadopt.domain.exception.ContrasenaInvalidaException;
 import com.petadopt.domain.exception.CredencialesInvalidasException;
+import com.petadopt.domain.exception.DemasiadosIntentosException;
 import com.petadopt.domain.exception.EmailYaRegistradoException;
 import com.petadopt.domain.exception.ImagenInvalidaException;
 import com.petadopt.domain.exception.LimiteSolicitudesExcedidoException;
@@ -126,9 +127,8 @@ public class GlobalExceptionHandler {
 
     // ---------- 429 / 502 ----------
 
-    @ExceptionHandler(LimiteSolicitudesExcedidoException.class)
-    public ResponseEntity<ErrorResponse> demasiadasSolicitudes(LimiteSolicitudesExcedidoException ex,
-                                                               HttpServletRequest req) {
+    @ExceptionHandler({LimiteSolicitudesExcedidoException.class, DemasiadosIntentosException.class})
+    public ResponseEntity<ErrorResponse> demasiadasSolicitudes(RuntimeException ex, HttpServletRequest req) {
         return responder(HttpStatus.TOO_MANY_REQUESTS, ex.getMessage(), req);
     }
 

@@ -9,7 +9,12 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "animales")
+@Table(name = "animales", indexes = {
+        // Catálogo: filtra por estado y ordena por fecha
+        @Index(name = "idx_animales_estado_fecha", columnList = "estado, fecha_publicacion"),
+        // "Mis publicaciones" (PostgreSQL no crea índices para las llaves foráneas)
+        @Index(name = "idx_animales_vendedor", columnList = "vendedor_id")
+})
 public class AnimalEntity {
 
     @Id

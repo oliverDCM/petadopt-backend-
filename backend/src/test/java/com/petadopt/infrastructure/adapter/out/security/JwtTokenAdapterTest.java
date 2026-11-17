@@ -25,7 +25,8 @@ class JwtTokenAdapterTest {
         String token = adaptador.generar(ana);
         Optional<DatosToken> datos = adaptador.validar(token);
 
-        assertThat(datos).contains(new DatosToken(7L, "ana@correo.com", Rol.ADOPTANTE));
+        assertThat(datos).contains(
+                new DatosToken(7L, "ana@correo.com", Rol.ADOPTANTE, adaptador.huellaCredencial(ana)));
     }
 
     @Test
@@ -58,6 +59,29 @@ class JwtTokenAdapterTest {
 
         assertThat(adaptador.validar("esto-no-es-un-jwt")).isEmpty();
         assertThat(adaptador.validar("")).isEmpty();
+    }
+
+    @Test
+    void laHuellaCambiaCuandoCambiaLaContrasena() {
+        var adaptador = new JwtTokenAdapter(SECRETO, UN_DIA_MS);
+
+        String antes = adaptador.huellaCredencial(ana);
+        String despues = adaptador.huellaCredencial(ana.conPassword("otro-hash"));
+
+        assertThat(antes).isEqualTo(adaptador.huellaCredencial(ana)); // estable para la misma contraseña
+        assertThat(despues).isNotEqualTo(antes);
+    }
+
+    @Test
+    void elTokenNoContieneElHashDeLaContrasena() {
+        var adaptador = new JwtTokenAdapter(SECRETO, UN_DIA_MS);
+
+        String token = adaptador.generar(ana);
+        String cuerpo = new String(java.util.Base64.getUrlDecoder().decode(token.split("\\.")[1]),
+                java.nio.charset.StandardCharsets.UTF_8);
+
+        assertThat(cuerpo).doesNotContain("hash");
+        assertThat(adaptador.huellaCredencial(ana)).hasSize(16);
     }
 
     @Test

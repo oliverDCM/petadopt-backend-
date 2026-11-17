@@ -4,7 +4,11 @@
 #   SonarQube: http://localhost:9000
 #   Mailpit:   http://localhost:8025   (bandeja donde llegan los correos de desarrollo)
 #   Logs:      carpeta petadopt/logs/backend
-# Los secretos (AWS S3, JWT, SMTP real) van en un archivo .env junto a este compose, nunca en el código.
+# Los secretos van en un archivo .env junto a este compose (plantilla: .env.example), nunca en el código.
+# Sin POSTGRES_PASSWORD o JWT_SECRET en el .env, docker compose se niega a arrancar: no hay valores por defecto
+# porque un secreto escrito en el repositorio lo conoce cualquiera.
+# Solo la app (4200) es visible desde la red; la base de datos, pgAdmin, Mailpit, SonarQube y el backend
+# escuchan únicamente en este equipo (127.0.0.1).
 services:
   db:
     image: postgres:15
@@ -13,9 +17,9 @@ services:
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-petadopt}
       POSTGRES_USER: ${POSTGRES_USER:-petadopt}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-123456}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Falta POSTGRES_PASSWORD en el archivo .env}
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -32,8 +36,8 @@ services:
     container_name: petadopt-mailpit
     restart: unless-stopped
     ports:
-      - "1025:1025"
-      - "8025:8025"
+      - "127.0.0.1:1025:1025"
+      - "127.0.0.1:8025:8025"
     networks:
       - petadopt-net
 
@@ -50,8 +54,8 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-petadopt}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-petadopt}
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-123456}
-      JWT_SECRET: ${JWT_SECRET:-cambia_este_secreto_largo_minimo_32_caracteres_aaaa}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET:?Falta JWT_SECRET en el archivo .env (mínimo 32 caracteres)}
       S3_REGION: ${S3_REGION:-us-east-1}
       S3_BUCKET: ${S3_BUCKET:-}
       S3_ACCESS_KEY: ${S3_ACCESS_KEY:-}
@@ -74,9 +78,9 @@ services:
     # Los logs quedan en tu equipo, en petadopt/logs/backend (fuera del proyecto y del contenedor)
     volumes:
       - ./logs/backend:/app/logs
-    # Solo accesible desde la red interna; el frontend (nginx) le reenvía /api
-    expose:
-      - "8080"
+    # Solo accesible desde este PC (pruebas de carga, actuator); no desde la red
+    ports:
+      - "127.0.0.1:8080:8080"
     networks:
       - petadopt-net
 
@@ -99,9 +103,9 @@ services:
     restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@petadopt.com
-      PGADMIN_DEFAULT_PASSWORD: admin123
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin123}
     ports:
-      - "5050:80"
+      - "127.0.0.1:5050:80"
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     depends_on:
@@ -116,7 +120,7 @@ services:
     environment:
       SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
     ports:
-      - "9000:9000"
+      - "127.0.0.1:9000:9000"
     volumes:
       - sonarqube-data:/opt/sonarqube/data
       - sonarqube-extensions:/opt/sonarqube/extensions

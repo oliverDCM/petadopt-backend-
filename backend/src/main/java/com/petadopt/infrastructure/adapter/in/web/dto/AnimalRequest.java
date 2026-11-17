@@ -10,14 +10,17 @@ import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
 public record AnimalRequest(
-        @NotBlank @Size(max = 100) String nombre,
+        @NotBlank @Size(max = 100) @Pattern(regexp = "[^\\p{Cntrl}]*", message = "no puede contener saltos de línea ni caracteres de control")
+        String nombre,
         @NotNull EspecieAnimal especie,
-        @Size(max = 80) String raza,
+        @Size(max = 80) @Pattern(regexp = "[^\\p{Cntrl}]*", message = "no puede contener saltos de línea ni caracteres de control")
+        String raza,
         @PositiveOrZero Integer edadMeses,
         @NotNull SexoAnimal sexo,
         @Size(max = 1000) String descripcion,
         @Size(max = 500) @Pattern(regexp = "^(https://\\S+)?$", message = "debe ser una URL https") String fotoUrl,
-        @Size(max = 80) String ciudad,
+        @Size(max = 80) @Pattern(regexp = "[^\\p{Cntrl}]*", message = "no puede contener saltos de línea ni caracteres de control")
+        String ciudad,
         boolean vacunado,
         boolean esterilizado,
         @NotNull TipoPublicacion tipo

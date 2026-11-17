@@ -22,8 +22,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-import java.util.Map;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -52,11 +50,13 @@ class AuthYUsuarioControllerTest {
     }
 
     @Test
-    void login_devuelve_token_rol_nombre_y_email() {
-        when(iniciarSesion.iniciarSesion(new IniciarSesionUseCase.Comando("ana@test.com", "12345678")))
+    void login_usa_la_ip_del_cliente_y_devuelve_token_rol_nombre_y_email() {
+        MockHttpServletRequest http = new MockHttpServletRequest();
+        http.setRemoteAddr("10.0.0.7");
+        when(iniciarSesion.iniciarSesion(new IniciarSesionUseCase.Comando("ana@test.com", "12345678", "10.0.0.7")))
                 .thenReturn(new IniciarSesionUseCase.Resultado("jwt", Rol.ADOPTANTE, "Ana", "ana@test.com"));
 
-        LoginResponse r = auth.login(new LoginRequest("ana@test.com", "12345678"));
+        LoginResponse r = auth.login(new LoginRequest("ana@test.com", "12345678"), http);
 
         assertThat(r.token()).isEqualTo("jwt");
         assertThat(r.rol()).isEqualTo(Rol.ADOPTANTE);
@@ -90,11 +90,5 @@ class AuthYUsuarioControllerTest {
                 .perfilPublico(2L, new UsernamePasswordAuthenticationToken("v@test.com", null));
 
         assertThat(r).isEqualTo(new PerfilPublicoResponse("Ana", "Bogotá", Rol.ADOPTANTE));
-    }
-
-    @Test
-    void health_responde_up() {
-        Map<String, String> r = new HealthController().health();
-        assertThat(r).containsEntry("status", "UP");
     }
 }

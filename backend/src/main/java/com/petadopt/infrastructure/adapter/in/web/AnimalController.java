@@ -10,6 +10,7 @@ import com.petadopt.domain.exception.ImagenInvalidaException;
 import com.petadopt.domain.model.Animal;
 import com.petadopt.domain.model.EspecieAnimal;
 import com.petadopt.domain.model.ImagenArchivo;
+import com.petadopt.domain.model.Pagina;
 import com.petadopt.domain.model.TipoPublicacion;
 import com.petadopt.infrastructure.adapter.in.web.docs.ApiEjemplos;
 import com.petadopt.infrastructure.adapter.in.web.dto.AnimalDetalleResponse;
@@ -50,6 +51,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/animales")
 public class AnimalController {
+
+    /** Total de animales que cumplen el filtro, sumando todas las páginas. */
+    public static final String CABECERA_TOTAL = "X-Total-Count";
 
     private final PublicarAnimalUseCase publicarAnimal;
     private final ListarAnimalesUseCase listarAnimales;
@@ -122,20 +126,25 @@ public class AnimalController {
     }
 
     @Operation(summary = "Consultar el catálogo",
-            description = "Público: lista los animales con estado DISPONIBLE, del más reciente al más antiguo. "
+            description = "Público y paginado: animales con estado DISPONIBLE, del más reciente al más antiguo. "
+                    + "El total de resultados va en la cabecera X-Total-Count. "
                     + "Filtros opcionales: especie, tipo y ciudad (no distingue mayúsculas ni tildes).")
     @ApiResponse(responseCode = "200", description = "Animales disponibles",
             content = @Content(mediaType = "application/json",
                     array = @ArraySchema(schema = @Schema(implementation = AnimalResponse.class)),
                     examples = @ExampleObject(value = "[" + ApiEjemplos.ANIMAL_RESPONSE + "]")))
     @GetMapping
-    public List<AnimalResponse> listar(
+    public ResponseEntity<List<AnimalResponse>> listar(
             @Parameter(description = "PERRO, GATO u OTRO") @RequestParam(required = false) EspecieAnimal especie,
             @Parameter(description = "ADOPCION o VENTA") @RequestParam(required = false) TipoPublicacion tipo,
-            @Parameter(description = "Parte del nombre de la ciudad") @RequestParam(required = false) String ciudad) {
-        return listarAnimales.listarDisponibles(new ListarAnimalesUseCase.Filtro(especie, tipo, ciudad)).stream()
-                .map(AnimalResponse::desde)
-                .toList();
+            @Parameter(description = "Parte del nombre de la ciudad") @RequestParam(required = false) String ciudad,
+            @Parameter(description = "Número de página, desde 0") @RequestParam(defaultValue = "0") int pagina,
+            @Parameter(description = "Animales por página (máximo 100)") @RequestParam(defaultValue = "24") int tamano) {
+        Pagina<Animal> resultado = listarAnimales.listarDisponibles(
+                new ListarAnimalesUseCase.Filtro(especie, tipo, ciudad, pagina, tamano));
+        return ResponseEntity.ok()
+                .header(CABECERA_TOTAL, String.valueOf(resultado.total()))
+                .body(resultado.contenido().stream().map(AnimalResponse::desde).toList());
     }
 
     @Operation(summary = "Detalle de un animal",

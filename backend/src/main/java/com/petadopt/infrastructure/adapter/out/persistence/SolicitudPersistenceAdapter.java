@@ -35,6 +35,18 @@ public class SolicitudPersistenceAdapter implements SolicitudRepositoryPort {
     }
 
     @Override
+    public Optional<Long> buscarAnimalId(Long solicitudId) {
+        return jpaRepository.buscarAnimalId(solicitudId);
+    }
+
+    @Override
+    public List<Solicitud> listarActivasPorAnimal(Long animalId) {
+        return jpaRepository.findByAnimalIdAndEstadoIn(animalId,
+                        List.of(EstadoSolicitud.PENDIENTE, EstadoSolicitud.APROBADA))
+                .stream().map(this::toDomain).toList();
+    }
+
+    @Override
     public List<Solicitud> listarPorSolicitante(Long solicitanteId) {
         return jpaRepository.findBySolicitanteId(solicitanteId).stream().map(this::toDomain).toList();
     }

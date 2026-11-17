@@ -21,8 +21,9 @@ public class RegistrarUsuarioService implements RegistrarUsuarioUseCase {
 
     @Override
     public Usuario registrar(Comando comando) {
-        String email = comando.email().trim().toLowerCase();
+        String email = comando.email().trim().toLowerCase(java.util.Locale.ROOT);
 
+        ReglasContrasena.validar(comando.password());
         if (usuarioRepository.existePorEmail(email)) {
             throw new EmailYaRegistradoException(email);
         }

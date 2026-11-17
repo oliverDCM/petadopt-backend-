@@ -30,7 +30,7 @@ public class RegistroPeticionesFilter extends OncePerRequestFilter {
     public static final String CLAVE_MDC = "requestId";
 
     private static final Logger log = LoggerFactory.getLogger(RegistroPeticionesFilter.class);
-    private static final Set<String> RUTAS_SILENCIOSAS = Set.of("/api/health", "/actuator/health");
+    private static final Set<String> RUTAS_SILENCIOSAS = Set.of("/actuator/health");
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,

@@ -16,6 +16,12 @@ public interface TokenServicePort {
     /** Devuelve los datos del token si es válido (firma correcta y no vencido). */
     Optional<DatosToken> validar(String token);
 
-    record DatosToken(Long usuarioId, String email, Rol rol) {
+    /**
+     * Huella de las credenciales de un usuario. Va dentro del token; cuando el usuario cambia su
+     * contraseña la huella cambia y todos los tokens emitidos antes dejan de ser válidos.
+     */
+    String huellaCredencial(Usuario usuario);
+
+    record DatosToken(Long usuarioId, String email, Rol rol, String huellaCredencial) {
     }
 }

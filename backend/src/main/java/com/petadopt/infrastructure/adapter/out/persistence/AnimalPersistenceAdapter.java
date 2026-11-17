@@ -2,7 +2,12 @@ package com.petadopt.infrastructure.adapter.out.persistence;
 
 import com.petadopt.application.port.out.AnimalRepositoryPort;
 import com.petadopt.domain.model.Animal;
+import com.petadopt.domain.model.EspecieAnimal;
 import com.petadopt.domain.model.EstadoAnimal;
+import com.petadopt.domain.model.Pagina;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import com.petadopt.domain.model.TipoPublicacion;
 
@@ -39,13 +44,28 @@ public class AnimalPersistenceAdapter implements AnimalRepositoryPort {
     }
 
     @Override
-    public List<Animal> listarPorEstado(EstadoAnimal estado) {
-        return jpaRepository.findByEstado(estado).stream().map(this::toDomain).toList();
+    public Pagina<Animal> buscar(EstadoAnimal estado, EspecieAnimal especie, TipoPublicacion tipo,
+                                 String ciudadNormalizada, int pagina, int tamano) {
+        // El id desempata animales publicados en el mismo instante: el orden entre páginas es estable
+        Sort orden = Sort.by(Sort.Order.desc("fechaPublicacion"), Sort.Order.desc("id"));
+        Page<AnimalEntity> resultado = jpaRepository.buscarCatalogo(estado, especie, tipo,
+                patronLike(ciudadNormalizada), PageRequest.of(pagina, tamano, orden));
+        return new Pagina<>(resultado.getContent().stream().map(this::toDomain).toList(),
+                resultado.getTotalElements(), pagina, tamano);
+    }
+
+    /** "%texto%" escapando los comodines que escriba el usuario (el carácter de escape es '!'). */
+    static String patronLike(String texto) {
+        if (texto == null || texto.isBlank()) {
+            return null;
+        }
+        return "%" + texto.replace("!", "!!").replace("%", "!%").replace("_", "!_") + "%";
     }
 
     @Override
     public List<Animal> listarPorVendedor(Long vendedorId) {
-        return jpaRepository.findByVendedorId(vendedorId).stream().map(this::toDomain).toList();
+        return jpaRepository.findByVendedorIdOrderByFechaPublicacionDescIdDesc(vendedorId)
+                .stream().map(this::toDomain).toList();
     }
 
     private AnimalEntity toEntity(Animal a) {

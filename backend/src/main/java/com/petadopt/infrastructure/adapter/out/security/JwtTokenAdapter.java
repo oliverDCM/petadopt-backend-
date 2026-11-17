@@ -12,6 +12,10 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Optional;
 
@@ -20,6 +24,7 @@ import java.util.Optional;
 public class JwtTokenAdapter implements TokenServicePort {
 
     private static final int LONGITUD_MINIMA_SECRETO = 32;
+    private static final String CLAIM_HUELLA = "cred";
 
     private final SecretKey clave;
     private final long expiracionMs;
@@ -42,6 +47,7 @@ public class JwtTokenAdapter implements TokenServicePort {
                 .subject(String.valueOf(usuario.id()))
                 .claim("email", usuario.email())
                 .claim("rol", usuario.rol().name())
+                .claim(CLAIM_HUELLA, huellaCredencial(usuario))
                 .issuedAt(ahora)
                 .expiration(new Date(ahora.getTime() + expiracionMs))
                 .signWith(clave)
@@ -59,10 +65,23 @@ public class JwtTokenAdapter implements TokenServicePort {
             return Optional.of(new DatosToken(
                     Long.valueOf(claims.getSubject()),
                     claims.get("email", String.class),
-                    Rol.valueOf(claims.get("rol", String.class))));
-        } catch (JwtException | IllegalArgumentException e) {
+                    Rol.valueOf(claims.get("rol", String.class)),
+                    claims.get(CLAIM_HUELLA, String.class)));
+        } catch (JwtException | IllegalArgumentException | NullPointerException e) {
             // firma inválida, token vencido, mal formado o con datos inesperados
             return Optional.empty();
+        }
+    }
+
+    /** SHA-256 del hash BCrypt guardado, recortado: no permite recuperar ni la contraseña ni su hash. */
+    @Override
+    public String huellaCredencial(Usuario usuario) {
+        try {
+            byte[] digest = MessageDigest.getInstance("SHA-256")
+                    .digest(usuario.password().getBytes(StandardCharsets.UTF_8));
+            return Base64.getUrlEncoder().withoutPadding().encodeToString(Arrays.copyOf(digest, 12));
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException("SHA-256 no está disponible en la JVM", e);
         }
     }
 }

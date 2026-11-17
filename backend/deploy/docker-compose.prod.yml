@@ -72,9 +72,9 @@ services:
     depends_on:
       backend:
         condition: service_healthy
-    # Único puerto público: la app en http://<IP del servidor>/ ; nginx reenvía /api al backend
-    ports:
-      - "80:8080"
+    # Sin puertos públicos: solo Caddy (abajo) habla con el frontend, y nginx reenvía /api al backend
+    expose:
+      - "8080"
     logging:
       driver: json-file
       options:
@@ -82,6 +82,31 @@ services:
         max-file: "3"
     networks:
       - petadopt-net
+
+  # Única puerta de entrada desde internet. Con SITIO=:80 sirve HTTP (para probar con la IP).
+  # Con SITIO=tudominio.com pide solo un certificado de Let's Encrypt, sirve HTTPS y redirige HTTP a HTTPS:
+  # así las contraseñas y los tokens dejan de viajar en texto plano.
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on:
+      - frontend
+    command: caddy reverse-proxy --from ${SITIO:-:80} --to frontend:8080
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - caddy-data:/data   # certificados: se conservan al recrear el contenedor
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - petadopt-net
+
+volumes:
+  caddy-data:
 
 networks:
   petadopt-net:

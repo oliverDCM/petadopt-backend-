@@ -24,6 +24,7 @@ import com.petadopt.domain.model.Usuario;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -39,6 +40,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -84,6 +86,7 @@ class DecidirSolicitudServiceTest {
         Solicitud principal = solicitud(5L, EstadoSolicitud.PENDIENTE);
         Solicitud otra = solicitud(6L, EstadoSolicitud.PENDIENTE);
         when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor));
+        when(solicitudRepository.buscarAnimalId(5L)).thenReturn(Optional.of(10L));
         when(solicitudRepository.buscarPorId(5L)).thenReturn(Optional.of(principal));
         when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(animal(1L)));
         when(solicitudRepository.guardar(any(Solicitud.class))).thenAnswer(inv -> inv.getArgument(0));
@@ -108,6 +111,7 @@ class DecidirSolicitudServiceTest {
     @Test
     void rechazar_no_cambia_el_estado_del_animal() {
         when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor));
+        when(solicitudRepository.buscarAnimalId(5L)).thenReturn(Optional.of(10L));
         when(solicitudRepository.buscarPorId(5L)).thenReturn(Optional.of(solicitud(5L, EstadoSolicitud.PENDIENTE)));
         when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(animal(1L)));
         when(solicitudRepository.guardar(any(Solicitud.class))).thenAnswer(inv -> inv.getArgument(0));
@@ -121,6 +125,7 @@ class DecidirSolicitudServiceTest {
     @Test
     void rechaza_decision_de_quien_no_es_dueno_del_animal() {
         when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor));
+        when(solicitudRepository.buscarAnimalId(5L)).thenReturn(Optional.of(10L));
         when(solicitudRepository.buscarPorId(5L)).thenReturn(Optional.of(solicitud(5L, EstadoSolicitud.PENDIENTE)));
         when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(animal(99L)));
 
@@ -131,6 +136,7 @@ class DecidirSolicitudServiceTest {
     @Test
     void rechaza_solicitud_ya_decidida() {
         when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor));
+        when(solicitudRepository.buscarAnimalId(5L)).thenReturn(Optional.of(10L));
         when(solicitudRepository.buscarPorId(5L)).thenReturn(Optional.of(solicitud(5L, EstadoSolicitud.APROBADA)));
         when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(animal(1L)));
 
@@ -141,7 +147,7 @@ class DecidirSolicitudServiceTest {
     @Test
     void rechaza_solicitud_inexistente() {
         when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor));
-        when(solicitudRepository.buscarPorId(77L)).thenReturn(Optional.empty());
+        when(solicitudRepository.buscarAnimalId(77L)).thenReturn(Optional.empty());
 
         assertThrows(SolicitudNoEncontradaException.class, () -> service.decidir(comando(77L, Decision.APROBAR)));
     }
@@ -150,6 +156,7 @@ class DecidirSolicitudServiceTest {
     void no_aprueba_si_el_animal_ya_no_esta_disponible() {
         Animal reservado = animal(1L).conEstado(EstadoAnimal.RESERVADO);
         when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor));
+        when(solicitudRepository.buscarAnimalId(5L)).thenReturn(Optional.of(10L));
         when(solicitudRepository.buscarPorId(5L)).thenReturn(Optional.of(solicitud(5L, EstadoSolicitud.PENDIENTE)));
         when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(reservado));
 
@@ -160,6 +167,7 @@ class DecidirSolicitudServiceTest {
 
     private void prepararAprobacion(Solicitud principal, List<Solicitud> pendientes) {
         when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor));
+        when(solicitudRepository.buscarAnimalId(principal.id())).thenReturn(Optional.of(10L));
         when(solicitudRepository.buscarPorId(principal.id())).thenReturn(Optional.of(principal));
         when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(animal(1L)));
         when(solicitudRepository.guardar(any(Solicitud.class))).thenAnswer(inv -> inv.getArgument(0));
@@ -212,6 +220,7 @@ class DecidirSolicitudServiceTest {
     @Test
     void rechazar_registra_historial_y_no_envia_correos() {
         when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor));
+        when(solicitudRepository.buscarAnimalId(5L)).thenReturn(Optional.of(10L));
         when(solicitudRepository.buscarPorId(5L)).thenReturn(Optional.of(solicitud(5L, EstadoSolicitud.PENDIENTE)));
         when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(animal(1L)));
         when(solicitudRepository.guardar(any(Solicitud.class))).thenAnswer(inv -> inv.getArgument(0));
@@ -220,5 +229,21 @@ class DecidirSolicitudServiceTest {
 
         verify(historialRepository).registrar(any(HistorialSolicitud.class));
         verify(emailSender, never()).enviar(anyString(), anyString(), anyString());
+    }
+
+    @Test
+    void bloquea_el_animal_antes_de_leer_la_solicitud_para_no_decidir_con_un_estado_viejo() {
+        when(usuarioRepository.buscarPorEmail("v@test.com")).thenReturn(Optional.of(vendedor));
+        when(solicitudRepository.buscarAnimalId(5L)).thenReturn(Optional.of(10L));
+        when(animalRepository.buscarPorIdParaActualizar(10L)).thenReturn(Optional.of(animal(1L)));
+        // cuando por fin se obtiene el bloqueo, otra petición ya decidió la solicitud
+        when(solicitudRepository.buscarPorId(5L)).thenReturn(Optional.of(solicitud(5L, EstadoSolicitud.APROBADA)));
+
+        assertThrows(SolicitudYaDecididaException.class, () -> service.decidir(comando(5L, Decision.RECHAZAR)));
+
+        InOrder orden = inOrder(animalRepository, solicitudRepository);
+        orden.verify(animalRepository).buscarPorIdParaActualizar(10L);
+        orden.verify(solicitudRepository).buscarPorId(5L);
+        verify(solicitudRepository, never()).guardar(any());
     }
 }

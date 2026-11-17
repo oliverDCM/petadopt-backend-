@@ -36,7 +36,8 @@ spring:
 
 jwt:
   secret: ${JWT_SECRET}
-  expiration-ms: 86400000
+  # 2 horas. Además, cambiar la contraseña invalida de inmediato todos los tokens anteriores.
+  expiration-ms: ${JWT_EXPIRATION_MS:7200000}
 
 # Fotos de los animales en Amazon S3 (o cualquier servicio compatible: Cloudflare R2, MinIO)
 s3:
@@ -60,6 +61,9 @@ app:
   recuperacion:
     max-intentos: ${RECUPERACION_MAX_INTENTOS:3}
     ventana-minutos: 60
+  # Fuerza bruta: tras 5 fallos sobre una cuenta (o 100 en total) desde una misma IP, se bloquea esta ventana
+  login:
+    ventana-minutos: ${LOGIN_VENTANA_MINUTOS:15}
 
 springdoc:
   api-docs:

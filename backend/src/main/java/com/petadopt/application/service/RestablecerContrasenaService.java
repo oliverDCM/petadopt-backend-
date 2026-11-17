@@ -5,7 +5,6 @@ import com.petadopt.application.port.out.EmailSenderPort;
 import com.petadopt.application.port.out.PasswordHasherPort;
 import com.petadopt.application.port.out.TokenRecuperacionRepositoryPort;
 import com.petadopt.application.port.out.UsuarioRepositoryPort;
-import com.petadopt.domain.exception.ContrasenaInvalidaException;
 import com.petadopt.domain.exception.TokenRecuperacionInvalidoException;
 import com.petadopt.domain.model.TokenRecuperacion;
 import com.petadopt.domain.model.Usuario;
@@ -18,8 +17,6 @@ import java.time.LocalDateTime;
 @Service
 public class RestablecerContrasenaService implements RestablecerContrasenaUseCase {
 
-    static final int LONGITUD_MINIMA = 8;
-    static final int LONGITUD_MAXIMA = 72; // límite de BCrypt
 
     private final TokenRecuperacionRepositoryPort tokenRepository;
     private final UsuarioRepositoryPort usuarioRepository;
@@ -43,9 +40,7 @@ public class RestablecerContrasenaService implements RestablecerContrasenaUseCas
     @Transactional
     public void restablecer(Comando comando) {
         String nueva = comando.nuevaPassword();
-        if (nueva == null || nueva.length() < LONGITUD_MINIMA || nueva.length() > LONGITUD_MAXIMA) {
-            throw new ContrasenaInvalidaException();
-        }
+        ReglasContrasena.validar(nueva);
         if (comando.token() == null || comando.token().isBlank()) {
             throw new TokenRecuperacionInvalidoException("El enlace de recuperación no es válido");
         }

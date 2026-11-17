@@ -5,6 +5,7 @@ import com.petadopt.domain.model.EspecieAnimal;
 import com.petadopt.domain.model.EstadoAnimal;
 import com.petadopt.domain.model.EstadoSolicitud;
 import com.petadopt.domain.model.HistorialSolicitud;
+import com.petadopt.domain.model.Pagina;
 import com.petadopt.domain.model.Rol;
 import com.petadopt.domain.model.SexoAnimal;
 import com.petadopt.domain.model.Solicitud;
@@ -14,6 +15,10 @@ import com.petadopt.domain.model.Usuario;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -83,13 +88,34 @@ class PersistenceAdaptersTest {
         AnimalPersistenceAdapter adapter = new AnimalPersistenceAdapter(animalRepo, usuarioRepo);
         when(animalRepo.findById(10L)).thenReturn(Optional.of(animalEntity));
         when(animalRepo.buscarBloqueadoPorId(10L)).thenReturn(Optional.of(animalEntity));
-        when(animalRepo.findByEstado(EstadoAnimal.DISPONIBLE)).thenReturn(List.of(animalEntity));
-        when(animalRepo.findByVendedorId(1L)).thenReturn(List.of(animalEntity));
+        when(animalRepo.findByVendedorIdOrderByFechaPublicacionDescIdDesc(1L)).thenReturn(List.of(animalEntity));
 
         assertThat(adapter.buscarPorId(10L)).map(Animal::nombre).contains("Lupe");
         assertThat(adapter.buscarPorIdParaActualizar(10L)).isPresent();
-        assertThat(adapter.listarPorEstado(EstadoAnimal.DISPONIBLE)).hasSize(1);
         assertThat(adapter.listarPorVendedor(1L)).extracting(Animal::vacunado).containsExactly(true);
+    }
+
+    @Test
+    void catalogo_se_pide_paginado_del_mas_reciente_al_mas_antiguo_y_con_la_ciudad_como_patron() {
+        AnimalPersistenceAdapter adapter = new AnimalPersistenceAdapter(animalRepo, usuarioRepo);
+        Pageable esperado = PageRequest.of(2, 10, Sort.by(Sort.Order.desc("fechaPublicacion"), Sort.Order.desc("id")));
+        when(animalRepo.buscarCatalogo(EstadoAnimal.DISPONIBLE, EspecieAnimal.PERRO, null, "%fusa%", esperado))
+                .thenReturn(new PageImpl<>(List.of(animalEntity), esperado, 21));
+
+        Pagina<Animal> pagina = adapter.buscar(EstadoAnimal.DISPONIBLE, EspecieAnimal.PERRO, null, "fusa", 2, 10);
+
+        assertThat(pagina.contenido()).extracting(Animal::nombre).containsExactly("Lupe");
+        assertThat(pagina.total()).isEqualTo(21);
+        assertThat(pagina.numero()).isEqualTo(2);
+        assertThat(pagina.tamano()).isEqualTo(10);
+    }
+
+    @Test
+    void los_comodines_que_escribe_el_usuario_se_escapan_en_el_patron_de_ciudad() {
+        assertThat(AnimalPersistenceAdapter.patronLike("bogota")).isEqualTo("%bogota%");
+        assertThat(AnimalPersistenceAdapter.patronLike("100%_real!")).isEqualTo("%100!%!_real!!%");
+        assertThat(AnimalPersistenceAdapter.patronLike(null)).isNull();
+        assertThat(AnimalPersistenceAdapter.patronLike("  ")).isNull();
     }
 
     // ---------- Solicitudes ----------

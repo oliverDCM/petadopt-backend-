@@ -22,7 +22,8 @@ import java.util.function.Supplier;
 /**
  * Adaptador de salida que guarda las fotos en Amazon S3 usando su API REST (PUT Object) firmada con
  * AWS Signature V4. Funciona igual con cualquier servicio compatible con S3 (Cloudflare R2, MinIO)
- * cambiando S3_ENDPOINT. Devuelve la URL pública con la que el frontend muestra la foto.
+ * cambiando S3_ENDPOINT. Devuelve la URL pública con la que el frontend muestra la foto y borra las fotos
+ * que dejan de usarse.
  */
 @Component
 public class S3StorageAdapter implements ImagenStoragePort {
@@ -112,6 +113,51 @@ public class S3StorageAdapter implements ImagenStoragePort {
         }
         log.info("Foto subida a S3: {}", llave);
         return urlPublica + "/" + FirmaAwsV4.codificarRuta(llave);
+    }
+
+    @Override
+    public boolean esUrlPropia(String url) {
+        return url != null && url.startsWith(prefijoPropio());
+    }
+
+    @Override
+    public void eliminarImagen(String url) {
+        if (!configurado || !esUrlPropia(url)) {
+            return;
+        }
+        String llave = url.substring(urlPublica.length() + 1);
+        if (llave.contains("..") || llave.contains("?") || llave.contains("#")) {
+            return; // nunca se firma un borrado para algo que no sea una llave simple dentro de la carpeta de fotos
+        }
+        String ruta = "/" + bucket + "/" + llave; // la llave viene de una URL: ya está codificada
+        URI destino = URI.create(endpoint + ruta);
+        byte[] sinCuerpo = new byte[0];
+        FirmaAwsV4.Firma f = firma.firmar("DELETE", host(destino), ruta, sinCuerpo, clock.instant());
+        HttpRequest peticion = HttpRequest.newBuilder(destino)
+                .timeout(TIEMPO_MAXIMO)
+                .header("x-amz-date", f.amzDate())
+                .header("x-amz-content-sha256", f.hashContenido())
+                .header("Authorization", f.authorization())
+                .DELETE()
+                .build();
+        try {
+            HttpResponse<String> respuesta = http.send(peticion, HttpResponse.BodyHandlers.ofString());
+            if (respuesta.statusCode() / 100 == 2) {
+                log.info("Foto eliminada de S3: {}", llave);
+            } else {
+                log.warn("S3 respondió {} al eliminar {}: {}", respuesta.statusCode(), llave, resumir(respuesta.body()));
+            }
+        } catch (IOException e) {
+            log.warn("No se pudo eliminar {} de S3 ({})", llave, e.getClass().getSimpleName());
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.warn("Se interrumpió la eliminación de {} en S3", llave);
+        }
+    }
+
+    /** Las fotos propias viven bajo <url pública>/<carpeta>/. */
+    private String prefijoPropio() {
+        return urlPublica + "/" + (carpeta.isEmpty() ? "" : FirmaAwsV4.codificarRuta(carpeta) + "/");
     }
 
     static String extension(String contentType) {

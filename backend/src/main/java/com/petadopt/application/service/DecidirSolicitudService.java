@@ -53,11 +53,17 @@ public class DecidirSolicitudService implements DecidirSolicitudUseCase {
         Usuario vendedor = usuarioRepository.buscarPorEmail(comando.vendedorEmail())
                 .orElseThrow(NoEsDuenoDelAnimalException::new);
 
-        Solicitud solicitud = solicitudRepository.buscarPorId(comando.solicitudId())
+        // Orden que evita la carrera aprobar/rechazar: primero se bloquea el animal y DESPUÉS se lee la
+        // solicitud. Si se leyera antes, una decisión simultánea esperaría el bloqueo y luego decidiría
+        // con el estado viejo (PENDIENTE), pisando la decisión que ya se guardó.
+        Long animalId = solicitudRepository.buscarAnimalId(comando.solicitudId())
                 .orElseThrow(() -> new SolicitudNoEncontradaException(comando.solicitudId()));
 
-        Animal animal = animalRepository.buscarPorIdParaActualizar(solicitud.animalId())
-                .orElseThrow(() -> new AnimalNoEncontradoException(solicitud.animalId()));
+        Animal animal = animalRepository.buscarPorIdParaActualizar(animalId)
+                .orElseThrow(() -> new AnimalNoEncontradoException(animalId));
+
+        Solicitud solicitud = solicitudRepository.buscarPorId(comando.solicitudId())
+                .orElseThrow(() -> new SolicitudNoEncontradaException(comando.solicitudId()));
 
         if (!animal.vendedorId().equals(vendedor.id())) {
             throw new NoEsDuenoDelAnimalException();

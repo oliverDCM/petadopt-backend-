@@ -118,6 +118,7 @@ class SolicitarRecuperacionServiceTest {
 
     @Test
     void supera_el_limite_por_email_devuelve_429() {
+        when(limitador.intentar("ip:10.0.0.1")).thenReturn(true);
         when(limitador.intentar("email:ana@test.com")).thenReturn(false);
 
         assertThrows(LimiteSolicitudesExcedidoException.class,
@@ -128,7 +129,6 @@ class SolicitarRecuperacionServiceTest {
 
     @Test
     void supera_el_limite_por_ip_devuelve_429() {
-        when(limitador.intentar("email:ana@test.com")).thenReturn(true);
         when(limitador.intentar("ip:10.0.0.1")).thenReturn(false);
 
         assertThrows(LimiteSolicitudesExcedidoException.class,
@@ -137,7 +137,18 @@ class SolicitarRecuperacionServiceTest {
     }
 
     @Test
+    void una_ip_bloqueada_no_gasta_la_cuota_del_email_ni_deja_claves_en_memoria() {
+        when(limitador.intentar("ip:10.0.0.1")).thenReturn(false);
+
+        assertThrows(LimiteSolicitudesExcedidoException.class,
+                () -> service.solicitar(new SolicitarRecuperacionUseCase.Comando("victima@test.com", "10.0.0.1")));
+
+        verify(limitador, never()).intentar("email:victima@test.com");
+    }
+
+    @Test
     void el_limite_tambien_aplica_a_emails_no_registrados() {
+        when(limitador.intentar("ip:10.0.0.1")).thenReturn(true);
         when(limitador.intentar("email:nadie@test.com")).thenReturn(false);
 
         assertThrows(LimiteSolicitudesExcedidoException.class,

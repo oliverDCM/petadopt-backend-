@@ -6,7 +6,10 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "solicitudes")
+@Table(name = "solicitudes", indexes = {
+        @Index(name = "idx_solicitudes_animal_estado", columnList = "animal_id, estado"),
+        @Index(name = "idx_solicitudes_solicitante", columnList = "solicitante_id")
+})
 public class SolicitudEntity {
 
     @Id

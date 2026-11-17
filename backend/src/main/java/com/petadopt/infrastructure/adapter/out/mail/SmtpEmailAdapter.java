@@ -37,9 +37,14 @@ public class SmtpEmailAdapter implements EmailSenderPort {
         mensaje.setText(cuerpo);
         try {
             mailSender.send(mensaje);
-            log.info("Correo enviado: '{}'", asunto);
+            log.info("Correo enviado: '{}'", paraLog(asunto));
         } catch (MailException e) {
-            log.error("No se pudo enviar el correo '{}' ({})", asunto, e.getClass().getSimpleName());
+            log.error("No se pudo enviar el correo '{}' ({})", paraLog(asunto), e.getClass().getSimpleName());
         }
+    }
+
+    /** El asunto puede llevar texto escrito por usuarios: sin saltos de línea no se pueden falsificar líneas del log. */
+    private static String paraLog(String texto) {
+        return texto == null ? "" : texto.replaceAll("\\p{Cntrl}+", " ");
     }
 }

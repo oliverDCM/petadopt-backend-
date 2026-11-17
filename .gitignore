@@ -13,3 +13,5 @@ logs/
 logs/
 *.log
 .env
+
+pruebas-carga/resultados/

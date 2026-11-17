@@ -31,4 +31,23 @@ class PlantillasCorreoTest {
     void contrasena_cambiada_saluda_al_usuario() {
         assertThat(PlantillasCorreo.contrasenaCambiada("Ana").cuerpo()).contains("Hola Ana");
     }
+
+    @Test
+    void el_asunto_no_puede_partirse_con_saltos_de_linea_escritos_por_un_usuario() {
+        var correo = PlantillasCorreo.solicitudAprobadaParaAdoptante("Ana", "Firu\r\nBcc: otro@test.com\n2026 ERROR falso",
+                "Carlos", "carlos@test.com", null, null);
+
+        assertThat(correo.asunto()).doesNotContain("\r").doesNotContain("\n");
+        assertThat(correo.asunto()).isEqualTo("Tu solicitud por Firu Bcc: otro@test.com 2026 ERROR falso fue aprobada");
+    }
+
+    @Test
+    void solicitud_cerrada_explica_si_se_cancelo_la_reserva_o_se_retiro_la_publicacion() {
+        var reserva = PlantillasCorreo.solicitudCerrada("Ana", "Firulais", true);
+        var retiro = PlantillasCorreo.solicitudCerrada("Ana", "Firulais", false);
+
+        assertThat(reserva.asunto()).isEqualTo("Tu solicitud por Firulais fue cerrada");
+        assertThat(reserva.cuerpo()).contains("Hola Ana").contains("canceló la reserva");
+        assertThat(retiro.cuerpo()).contains("retiró la publicación");
+    }
 }

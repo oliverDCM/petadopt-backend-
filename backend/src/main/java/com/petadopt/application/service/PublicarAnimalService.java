@@ -19,14 +19,14 @@ public class PublicarAnimalService implements PublicarAnimalUseCase {
 
     private final AnimalRepositoryPort animalRepository;
     private final UsuarioRepositoryPort usuarioRepository;
-    private final ImagenStoragePort imagenStorage;
+    private final GestorFotos fotos;
 
     public PublicarAnimalService(AnimalRepositoryPort animalRepository,
                                  UsuarioRepositoryPort usuarioRepository,
                                  ImagenStoragePort imagenStorage) {
         this.animalRepository = animalRepository;
         this.usuarioRepository = usuarioRepository;
-        this.imagenStorage = imagenStorage;
+        this.fotos = new GestorFotos(imagenStorage);
     }
 
     @Override
@@ -35,7 +35,8 @@ public class PublicarAnimalService implements PublicarAnimalUseCase {
                 .filter(u -> u.rol() == Rol.VENDEDOR)
                 .orElseThrow(VendedorNoAutorizadoException::new);
 
-        String fotoUrl = resolverFotoUrl(comando);
+        String enlace = fotos.urlPermitida(comando.fotoUrl(), null);
+        String subida = fotos.subirSiHay(comando.foto());
 
         Animal nuevo = new Animal(
                 null,
@@ -45,7 +46,7 @@ public class PublicarAnimalService implements PublicarAnimalUseCase {
                 comando.edadMeses(),
                 comando.sexo(),
                 comando.descripcion(),
-                fotoUrl,
+                subida != null ? subida : enlace,
                 EstadoAnimal.DISPONIBLE,
                 comando.ciudad(),
                 vendedor.id(),
@@ -54,15 +55,11 @@ public class PublicarAnimalService implements PublicarAnimalUseCase {
                 comando.esterilizado(),
                 comando.tipo()
         );
-        return animalRepository.guardar(nuevo);
-    }
-
-    private String resolverFotoUrl(Comando comando) {
-        ImagenArchivo foto = comando.foto();
-        if (foto == null || foto.estaVacia()) {
-            return comando.fotoUrl();
+        try {
+            return animalRepository.guardar(nuevo);
+        } catch (RuntimeException e) {
+            fotos.descartar(subida); // la publicación no se guardó: la foto recién subida quedaría huérfana
+            throw e;
         }
-        ValidacionImagen.validar(foto);
-        return imagenStorage.subirImagen(foto);
     }
 }

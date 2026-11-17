@@ -21,6 +21,7 @@ import java.util.UUID;
  * Cada petición recibe un identificador (cabecera X-Request-Id y campo requestId en el log)
  * para seguir todos los mensajes de una misma petición. Nunca se registran cuerpos,
  * cabeceras ni parámetros, porque pueden llevar contraseñas, tokens o datos de contacto.
+ * Con varias réplicas detrás del balanceador, la cabecera X-Instancia dice qué réplica atendió la petición.
  */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -28,9 +29,20 @@ public class RegistroPeticionesFilter extends OncePerRequestFilter {
 
     public static final String CABECERA_ID = "X-Request-Id";
     public static final String CLAVE_MDC = "requestId";
+    public static final String CABECERA_INSTANCIA = "X-Instancia";
 
     private static final Logger log = LoggerFactory.getLogger(RegistroPeticionesFilter.class);
     private static final Set<String> RUTAS_SILENCIOSAS = Set.of("/actuator/health");
+
+    /** Nombre de esta réplica: variable INSTANCIA (backend1, backend2) o, si no existe, el hostname del contenedor. */
+    private final String instancia = nombreInstancia(System.getenv("INSTANCIA"), System.getenv("HOSTNAME"));
+
+    static String nombreInstancia(String variable, String hostname) {
+        if (variable != null && !variable.isBlank()) {
+            return variable.trim();
+        }
+        return hostname != null && !hostname.isBlank() ? hostname.trim() : "desconocida";
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -39,6 +51,7 @@ public class RegistroPeticionesFilter extends OncePerRequestFilter {
         long inicio = System.nanoTime();
         MDC.put(CLAVE_MDC, id);
         response.setHeader(CABECERA_ID, id);
+        response.setHeader(CABECERA_INSTANCIA, instancia);
         try {
             chain.doFilter(request, response);
         } finally {

@@ -1,4 +1,7 @@
+# Secretos: solo se suben las plantillas .env.example y .env.cloud.example
 .env
+*.pem
+
 **/target/
 .idea/
 *.iml
@@ -8,10 +11,10 @@ petadot-frontend-main/
 
 logs/
 *.log
-.env
 
-logs/
-*.log
-.env
+# Respaldos de la base (tienen datos de usuarios) y reportes de monitor.sh (tienen IPs del servidor).
+# Los reportes se adjuntan al informe, no al repositorio.
+respaldos/
+reportes/
 
 pruebas-carga/resultados/

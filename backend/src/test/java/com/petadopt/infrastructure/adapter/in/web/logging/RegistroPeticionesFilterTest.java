@@ -51,4 +51,20 @@ class RegistroPeticionesFilterTest {
         assertThat(llamado[0]).isTrue();
         assertThat(res.getHeader(RegistroPeticionesFilter.CABECERA_ID)).isNotNull();
     }
+
+    @Test
+    void indica_que_replica_atendio_la_peticion() throws Exception {
+        MockHttpServletResponse res = new MockHttpServletResponse();
+
+        filtro.doFilter(new MockHttpServletRequest("GET", "/api/animales"), res, (rq, rs) -> { });
+
+        assertThat(res.getHeader(RegistroPeticionesFilter.CABECERA_INSTANCIA)).isNotBlank();
+    }
+
+    @Test
+    void el_nombre_de_la_replica_sale_de_la_variable_instancia_o_del_hostname() {
+        assertThat(RegistroPeticionesFilter.nombreInstancia("backend2", "a1b2c3")).isEqualTo("backend2");
+        assertThat(RegistroPeticionesFilter.nombreInstancia("  ", "a1b2c3")).isEqualTo("a1b2c3");
+        assertThat(RegistroPeticionesFilter.nombreInstancia(null, null)).isEqualTo("desconocida");
+    }
 }

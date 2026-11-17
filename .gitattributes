@@ -1,0 +1,4 @@
+# Los scripts y configuraciones que corren en Linux deben quedar con fin de línea LF aunque se editen en Windows
+*.sh text eol=lf
+balanceador/*.conf text eol=lf
+.env*.example text eol=lf

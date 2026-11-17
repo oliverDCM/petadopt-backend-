@@ -1,29 +1,90 @@
-# Despliegue completo con un solo comando (desde la carpeta petadopt):  docker compose up --build -d
-#   App:       http://localhost:4200
-#   pgAdmin:   http://localhost:5050
-#   SonarQube: http://localhost:9000
-#   Mailpit:   http://localhost:8025   (bandeja donde llegan los correos de desarrollo)
-#   Logs:      carpeta petadopt/logs/backend
-# Los secretos van en un archivo .env junto a este compose (plantilla: .env.example), nunca en el código.
-# Sin POSTGRES_PASSWORD o JWT_SECRET en el .env, docker compose se niega a arrancar: no hay valores por defecto
-# porque un secreto escrito en el repositorio lo conoce cualquiera.
-# Solo la app (4200) es visible desde la red; la base de datos, pgAdmin, Mailpit, SonarQube y el backend
-# escuchan únicamente en este equipo (127.0.0.1).
+# PetAdopt: frontend + NGINX balanceador + 2 réplicas del backend + PostgreSQL.
+# El MISMO archivo se usa en los dos ambientes; lo que cambia es el archivo .env de cada uno:
+#   On-premise (VirtualBox / tu PC):  plantilla .env.example        -> base de datos en un contenedor con volumen
+#   Cloud (AWS EC2):                  plantilla .env.cloud.example  -> base de datos en Amazon RDS (privada)
+#
+#   Levantar:   docker compose up -d --build
+#   Estado:     docker compose ps
+#   App:        http://<IP del servidor>:<PUERTO_APP>   (por defecto 4200)
+#   Logs:       carpeta logs/ (backend1.log, backend2.log, nginx/)
+#
+# Perfiles (variable COMPOSE_PROFILES del .env):
+#   db-local      contenedor PostgreSQL con volumen (on-premise). En cloud no se activa: se usa RDS.
+#   herramientas  pgAdmin y SonarQube (solo en el equipo de desarrollo; consumen mucha memoria).
+#
+# Los secretos van en el .env, nunca en el código. Sin DB_PASSWORD o JWT_SECRET, docker compose no arranca.
+# Solo el balanceador es visible desde la red. Las réplicas, el frontend y la base de datos no publican
+# puertos hacia afuera; las herramientas escuchan únicamente en este equipo (127.0.0.1).
+
+x-backend: &backend
+  build:
+    context: ./backend
+  # VERSION (en el .env) etiqueta la imagen: v1, v2... Para volver atrás: VERSION=v1 y docker compose up -d
+  image: petadopt-backend:${VERSION:-local}
+  restart: unless-stopped
+  # Límites por réplica: si una se desboca, no tumba a la otra ni al sistema operativo
+  deploy:
+    resources:
+      limits:
+        cpus: "1.0"
+        memory: 640m
+  depends_on:
+    db:
+      condition: service_healthy
+      required: false   # en cloud el perfil db-local está apagado: la base es RDS
+    mailpit:
+      condition: service_started
+  environment: &backend-env
+    # Cloud: DB_HOST = punto de enlace de RDS y DB_PARAMS=?sslmode=require (conexión cifrada)
+    SPRING_DATASOURCE_URL: jdbc:postgresql://${DB_HOST:-db}:${DB_PORT:-5432}/${DB_NAME:-${POSTGRES_DB:-petadopt}}${DB_PARAMS:-}
+    SPRING_DATASOURCE_USERNAME: ${DB_USER:-${POSTGRES_USER:-petadopt}}
+    SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-${POSTGRES_PASSWORD:?Falta DB_PASSWORD en el archivo .env}}
+    JWT_SECRET: ${JWT_SECRET:?Falta JWT_SECRET en el archivo .env (mínimo 32 caracteres)}
+    S3_REGION: ${S3_REGION:-us-east-2}
+    S3_BUCKET: ${S3_BUCKET:-}
+    S3_ACCESS_KEY: ${S3_ACCESS_KEY:-}
+    S3_SECRET_KEY: ${S3_SECRET_KEY:-}
+    S3_ENDPOINT: ${S3_ENDPOINT:-}
+    S3_PUBLIC_URL: ${S3_PUBLIC_URL:-}
+    CORS_ALLOWED_ORIGINS: ${PUBLIC_URL:-http://localhost:4200}
+    FRONTEND_URL: ${PUBLIC_URL:-http://localhost:4200}
+    # Pedidos de recuperación de contraseña por hora (por email y por IP). Para correr las E2E seguido: 100
+    RECUPERACION_MAX_INTENTOS: ${RECUPERACION_MAX_INTENTOS:-3}
+    MAIL_HOST: ${MAIL_HOST:-mailpit}
+    MAIL_PORT: ${MAIL_PORT:-1025}
+    MAIL_USERNAME: ${MAIL_USERNAME:-}
+    MAIL_PASSWORD: ${MAIL_PASSWORD:-}
+    MAIL_SMTP_AUTH: ${MAIL_SMTP_AUTH:-false}
+    MAIL_STARTTLS: ${MAIL_STARTTLS:-false}
+    MAIL_FROM: ${MAIL_FROM:-PetAdopt <no-reply@petadopt.local>}
+    LOG_LEVEL_APP: ${LOG_LEVEL_APP:-INFO}
+    # Memoria de cada réplica (dos réplicas deben caber en una VM de 2-4 GB)
+    JAVA_OPTS: ${JAVA_OPTS:--Xms128m -Xmx384m}
+  # Los logs quedan fuera del contenedor, en la carpeta logs/ junto a este archivo
+  volumes:
+    - ./logs/backend:/app/logs
+  expose:
+    - "8080"
+  networks:
+    - petadopt-net
+
 services:
   db:
     image: postgres:15
     container_name: petadopt-db
+    profiles: ["db-local"]
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-petadopt}
-      POSTGRES_USER: ${POSTGRES_USER:-petadopt}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Falta POSTGRES_PASSWORD en el archivo .env}
+      POSTGRES_DB: ${DB_NAME:-${POSTGRES_DB:-petadopt}}
+      POSTGRES_USER: ${DB_USER:-${POSTGRES_USER:-petadopt}}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-${POSTGRES_PASSWORD:?Falta DB_PASSWORD en el archivo .env}}
+    # Solo desde este equipo (pgAdmin, respaldos); nunca expuesta a la red
     ports:
       - "127.0.0.1:5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-petadopt} -d ${POSTGRES_DB:-petadopt}"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -36,70 +97,67 @@ services:
     container_name: petadopt-mailpit
     restart: unless-stopped
     ports:
-      - "127.0.0.1:1025:1025"
       - "127.0.0.1:8025:8025"
     networks:
       - petadopt-net
 
-  backend:
-    build:
-      context: ./backend
-    container_name: petadopt-backend
-    restart: unless-stopped
-    depends_on:
-      db:
-        condition: service_healthy
-      mailpit:
-        condition: service_started
+  # Dos réplicas idénticas del backend (misma imagen); solo cambia el nombre y su archivo de log
+  backend1:
+    <<: *backend
+    container_name: petadopt-backend1
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-petadopt}
-      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-petadopt}
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET:?Falta JWT_SECRET en el archivo .env (mínimo 32 caracteres)}
-      S3_REGION: ${S3_REGION:-us-east-1}
-      S3_BUCKET: ${S3_BUCKET:-}
-      S3_ACCESS_KEY: ${S3_ACCESS_KEY:-}
-      S3_SECRET_KEY: ${S3_SECRET_KEY:-}
-      S3_ENDPOINT: ${S3_ENDPOINT:-}
-      S3_PUBLIC_URL: ${S3_PUBLIC_URL:-}
-      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:4200}
-      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:4200}
-      # Pedidos de recuperación de contraseña por hora (por email y por IP). Para correr las E2E seguido: 100
-      RECUPERACION_MAX_INTENTOS: ${RECUPERACION_MAX_INTENTOS:-3}
-      MAIL_HOST: ${MAIL_HOST:-mailpit}
-      MAIL_PORT: ${MAIL_PORT:-1025}
-      MAIL_USERNAME: ${MAIL_USERNAME:-}
-      MAIL_PASSWORD: ${MAIL_PASSWORD:-}
-      MAIL_SMTP_AUTH: ${MAIL_SMTP_AUTH:-false}
-      MAIL_STARTTLS: ${MAIL_STARTTLS:-false}
-      MAIL_FROM: ${MAIL_FROM:-PetAdopt <no-reply@petadopt.local>}
-      LOG_LEVEL_APP: ${LOG_LEVEL_APP:-INFO}
-      LOG_FILE: /app/logs/petadopt.log
-    # Los logs quedan en tu equipo, en petadopt/logs/backend (fuera del proyecto y del contenedor)
-    volumes:
-      - ./logs/backend:/app/logs
-    # Solo accesible desde este PC (pruebas de carga, actuator); no desde la red
-    ports:
-      - "127.0.0.1:8080:8080"
-    networks:
-      - petadopt-net
+      <<: *backend-env
+      INSTANCIA: backend1
+      LOG_FILE: /app/logs/backend1.log
+
+  backend2:
+    <<: *backend
+    container_name: petadopt-backend2
+    environment:
+      <<: *backend-env
+      INSTANCIA: backend2
+      LOG_FILE: /app/logs/backend2.log
 
   frontend:
     build:
       context: ./petadot-frontend-main
+    image: petadopt-frontend:${VERSION:-local}
     container_name: petadopt-frontend
     restart: unless-stopped
+    expose:
+      - "8080"
+    networks:
+      - petadopt-net
+
+  # Único punto de entrada: sirve el frontend y reparte /api entre backend1 y backend2 (round robin)
+  balanceador:
+    image: nginx:1.27-alpine
+    container_name: petadopt-balanceador
+    restart: unless-stopped
     depends_on:
-      backend:
+      backend1:
         condition: service_healthy
+      backend2:
+        condition: service_healthy
+      frontend:
+        condition: service_started
     ports:
-      - "4200:8080"
+      - "${PUERTO_APP:-4200}:80"
+    volumes:
+      - ./balanceador/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./logs/nginx:/var/log/nginx
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/salud || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
     networks:
       - petadopt-net
 
   pgadmin:
     image: dpage/pgadmin4
     container_name: petadopt-pgadmin
+    profiles: ["herramientas"]
     restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@petadopt.com
@@ -108,14 +166,13 @@ services:
       - "127.0.0.1:5050:80"
     volumes:
       - pgadmin-data:/var/lib/pgadmin
-    depends_on:
-      - db
     networks:
       - petadopt-net
 
   sonarqube:
     image: sonarqube:community
     container_name: petadopt-sonarqube
+    profiles: ["herramientas"]
     restart: unless-stopped
     environment:
       SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"

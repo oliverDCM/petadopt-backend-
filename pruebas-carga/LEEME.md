@@ -29,7 +29,7 @@ Cada petición tiene aserciones: código HTTP esperado y campos del JSON (token,
 ## Cómo ejecutarlas
 
 1. **Requisitos:** Java 17 (ya lo tienes) y JMeter 5.6.3. Descarga el `.zip` "Binaries" de https://jmeter.apache.org/download_jmeter.cgi y descomprímelo en `C:\apache-jmeter-5.6.3`.
-2. Levanta el sistema: en la carpeta `petadopt`, ejecuta `docker compose up -d` y espera a que `backend` esté *healthy*.
+2. Levanta el sistema: en la carpeta `petadopt`, ejecuta `docker compose -f docker-compose.yml -f docker-compose.pruebas.yml up -d` y espera a que `backend1` y `backend2` estén *healthy* (`docker compose ps`). El archivo `docker-compose.pruebas.yml` publica `backend1` solo en `127.0.0.1:8080` para que JMeter mida el backend sin los límites del balanceador.
 3. Copia esta carpeta en `petadopt\pruebas-carga` y, en PowerShell dentro de ella, ejecuta:
    ```powershell
    powershell -ExecutionPolicy Bypass -File .\ejecutar-pruebas.ps1

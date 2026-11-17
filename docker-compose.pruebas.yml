@@ -1,0 +1,9 @@
+# Solo para las pruebas de carga con JMeter en TU PC (no en la VM ni en la EC2).
+# Publica backend1 en 127.0.0.1:8080 para medir el backend sin los límites de peticiones del balanceador.
+#   docker compose -f docker-compose.yml -f docker-compose.pruebas.yml up -d
+# Para medir el sistema completo (balanceador + 2 réplicas), usa en JMeter el puerto PUERTO_APP:
+# ten en cuenta que el balanceador limita /api/auth a 10 peticiones/s por IP y responderá 429 al excedente.
+services:
+  backend1:
+    ports:
+      - "127.0.0.1:8080:8080"

@@ -55,13 +55,14 @@ git commit -m "Balanceador NGINX con dos réplicas del backend, scripts de opera
 git push origin HEAD:develop
 ```
 
-Tu `.env` del PC necesita **una línea nueva** (sin ella no arranca la base de datos):
+Tu `.env` del PC necesita **dos líneas nuevas** (sin ellas no arranca la base de datos):
 
 ```
 COMPOSE_PROFILES=db-local,herramientas
+DB_PASSWORD=la-misma-que-tienes-en-POSTGRES_PASSWORD
 ```
 
-Puedes dejar `POSTGRES_PASSWORD`, `POSTGRES_DB` y `POSTGRES_USER` como están: el compose los sigue aceptando.
+`POSTGRES_DB` y `POSTGRES_USER` pueden quedarse como están: el compose los sigue aceptando.
 Luego: `docker compose up -d --build --remove-orphans` (`--remove-orphans` borra el contenedor viejo `petadopt-backend`).
 La app sigue en `http://localhost:4200`, ahora a través del balanceador.
 

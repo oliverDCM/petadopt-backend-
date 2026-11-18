@@ -17,8 +17,6 @@
 # puertos hacia afuera; las herramientas escuchan únicamente en este equipo (127.0.0.1).
 
 x-backend: &backend
-  build:
-    context: ./backend
   # VERSION (en el .env) etiqueta la imagen: v1, v2... Para volver atrás: VERSION=v1 y docker compose up -d
   image: petadopt-backend:${VERSION:-local}
   restart: unless-stopped
@@ -38,7 +36,7 @@ x-backend: &backend
     # Cloud: DB_HOST = punto de enlace de RDS y DB_PARAMS=?sslmode=require (conexión cifrada)
     SPRING_DATASOURCE_URL: jdbc:postgresql://${DB_HOST:-db}:${DB_PORT:-5432}/${DB_NAME:-${POSTGRES_DB:-petadopt}}${DB_PARAMS:-}
     SPRING_DATASOURCE_USERNAME: ${DB_USER:-${POSTGRES_USER:-petadopt}}
-    SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-${POSTGRES_PASSWORD:?Falta DB_PASSWORD en el archivo .env}}
+    SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:?Falta DB_PASSWORD en el archivo .env}
     JWT_SECRET: ${JWT_SECRET:?Falta JWT_SECRET en el archivo .env (mínimo 32 caracteres)}
     S3_REGION: ${S3_REGION:-us-east-2}
     S3_BUCKET: ${S3_BUCKET:-}
@@ -77,7 +75,7 @@ services:
     environment:
       POSTGRES_DB: ${DB_NAME:-${POSTGRES_DB:-petadopt}}
       POSTGRES_USER: ${DB_USER:-${POSTGRES_USER:-petadopt}}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-${POSTGRES_PASSWORD:?Falta DB_PASSWORD en el archivo .env}}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Falta DB_PASSWORD en el archivo .env}
     # Solo desde este equipo (pgAdmin, respaldos); nunca expuesta a la red
     ports:
       - "127.0.0.1:5432:5432"
@@ -104,6 +102,9 @@ services:
   # Dos réplicas idénticas del backend (misma imagen); solo cambia el nombre y su archivo de log
   backend1:
     <<: *backend
+    # Solo backend1 construye la imagen; backend2 reutiliza la misma (construirla dos veces a la vez falla)
+    build:
+      context: ./backend
     container_name: petadopt-backend1
     environment:
       <<: *backend-env
@@ -112,6 +113,8 @@ services:
 
   backend2:
     <<: *backend
+    # Usa la imagen que construyó backend1; nunca la busca en Docker Hub
+    pull_policy: never
     container_name: petadopt-backend2
     environment:
       <<: *backend-env
